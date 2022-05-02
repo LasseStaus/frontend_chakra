@@ -1,10 +1,13 @@
-import { Button, Container, FormControl, FormLabel, Input } from '@chakra-ui/react'
-import { FC, useState } from 'react'
-import login from '../../api/Login'
+import { Button, Container, FormControl, FormLabel, Heading, Input } from '@chakra-ui/react'
+import { FC, useContext, useState } from 'react'
+import login from '../../api/Old.Login'
+import { useAuth } from '../../context/AuthContext'
 
 const Loginform: FC<any> = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const { user, login, error, isLoading } = useAuth()
 
   //toddo e type
   const handleLogin = async (e: any) => {
@@ -16,11 +19,13 @@ const Loginform: FC<any> = (props) => {
       password: password,
     }
 
-    login(body)
+    login({ email, password })
   }
 
   return (
     <Container maxW={'container.sm'}>
+      <Heading>{isLoading ? 'Loading....' : 'not loading'}</Heading>
+      <Heading>{error ? error : 'no error'}</Heading>
       <FormControl>
         <FormLabel htmlFor='email'>Email address</FormLabel>
         <Input id='email' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
