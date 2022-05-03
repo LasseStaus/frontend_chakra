@@ -4,7 +4,7 @@ import React, { createContext, ReactNode, useContext, useEffect, useState } from
 const API_URL = 'http://localhost:3000'
 
 export interface AuthContextInterface {
-  user: { access_token: string | null; refresh_token: string | null } | null
+  user: { access_token: string | undefined; refresh_token: string | undefined }
   login: ({ email, password }: loginProps) => void
   logout: () => void
   emailError: string | null
@@ -13,11 +13,11 @@ export interface AuthContextInterface {
 }
 
 type userObj = {
-  access_token: string
-  refresh_token: string
+  access_token: string | undefined
+  refresh_token: string | undefined
 }
 export const authContextDefaultValues: AuthContextInterface = {
-  user: { access_token: '', refresh_token: '' },
+  user: { access_token: undefined, refresh_token: undefined },
   login: () => {},
   logout: () => {},
   emailError: null,
@@ -58,9 +58,10 @@ export function AuthProvider({ children }: Props) {
     })
 
     const data = await res.json()
+    console.log('hallo', data)
 
     if (res.ok) {
-      setUser(data)
+      setUser({ access_token: data.access_token, refresh_token: data.refresh_token })
 
       //  router.push('/user')
     } else {
@@ -114,7 +115,7 @@ export function AuthProvider({ children }: Props) {
     if (res.ok) {
       console.log('UD MED DIG')
 
-      setUser({ access_token: '', refresh_token: '' })
+      setUser({ access_token: undefined, refresh_token: undefined })
     } else {
       console.error('error logging out user')
     }
