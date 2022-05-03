@@ -7,7 +7,7 @@ const Loginform: FC<any> = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { user, login, error, isLoading } = useAuth()
+  const { user, login, emailError, passwordError, isLoading } = useAuth()
 
   //toddo e type
   const handleLogin = async (e: any) => {
@@ -24,15 +24,16 @@ const Loginform: FC<any> = (props) => {
 
   return (
     <Container maxW={'container.sm'}>
-      <Heading>{isLoading ? 'Loading....' : 'not loading'}</Heading>
-      <Heading>{error ? error : 'no error'}</Heading>
       <FormControl>
         <FormLabel htmlFor='email'>Email address</FormLabel>
         <Input id='email' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+
+        <Heading>{emailError ? emailError : 'no error'}</Heading>
       </FormControl>
       <FormControl>
         <FormLabel htmlFor='password'>Password</FormLabel>
         <Input id='password' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+        <Heading>{passwordError ? passwordError : 'no error'}</Heading>
       </FormControl>
       <Button mt={4} colorScheme='teal' isLoading={props.isSubmitting} type='submit' onClick={handleLogin}>
         Submit
