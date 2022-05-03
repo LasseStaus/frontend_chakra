@@ -3,6 +3,7 @@ import router from 'next/router'
 import React, { useEffect } from 'react'
 import { useAuth } from '../../../context/AuthContext'
 import Loginform from '../loginform/Loginform'
+import SignupForm from '../signupform/Signupform'
 
 function AuthenticatedPage() {
   const { user, login, emailError, passwordError, isLoading } = useAuth()
@@ -12,6 +13,7 @@ function AuthenticatedPage() {
       <Box>
         <Heading>Login</Heading>
         <Loginform />
+        <SignupForm />
       </Box>
     </Container>
   )
