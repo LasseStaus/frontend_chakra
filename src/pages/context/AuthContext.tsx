@@ -62,7 +62,7 @@ export function AuthProvider({ children }: Props) {
     if (res.ok) {
       setUser(data)
 
-      router.push('/user')
+      //  router.push('/user')
     } else {
       setEmailError(data.message)
       console.log(data)
@@ -79,22 +79,45 @@ export function AuthProvider({ children }: Props) {
 
     console.log('Get User')
 
-    const res = await fetch(`${API_URL}/api/user`)
+    const res = await fetch(`${API_URL}/api/user`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     const currentUser = await res.json()
     console.log(currentUser)
+
+    const obj = {
+      access_token: 'dasjdaskd',
+      refresh_token: 'dasjdaskd',
+    }
 
     if (res.ok && currentUser) {
       console.log('User is logged in', currentUser.data)
       setUser(currentUser.data)
-      router.push('/')
+      //   router.push('/')
     } else {
       console.log('User is NOT logged in')
       setUser({ access_token: '', refresh_token: '' })
     }
   }
 
-  const logout = () => {
-    setUser({ access_token: '', refresh_token: '' })
+  const logout = async () => {
+    const res = await fetch(`${API_URL}/api/logout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    if (res.ok) {
+      console.log('UD MED DIG')
+
+      setUser({ access_token: '', refresh_token: '' })
+    } else {
+      console.error('error logging out user')
+    }
   }
 
   const value = {

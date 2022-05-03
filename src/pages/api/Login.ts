@@ -24,16 +24,27 @@ export default async function login(req:NextApiRequest, res:NextApiResponse) {
 
     console.log("logints", data)
     if(apiRes.ok) {
-      res.setHeader(
-        'Set-Cookie',
-        cookie.serialize('token', String(data.access_token), {
-          httpOnly: true,
-          secure: process.env.NODE_ENV !== 'development',
-          maxAge: 60 * 60 * 24 * 7, // 1 week
-          sameSite: 'strict',
-          path: '/'
-        })
-     )
+
+     res.setHeader("Set-Cookie", 
+    [
+    cookie.serialize("AT", String(data.access_token), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'development',
+      maxAge: 60 * 60 * 24 * 7, // 1 week
+      sameSite: 'strict',
+      path: '/'
+    }),
+    cookie.serialize("RT", String(data.refresh_token), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'development',
+      maxAge: 60 * 60 * 24 * 7, // 1 week
+      sameSite: 'strict',
+      path: '/'
+    }),
+
+    ],
+   
+)
 
       res.status(200).json(data)
     } else {
