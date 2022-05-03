@@ -1,7 +1,7 @@
 import { Box, Container, Heading } from '@chakra-ui/react'
 import router from 'next/router'
 import React, { useEffect } from 'react'
-import { useAuth } from '../../context/AuthContext'
+import { useAuth } from '../../../context/AuthContext'
 import Loginform from '../loginform/Loginform'
 
 function AuthenticatedPage() {

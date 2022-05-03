@@ -3,7 +3,7 @@ import React, { createContext, ReactNode, useContext, useEffect, useState } from
 
 const API_URL = 'http://localhost:3000'
 
-export interface AuthContextInterface {
+export type AuthContextInterface = {
   user: { access_token: string | undefined; refresh_token: string | undefined }
   login: ({ email, password }: loginProps) => void
   logout: () => void
@@ -18,8 +18,8 @@ type userObj = {
 }
 export const authContextDefaultValues: AuthContextInterface = {
   user: { access_token: undefined, refresh_token: undefined },
-  login: () => {},
-  logout: () => {},
+  login: () => Promise.resolve(),
+  logout: () => Promise.resolve(),
   emailError: null,
   passwordError: null,
   isLoading: false,
@@ -34,6 +34,15 @@ type Props = {
   children: ReactNode
 }
 
+type AuthProvider = {
+  login: (params: any) => Promise<any>
+  logout: (params: any) => Promise<void | false | string>
+  checkAuth: (params: any) => Promise<void>
+  checkError: (error: any) => Promise<void>
+  getIdentity?: () => Promise<any>
+  getPermissions: (params: any) => Promise<any>
+  [key: string]: any
+}
 export function AuthProvider({ children }: Props) {
   useEffect(() => {
     getUser()
@@ -91,7 +100,7 @@ export function AuthProvider({ children }: Props) {
     })
     const data = await res.json()
 
-    if (data) {
+    if (res.ok && data) {
       console.log('getUser', user)
 
       console.log('GetUser AT', data.access_token)

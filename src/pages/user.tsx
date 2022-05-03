@@ -1,7 +1,7 @@
 import { Box, Heading } from '@chakra-ui/react'
 import router from 'next/router'
 import React, { useEffect } from 'react'
-import { useAuth } from './context/AuthContext'
+import { useAuth } from '../context/AuthContext'
 
 function User() {
   const { user, login, emailError, passwordError, isLoading } = useAuth()
