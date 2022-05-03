@@ -1,5 +1,5 @@
 import router from 'next/router'
-import React, { createContext, ReactNode, useContext, useState } from 'react'
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
 const API_URL = 'http://localhost:3000'
 
@@ -35,6 +35,10 @@ type Props = {
 }
 
 export function AuthProvider({ children }: Props) {
+  useEffect(() => {
+    getUser()
+  }, [])
+
   const [user, setUser] = useState<userObj>({ access_token: '', refresh_token: '' })
   const [emailError, setEmailError] = useState(null)
   const [passwordError, setPasswordError] = useState(null)
@@ -66,6 +70,29 @@ export function AuthProvider({ children }: Props) {
     // Making a post request to hit our backend api-endpoint
   }
 
+  //getUser
+
+  // Check if user is logged in
+  // ================================================
+  const getUser = async () => {
+    setIsLoading(true)
+
+    console.log('Get User')
+
+    const res = await fetch(`${API_URL}/api/user`)
+    const currentUser = await res.json()
+    console.log(currentUser)
+
+    if (res.ok && currentUser) {
+      console.log('User is logged in', currentUser.data)
+      setUser(currentUser.data)
+      router.push('/')
+    } else {
+      console.log('User is NOT logged in')
+      setUser({ access_token: '', refresh_token: '' })
+    }
+  }
+
   const logout = () => {
     setUser({ access_token: '', refresh_token: '' })
   }
@@ -77,6 +104,7 @@ export function AuthProvider({ children }: Props) {
     emailError,
     passwordError,
     isLoading,
+    getUser,
   }
   return (
     <>
