@@ -61,7 +61,10 @@ export function AuthProvider({ children }: Props) {
     console.log('hallo', data)
 
     if (res.ok) {
+      console.log('LOGIN USER', user)
+
       setUser({ access_token: data.access_token, refresh_token: data.refresh_token })
+      console.log('LOGIN USER after set', user)
 
       //  router.push('/user')
     } else {
@@ -86,21 +89,22 @@ export function AuthProvider({ children }: Props) {
         'Content-Type': 'application/json',
       },
     })
-    const currentUser = await res.json()
-    console.log(currentUser)
+    const data = await res.json()
 
-    const obj = {
-      access_token: 'dasjdaskd',
-      refresh_token: 'dasjdaskd',
-    }
+    if (data) {
+      console.log('getUser', user)
 
-    if (res.ok && currentUser) {
-      console.log('User is logged in', currentUser.data)
-      setUser(currentUser.data)
+      console.log('GetUser AT', data.access_token)
+      console.log('GetUser RT', data.refresh_token)
+
+      setUser({ access_token: data.access_token, refresh_token: data.refresh_token })
+
+      console.log('getuser After set', user)
+
       //   router.push('/')
     } else {
       console.log('User is NOT logged in')
-      setUser({ access_token: '', refresh_token: '' })
+      //    setUser({ access_token: '', refresh_token: '' })
     }
   }
 
