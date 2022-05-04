@@ -26,9 +26,9 @@ const FieldError: React.FC<FieldErrorContainerProps> = ({ fieldState }) => {
         <>
             <Box
             >
-                <Text>
+                <FormErrorMessage>
                     {fieldState?.error?.message && fieldState?.error.message}
-                </Text>
+                </FormErrorMessage>
             </Box>
         </>
     );

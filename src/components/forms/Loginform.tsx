@@ -19,7 +19,7 @@ const Loginform: FC<any> = (props) => {
 
   const methods = useForm<FormValues>({ mode: "onChange" });
   const {
-    handleSubmit, formState: { isValid, isDirty }, } = methods
+    handleSubmit, formState: { errors, isValid, isDirty }, } = methods
 
   //toddo e type
   const handleLogin: SubmitHandler<FormValues> = async (data) => {
@@ -35,30 +35,34 @@ const Loginform: FC<any> = (props) => {
       <Container maxW={'container.sm'}>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(handleLogin)}>
-            <FormField
-              as={InputField}
-              name="email"
-              labeltitle="Email"
-              defaultValue=""
-              rules={{
-                required: {
-                  value: true,
-                  message: "Required"
-                }
-              }}
-            />
-            <FormField
-              as={InputField}
-              name="password"
-              labeltitle="Password"
-              defaultValue=""
-              rules={{
-                required: {
-                  value: true,
-                  message: "Required"
-                }
-              }}
-            />
+            <FormControl isInvalid={errors.email ? true : undefined}>
+              <FormField
+                as={InputField}
+                name="email"
+                labeltitle="Email"
+                defaultValue=""
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Required"
+                  }
+                }}
+              />
+            </FormControl>
+            <FormControl isInvalid={errors.password ? true : undefined}>
+              <FormField
+                as={InputField}
+                name="password"
+                labeltitle="Password"
+                defaultValue=""
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Required"
+                  }
+                }}
+              />
+            </FormControl>
             <Button mt={4} colorScheme='teal' type="submit" isLoading={props.isSubmitting}>
               Submit
             </Button>
