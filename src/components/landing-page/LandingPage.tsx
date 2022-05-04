@@ -1,5 +1,5 @@
 import { Button, Container, Flex, Heading } from '@chakra-ui/react'
-import { useAuth } from '../../../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
 
 function LandingPage() {
   const { user, login, logout, emailError, passwordError, isLoading } = useAuth()
