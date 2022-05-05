@@ -11,7 +11,10 @@ const HomePage: FC<NextPage> = () => {
   console.log('from state', user?.access_token)
   return (
     <>
-      <Layout pageTitle='Home'>{user?.access_token === undefined ? <LandingPage /> : <AuthenticatedPage />}</Layout>
+      {/* <Layout pageTitle='Home'>{user?.access_token === undefined ? <LandingPage /> : <AuthenticatedPage />}</Layout> */}
+      <Layout pageTitle='Home'>
+        <LandingPage />
+      </Layout>
     </>
   )
 }

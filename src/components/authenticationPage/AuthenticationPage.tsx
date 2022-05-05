@@ -1,6 +1,6 @@
-import { Container, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import { Container, Tab, TabList, TabPanel, TabPanels, Tabs, useColorModeValue } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import AlertBox from '../alert/alert'
+import AlertBox from '../alert/Alert'
 // import { useAuth } from '../../context/AuthContext'
 import Loginform from '../forms/Loginform'
 import SignupForm from '../forms/Signupform'
@@ -13,13 +13,19 @@ function AuthenticatedPage() {
   const [status, setStatus] = useState(undefined);
   const [statusText, setStatusText] = useState(undefined);
 
+  const colors = useColorModeValue(
+    ['red.50', 'teal.50', 'blue.50'],
+    ['red.900', 'teal.900', 'blue.900'],
+  )
+
+  const bg = colors[index]
 
   return (
     <>
       <AlertBox status={status} text={statusText} />
       <Container maxW={'container.lg'}>
 
-        <Tabs defaultIndex={0} index={index} onChange={(index) => setTabIndex(index)} isFitted variant='enclosed'>
+        <Tabs bg="white" defaultIndex={0} index={index} onChange={(index) => setTabIndex(index)} isFitted variant="enclosed">
           <TabList mb='1em'>
             <Tab>Login</Tab>
             <Tab>Signup</Tab>
