@@ -5,11 +5,12 @@ const API_URL = 'http://localhost:3000'
 
 export type AuthContextInterface = {
   user: { access_token: string | undefined; refresh_token: string | undefined }
+  signup: ({ firstname, lastname, email, password, phonenumber, passwordConfirm }: signupProps) => void
   login: ({ email, password }: loginProps) => void
   logout: () => void
-  emailError: string | null
-  passwordError: string | null
   isLoading: boolean
+  authAlertActive: boolean
+  authAlert: 'success' | 'error' | 'warning' | 'info'
 }
 
 type userObj = {
@@ -18,10 +19,12 @@ type userObj = {
 }
 export const authContextDefaultValues: AuthContextInterface = {
   user: { access_token: undefined, refresh_token: undefined },
+  authAlert: 'info',
+  authAlertActive: false,
+  signup: () => Promise.resolve(),
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
-  emailError: null,
-  passwordError: null,
+
   isLoading: false,
 }
 const AuthContext = createContext<AuthContextInterface>(authContextDefaultValues)
@@ -30,31 +33,74 @@ type loginProps = {
   email: string
   password: string
 }
+type signupProps = {
+  email: string
+  password: string
+  firstname: string
+  lastname: string
+  phonenumber: string
+  passwordConfirm: string
+}
 type Props = {
   children: ReactNode
 }
 
-type AuthProvider = {
-  login: (params: any) => Promise<any>
-  logout: (params: any) => Promise<void | false | string>
-  checkAuth: (params: any) => Promise<void>
-  checkError: (error: any) => Promise<void>
-  getIdentity?: () => Promise<any>
-  getPermissions: (params: any) => Promise<any>
-  [key: string]: any
-}
 export function AuthProvider({ children }: Props) {
   useEffect(() => {
     getUser()
   }, [])
 
+  console.log('in authprovider')
+
   const [user, setUser] = useState<userObj>({ access_token: '', refresh_token: '' })
-  const [emailError, setEmailError] = useState(null)
-  const [passwordError, setPasswordError] = useState(null)
+
   const [isLoading, setIsLoading] = useState(false)
+  const [authAlert, setAuthAlert] = useState<'success' | 'error' | 'warning' | 'info'>('info')
+  const [authAlertActive, setauthAlertActive] = useState(false)
+
+  const signup = async ({ firstname, lastname, email, password, phonenumber, passwordConfirm }: signupProps) => {
+    const res = await fetch(`${API_URL}/api/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        firstname: firstname,
+        lastname: lastname,
+        phonenumber: phonenumber,
+        passwordConfirm: passwordConfirm,
+      }),
+    })
+
+    const data = await res.json()
+    console.log('SIGNUP AUTH DATA', data)
+
+    if (res.ok) {
+      console.log('SIGNUP AUTH OK', data)
+
+      setUser({ access_token: data.access_token, refresh_token: data.refresh_token })
+      setauthAlertActive(true)
+      setAuthAlert('success')
+      console.log('SIGNUP USER after set', user)
+      return { STATUS: 'OK' }
+
+      //  router.push('/user')
+    } else {
+      console.log('SIGNUP AUTH NOT OK', data)
+      setauthAlertActive(true)
+      setAuthAlert('error')
+      console.log(data)
+    }
+    // Making a post request to hit our backend api-endpoint
+  }
 
   // LOGIN
   const login = async ({ email, password }: loginProps) => {
+    console.log('in login')
+
+    console.log(email, password)
     const res = await fetch(`${API_URL}/api/login`, {
       method: 'POST',
       headers: {
@@ -77,7 +123,6 @@ export function AuthProvider({ children }: Props) {
 
       //  router.push('/user')
     } else {
-      setEmailError(data.message)
       console.log(data)
     }
     // Making a post request to hit our backend api-endpoint
@@ -138,10 +183,12 @@ export function AuthProvider({ children }: Props) {
     user,
     login,
     logout,
-    emailError,
-    passwordError,
+    signup,
+
     isLoading,
     getUser,
+    authAlert,
+    authAlertActive,
   }
   return (
     <>
