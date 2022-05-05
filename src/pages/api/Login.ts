@@ -5,9 +5,11 @@ const API_URL = process.env.BACKEND_URL
 
 export default async function login(req:NextApiRequest, res:NextApiResponse) {
   
-  console.log("BACKENDURL", API_URL);
+  
+  console.log("in login api");
   
   if(req.method === 'POST') {
+    console.log("in login api post");
     const { email, password } = req.body
     const apiRes = await fetch(`${API_URL}/auth/local/signin`, {
       method: 'POST',
