@@ -15,6 +15,7 @@ const AlertBox = ({ status }: any) => {
   if (status === 'error') {
     text = 'nedtur'
   }
+
   return (
     <Alert status={status}>
       <AlertIcon />

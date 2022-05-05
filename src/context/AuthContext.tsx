@@ -1,4 +1,3 @@
-import router from 'next/router'
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
 const API_URL = 'http://localhost:3000'
@@ -84,7 +83,6 @@ export function AuthProvider({ children }: Props) {
       setauthAlertActive(true)
       setAuthAlert('success')
       console.log('SIGNUP USER after set', user)
-      return { STATUS: 'OK' }
 
       //  router.push('/user')
     } else {
