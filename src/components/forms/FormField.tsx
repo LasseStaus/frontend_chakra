@@ -1,6 +1,7 @@
 import {
     Controller,
     ControllerProps,
+    FieldError,
     FieldPath,
     FieldValues,
     useFormContext,
@@ -9,7 +10,7 @@ import {
 import { ControllerFieldState, ControllerRenderProps, } from "react-hook-form/dist/types/controller"
 import React from "react";
 import { InputField } from "./Input";
-import { Box, FormErrorMessage, Text } from "@chakra-ui/react";
+import { Box, FormControl, FormErrorMessage, Text } from "@chakra-ui/react";
 
 type FormFieldBase = {
     as?: React.ElementType;
@@ -86,6 +87,7 @@ export type FormFieldProps<
         name: string;
         disabled?: boolean;
         type?: string;
+        errors: FieldError | undefined;
         render?: ({
             field,
             fieldState,
@@ -102,6 +104,7 @@ const FormField: React.FC<FormFieldProps> = ({
     render,
     labeltitle,
     id,
+    errors,
     type,
     disabled,
     ...otherProps
@@ -119,18 +122,20 @@ const FormField: React.FC<FormFieldProps> = ({
                         <FieldError fieldState={data.fieldState} />
                     </>
                 ) : Component ? ( // If Component is defined then use RenderFormField and show Error
-                    <>
-                        <RenderFormField
-                            id={id}
-                            as={Component}
-                            field={data.field}
-                            labeltitle={labeltitle}
-                            fieldState={data.fieldState}
-                            type={type}
-                            disabled={disabled}
-                        />
-                        <FieldError fieldState={data.fieldState} />
-                    </>
+                    <Box mb='5'>
+                        <FormControl isInvalid={errors ? true : false}>
+                            <RenderFormField
+                                id={id}
+                                as={Component}
+                                field={data.field}
+                                labeltitle={labeltitle}
+                                fieldState={data.fieldState}
+                                type={type}
+                                disabled={disabled}
+                            />
+                            <FieldError fieldState={data.fieldState} />
+                        </FormControl>
+                    </Box>
                 ) : (
                     <></>
                 )
