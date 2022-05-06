@@ -19,7 +19,7 @@ function AuthenticatedPage() {
     <>
       {authAlertActive && <AlertBox status={authAlert} />}
       <Container maxW={'container.sm'}>
-        <Box boxShadow={'xl'}>
+        <Box bg='white' boxShadow={'xl'}>
           <Tabs defaultIndex={0} index={index} onChange={(index) => setTabIndex(index)} isFitted variant='enclosed' border={'sm'}>
             <TabList p={0} boxShadow={'sm'}>
               <Tab>Login</Tab>

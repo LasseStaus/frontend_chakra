@@ -137,7 +137,7 @@ const SignupForm: FC<any> = (props) => {
               }}
               errors={errors.passwordConfirm}
             />
-            <Button disabled={!isDirty || !isValid} mt={4} colorScheme='teal' type='submit' isLoading={props.isSubmitting} onClick={handleSubmit(onSubmit)}>
+            <Button variant="primary" disabled={!isDirty || !isValid} mt={4} type='submit' isLoading={props.isSubmitting} onClick={handleSubmit(onSubmit)}>
               Submit
             </Button>
           </form>

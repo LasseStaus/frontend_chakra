@@ -9,7 +9,7 @@ const Header: FC = () => {
   const { isOpen: isAlertOpen, onOpen: onAlertOpen, onClose: onAlertClose } = useDisclosure()
 
   return (
-    <Flex bg="Highlight" minWidth='max-content' pr="5" alignItems='center' gap='2'>
+    <Flex bg="white" minWidth='max-content' pr="5" alignItems='center' gap='2'>
       <Box p='2'>
         <Logo />
       </Box>
