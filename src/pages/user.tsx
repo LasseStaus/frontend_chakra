@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 
 function User() {
-  const { user, login, emailError, passwordError, isLoading } = useAuth()
+  const { user, login, isLoading } = useAuth()
   useEffect(() => {
     if (!user) router.push('/')
   }, [])

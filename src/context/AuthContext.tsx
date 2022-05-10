@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import React, { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
 
 const API_URL = 'http://localhost:3000'
 
@@ -10,6 +10,8 @@ export type AuthContextInterface = {
   isLoading: boolean
   authAlertActive: boolean
   authAlert: 'success' | 'error' | 'warning' | 'info'
+  setIsLoading: Dispatch<SetStateAction<boolean>>
+  getUser: () => void
 }
 
 type userObj = {
@@ -23,8 +25,10 @@ export const authContextDefaultValues: AuthContextInterface = {
   signup: () => Promise.resolve(),
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
+  setIsLoading: () => Promise.resolve(),
+  getUser: () => Promise.resolve(),
 
-  isLoading: false,
+  isLoading: true,
 }
 const AuthContext = createContext<AuthContextInterface>(authContextDefaultValues)
 
@@ -45,17 +49,13 @@ type Props = {
 }
 
 export function AuthProvider({ children }: Props) {
-  useEffect(() => {
-    getUser()
-  }, [])
-
-  console.log('in authprovider')
-
   const [user, setUser] = useState<userObj>({ access_token: '', refresh_token: '' })
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [authAlert, setAuthAlert] = useState<'success' | 'error' | 'warning' | 'info'>('info')
   const [authAlertActive, setauthAlertActive] = useState(false)
+
+  console.log('in authprovider')
 
   const signup = async ({ firstname, lastname, email, password, phonenumber, passwordConfirm }: signupProps) => {
     const res = await fetch(`${API_URL}/api/signup`, {
@@ -116,8 +116,8 @@ export function AuthProvider({ children }: Props) {
     if (res.ok) {
       console.log('LOGIN USER', user)
 
-      setUser({ access_token: data.access_token, refresh_token: data.refresh_token })
       console.log('LOGIN USER after set', user)
+      setUser({ access_token: data.access_token, refresh_token: data.refresh_token })
 
       //  router.push('/user')
     } else {
@@ -131,8 +131,6 @@ export function AuthProvider({ children }: Props) {
   // Check if user is logged in
   // ================================================
   const getUser = async () => {
-    setIsLoading(true)
-
     console.log('Get User')
 
     const res = await fetch(`${API_URL}/api/user`, {
@@ -150,12 +148,13 @@ export function AuthProvider({ children }: Props) {
       console.log('GetUser RT', data.refresh_token)
 
       setUser({ access_token: data.access_token, refresh_token: data.refresh_token })
-
+      setIsLoading(false)
       console.log('getuser After set', user)
 
       //   router.push('/')
     } else {
       console.log('User is NOT logged in')
+      setIsLoading(false)
       //    setUser({ access_token: '', refresh_token: '' })
     }
   }
@@ -182,7 +181,7 @@ export function AuthProvider({ children }: Props) {
     login,
     logout,
     signup,
-
+    setIsLoading,
     isLoading,
     getUser,
     authAlert,
