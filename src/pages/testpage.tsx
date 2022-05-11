@@ -11,7 +11,9 @@ function TestPage() {
   console.log('from state', user?.access_token)
   return (
     <>
-      {user?.access_token && isLoading !== true ? <LandingPage /> : <AuthenticatedPage />}
+      <Layout pageTitle='Home'>
+        {user?.access_token && isLoading !== true ? <LandingPage /> : <AuthenticatedPage />}
+      </Layout>
       {/*      <Layout pageTitle='Home'>
         {isLoading ? (
           <Box>Loading...</Box>
