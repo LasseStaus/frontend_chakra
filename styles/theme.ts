@@ -1,6 +1,7 @@
 import { extendTheme } from '@chakra-ui/react'
-import { ButtonStyles as Button } from '../styles/components/ButtonStyles'
 
+import { ButtonStyles as Button } from '../styles/components/ButtonStyles'
+import { StepsStyleConfig as Steps } from 'chakra-ui-steps';
 export const themeVaerkstedetCPH = extendTheme({
   colors: {
     primary: '#DD9933',
@@ -29,6 +30,9 @@ export const themeVaerkstedetCPH = extendTheme({
 
   // --- components
   components: {
+  
+      Steps,
+
     Button,
     Heading: {
       baseStyle: {
@@ -86,6 +90,7 @@ export const themeVaerkstedetCPH = extendTheme({
           paddingBottom: { sm: 5, xl: 6, xxl: 10 },
         },
       },
+      
     },
   },
 })
