@@ -19,7 +19,7 @@ type FormValues = {
 const SignupForm: FC<any> = (props) => {
   const { user, login, signup, isLoading } = useAuth()
 
-  const methods = useForm<FormValues>({ mode: 'onChange' })
+  const methods = useForm<FormValues>({ mode: 'onBlur' })
   const {
     handleSubmit,
     watch,
@@ -115,6 +115,10 @@ const SignupForm: FC<any> = (props) => {
               defaultValue=''
               rules={{
                 required: 'Required',
+                pattern: {
+                  value: /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
+                  message: 'Password must be at least 8 characters long, have at least one uppercase letter and one numeric character',
+                },
                 minLength: {
                   value: 8,
                   message: 'Password must be between 8 and 50 characters',

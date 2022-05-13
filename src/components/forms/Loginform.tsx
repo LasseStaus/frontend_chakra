@@ -14,7 +14,7 @@ type FormValues = {
 const Loginform: FC<any> = (props) => {
   const { user, login, isLoading } = useAuth()
 
-  const methods = useForm<FormValues>({ mode: 'onChange' })
+  const methods = useForm<FormValues>({ mode: 'onBlur' })
   const {
     handleSubmit,
     formState: { errors, isValid, isDirty },

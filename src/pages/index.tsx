@@ -1,40 +1,18 @@
-import type { NextPage } from 'next'
-import { FC, useEffect } from 'react'
-import { useAuth } from '../context/AuthContext'
+import { Skeleton } from '@chakra-ui/react'
 import AuthenticatedPage from '../components/authenticationPage/AuthenticationPage'
 import LandingPage from '../components/landing-page/LandingPage'
-
 import Layout from '../components/layouts/layout/Layout'
-import { Box, Skeleton } from '@chakra-ui/react'
-import TestPage from './testpage'
+import { useAuth } from '../context/AuthContext'
 
-const HomePage: FC<NextPage> = () => {
-  const { user, isLoading, getUser } = useAuth()
-
-  useEffect(() => {
-    getUser()
-  }, [])
-
+const Dashboard = () => {
+  const { user, isLoading } = useAuth()
   return (
     <>
-      <Skeleton isLoaded={!isLoading}>{!isLoading && <TestPage />}</Skeleton>
-      {/*      <Layout pageTitle='Home'>
-        {isLoading ? (
-          <Box>Loading...</Box>
-        ) : (
-          <>
-            
-            <Box>not loading...</Box>
-            <Box>not loading...</Box>
-            <Box>not loading...</Box>
-            <Box>not loading...</Box>
-            <Box>not loading...</Box>
-            <Box>not loading...</Box>
-          </>
-        )}
-      </Layout> */}
+      <Skeleton startColor='white' endColor='white' isLoaded={!isLoading}>
+        <Layout pageTitle='Home'>{user ? <LandingPage /> : <AuthenticatedPage />}</Layout>
+      </Skeleton>
     </>
   )
 }
 
-export default HomePage
+export default Dashboard
