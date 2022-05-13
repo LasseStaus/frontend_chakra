@@ -6,52 +6,13 @@ import InputField from "../forms/Input";
 import { EditProfileDetails } from "./EditProfileDetails";
 import { EditProfilePassword } from "./EditProfilePassword";
 
-type FormValues = {
-    firstname: string
-    lastname: string
-    email: string
-    phonenumber: string
-}
-
 type Props = {
     isOpen: boolean
     onClose: () => void
     data: any
 }
 
-// export async function getInitialProps() {
-
-//     const response = await fetch(`http://localhost:3000/api/getUser`)
-
-//     const data = await response.json()
-
-//     return {
-//         props: { data }, // Will be passed to the page component as props
-//     }
-// }
-
-export const EditProfile: FC<any> = ({ isOpen, onClose, data }: Props) => {
-
-    const methods = useForm<FormValues>({ mode: 'onChange' })
-
-
-    const {
-        handleSubmit,
-        formState: { errors, isValid, isDirty },
-    } = methods
-
-    const onSubmit: SubmitHandler<FormValues> = async (data) => {
-
-
-        const body = {
-            email: data.email,
-            firstname: data.firstname,
-            lastname: data.lastname,
-            phonenumber: data.phonenumber,
-        }
-
-        // const test = signup(body)
-    }
+export const EditProfileDrawer: FC<any> = ({ isOpen, onClose }: Props) => {
 
     return (
         <>
@@ -79,10 +40,7 @@ export const EditProfile: FC<any> = ({ isOpen, onClose, data }: Props) => {
                             </TabPanel>
                         </TabPanels>
                     </Tabs>
-
                 </DrawerContent>
-
-
             </Drawer>
         </>
     )

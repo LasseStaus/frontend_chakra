@@ -20,6 +20,7 @@ export type AuthContextInterface = {
   isLoading: boolean
   authAlertActive: boolean
   authAlert: 'success' | 'error' | 'warning' | 'info'
+  authAlertText: string
   setauthAlertActive: Dispatch<SetStateAction<boolean>>
   setIsLoading: Dispatch<SetStateAction<boolean>>
   refreshTokens: () => void
@@ -30,6 +31,7 @@ export const authContextDefaultValues: AuthContextInterface = {
   user: undefined,
   authAlert: 'info',
   authAlertActive: false,
+  authAlertText: '',
   signup: () => Promise.resolve(),
   editUser: () => Promise.resolve(),
   editUserPassword: () => Promise.resolve(),
@@ -77,6 +79,7 @@ export function AuthProvider({ children }: Props) {
 
   const [isLoading, setIsLoading] = useState(true)
   const [authAlert, setAuthAlert] = useState<'success' | 'error' | 'warning' | 'info'>('info')
+  const [authAlertText, setAuthAlertText] = useState<string>('')
   const [authAlertActive, setauthAlertActive] = useState(false)
 
   useEffect(() => {
@@ -203,7 +206,9 @@ export function AuthProvider({ children }: Props) {
 
       return data
     } else {
-      //TODO What here
+      setAuthAlert('error')
+      setAuthAlertText(data?.message)
+      setauthAlertActive(true)
     }
   }
 
@@ -227,13 +232,16 @@ export function AuthProvider({ children }: Props) {
 
     if (res.ok && data) {
       const userData = await getUserData()
+
       setUser({ firstname: userData.firstname, lastname: userData.lastname, email: userData.email, phonenumber: userData.phonenumber })
-      setauthAlertActive(true)
+
       setAuthAlert('success')
+      setAuthAlertText('User information updated successfully')
     } else {
-      setauthAlertActive(true)
       setAuthAlert('error')
+      setAuthAlertText(data?.message)
     }
+    setauthAlertActive(true)
   }
 
 
@@ -255,13 +263,13 @@ export function AuthProvider({ children }: Props) {
     const data = await res.json()
 
     if (res.ok && data) {
-      setauthAlertActive(true)
       setAuthAlert('success')
+      setAuthAlertText('Password updated successfully')
     } else {
-      console.log("backend fejlbesked password", data);
-      setauthAlertActive(true)
       setAuthAlert('error')
+      setAuthAlertText(data?.message)
     }
+    setauthAlertActive(true)
   }
 
   const value = {
@@ -273,6 +281,7 @@ export function AuthProvider({ children }: Props) {
     isLoading,
     refreshTokens,
     authAlert,
+    authAlertText,
     authAlertActive,
     setauthAlertActive,
     getUserData,

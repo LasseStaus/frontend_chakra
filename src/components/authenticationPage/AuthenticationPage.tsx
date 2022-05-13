@@ -8,7 +8,7 @@ import Loginform from '../forms/Loginform'
 import SignupForm from '../forms/Signupform'
 
 function AuthenticatedPage() {
-  const { user, login, isLoading, authAlert, authAlertActive } = useAuth()
+  const { user, login, isLoading, authAlertActive } = useAuth()
   // useEffect(() => { }, [])
 
   const [index, setTabIndex] = useState(0)
@@ -17,7 +17,7 @@ function AuthenticatedPage() {
 
   return (
     <>
-      {authAlertActive && <AlertBox status={authAlert} />}
+      {authAlertActive && <AlertBox />}
       <Container maxW={'container.sm'}>
         <Box bg='white' boxShadow={'xl'}>
           <Tabs defaultIndex={0} index={index} onChange={(index) => setTabIndex(index)} isFitted variant='enclosed' border={'sm'}>

@@ -18,12 +18,9 @@ type Props = {
 }
 
 export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
+
     const { user, editUser } = useAuth()
     const methods = useForm<FormValues>({ mode: 'onBlur', defaultValues: { firstname: user?.firstname, lastname: user?.lastname, email: user?.email, phonenumber: user?.phonenumber } })
-    const firstname = 'Johanne'
-    const lastname = 'Justesen'
-    // TO DO FETCH EXISTING DATA
-    // TO DO UPDATE USERINFO
 
     const {
         handleSubmit,
@@ -39,15 +36,10 @@ export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
         }
         editUser(body)
         onClose()
-        // const test = signup(body)
     }
 
     return (
         <>
-            {/* <DrawerHeader borderBottomWidth='1px'>
-                Change your personal details
-            </DrawerHeader> */}
-
             <DrawerBody py='10'>
                 <FormProvider {...methods}>
                     <form onSubmit={(e) => e.preventDefault()}>
@@ -56,7 +48,6 @@ export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
                                 as={InputField}
                                 name='firstname'
                                 labeltitle='First Name'
-                                defaultValue={firstname}
                                 rules={{
                                     required: 'Required',
                                     minLength: {
@@ -70,7 +61,6 @@ export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
                                 as={InputField}
                                 name='lastname'
                                 labeltitle='Last Name'
-                                defaultValue=''
                                 rules={{
                                     required: 'Required',
                                     minLength: {
@@ -84,7 +74,6 @@ export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
                                 as={InputField}
                                 name='email'
                                 labeltitle='Email'
-                                defaultValue=''
                                 rules={{
                                     required: 'Required',
                                     pattern: {
@@ -98,7 +87,6 @@ export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
                                 as={InputField}
                                 name='phonenumber'
                                 labeltitle='Phonenumber'
-                                defaultValue=''
                                 rules={{
                                     required: 'Required',
                                     pattern: {
@@ -117,7 +105,7 @@ export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
                 <Button variant='outline' mr={3} onClick={onClose}>
                     Cancel
                 </Button>
-                <Button type='submit' colorScheme='blue' onClick={handleSubmit(onSubmit)}>
+                <Button disabled={!isDirty || !isValid} type='submit' colorScheme='blue' onClick={handleSubmit(onSubmit)}>
                     Submit
                 </Button>
             </DrawerFooter>

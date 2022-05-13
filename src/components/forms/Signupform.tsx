@@ -99,6 +99,7 @@ const SignupForm: FC<any> = (props) => {
               name='phonenumber'
               labeltitle='Phonenumber'
               defaultValue=''
+              type="password"
               rules={{
                 required: 'Required',
                 pattern: {
@@ -113,6 +114,7 @@ const SignupForm: FC<any> = (props) => {
               name='password'
               labeltitle='Password'
               defaultValue=''
+              type="password"
               rules={{
                 required: 'Required',
                 pattern: {

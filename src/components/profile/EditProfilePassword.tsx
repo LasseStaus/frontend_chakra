@@ -45,10 +45,6 @@ export const EditProfilePassword: FC<any> = ({ onClose }: Props) => {
 
     return (
         <>
-            {/* <DrawerHeader borderBottomWidth='1px'>
-                Change password
-            </DrawerHeader> */}
-
             <DrawerBody py="10">
                 <FormProvider {...methods}>
                     <form onSubmit={(e) => e.preventDefault()}>
@@ -58,6 +54,7 @@ export const EditProfilePassword: FC<any> = ({ onClose }: Props) => {
                                 name='passwordCurrent'
                                 labeltitle='Current Password'
                                 defaultValue=''
+                                type="password"
                                 rules={{
                                     required: 'Required',
                                 }}
@@ -68,6 +65,7 @@ export const EditProfilePassword: FC<any> = ({ onClose }: Props) => {
                                 name='passwordNew'
                                 labeltitle='New Password'
                                 defaultValue=''
+                                type="password"
                                 rules={{
                                     required: 'Required',
                                     pattern: {
@@ -90,6 +88,7 @@ export const EditProfilePassword: FC<any> = ({ onClose }: Props) => {
                                 name='passwordNewConfirm'
                                 labeltitle='Confirm Password'
                                 defaultValue=''
+                                type="password"
                                 rules={{
                                     required: 'Required',
                                     validate: (value) => value === password.current || 'The passwords do not match',
@@ -105,7 +104,7 @@ export const EditProfilePassword: FC<any> = ({ onClose }: Props) => {
                 <Button variant='outline' mr={3} onClick={onClose}>
                     Cancel
                 </Button>
-                <Button type='submit' colorScheme='blue' onClick={handleSubmit(onSubmit)}>Submit</Button>
+                <Button disabled={!isDirty || !isValid} type='submit' colorScheme='blue' onClick={handleSubmit(onSubmit)}>Submit</Button>
             </DrawerFooter>
         </>
     )

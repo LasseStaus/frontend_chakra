@@ -54,6 +54,7 @@ const Loginform: FC<any> = (props) => {
               name='password'
               labeltitle='Password'
               defaultValue=''
+              type="password"
               rules={{
                 required: 'Required',
                 minLength: {

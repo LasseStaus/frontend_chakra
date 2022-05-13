@@ -1,27 +1,17 @@
-import { Box, Button, ButtonGroup, Container, Flex, Grid, GridItem, Heading, Spacer, Text, useDisclosure, Wrap } from '@chakra-ui/react'
+import { Box, Button, Container, Flex, Grid, GridItem, Heading, Text, useDisclosure, Wrap } from '@chakra-ui/react'
 import Image from 'next/image'
-import { useContext, useReducer } from 'react'
 import { useAuth } from '../../context/AuthContext'
-import AlertBox from '../alert/Alert'
-
-// import UserContext, { UserProvider } from "../../context/dashboard/dashboard_context";
-// import { initialState, userReducer } from "../../context/dashboard/dashboard_reducer";
-
-import { EditProfile } from './EditProfile'
-
-const AvatarProfilePicture = () => {
-  ; <Box bg='darkgray' borderRadius='100' p='6' mr='5'>
-    <Image src='/lillelogo.png' alt='me' width='50' height='40' />
-  </Box>
-}
+import { EditProfileDrawer } from './EditProfileDrawer'
 
 export function ProfileBanner() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { user } = useAuth()
 
+  //TO DO - add user booking data
+
   return (
     <>
-      <EditProfile isOpen={isOpen} onClose={onClose} />
+      <EditProfileDrawer isOpen={isOpen} onClose={onClose} />
 
       <Container bg='lightgrey' maxW='xxl' centerContent>
         <Grid maxW='70%' templateRows='repeat(3, 1fr)' templateColumns='repeat(5, 1fr)' columnGap={{ base: 4, md: 20 }} rowGap={{ base: 8, md: 2 }} justifyContent='center'>

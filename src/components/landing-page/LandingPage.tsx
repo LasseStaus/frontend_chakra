@@ -11,7 +11,7 @@ function LandingPage() {
 
   return (
     <>
-      {authAlertActive && <AlertBox status={authAlert} />}
+      {authAlertActive && <AlertBox />}
       <ProfileBanner />
       <Flex pb={10} flexDir='column'></Flex>
       <Footer />
