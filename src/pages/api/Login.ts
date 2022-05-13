@@ -6,11 +6,8 @@ const API_URL = 'http://localhost:3333';
 
 export default async function login(req: NextApiRequest, res: NextApiResponse) {
 
-
-  console.log("in login api");
-
   if (req.method === 'POST') {
-    console.log("in login api post");
+
     const { email, password } = req.body
     const apiRes = await fetch(`${API_URL}/auth/local/signin`, {
       method: 'POST',
@@ -25,7 +22,6 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
 
     const data = await apiRes.json()
 
-    console.log("logints", data)
     if (apiRes.ok) {
 
       res.setHeader("Set-Cookie",

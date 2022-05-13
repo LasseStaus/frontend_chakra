@@ -5,6 +5,7 @@ const API_URL = 'http://localhost:3333'
 export default async function logout(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === 'POST') {
+          //TODO Hvad mener du her johanne
     // TO DO MÅSKE LAVES OM
     // DESTROY COOKIE
 
@@ -17,8 +18,7 @@ export default async function logout(req: NextApiRequest, res: NextApiResponse) 
     const token = cookie.parse(req.headers.cookie)
 
     const at = token.AT
-    console.log("AT", at);
-    console.log("Logout API");
+
 
 
     const response = await fetch(`${API_URL}/auth/logout`, {
@@ -29,8 +29,6 @@ export default async function logout(req: NextApiRequest, res: NextApiResponse) 
     })
 
     if (response.ok) {
-      console.log("should be ok", response.ok);
-
       res.setHeader("Set-Cookie",
         [
           cookie.serialize("AT", '', {
@@ -56,8 +54,6 @@ export default async function logout(req: NextApiRequest, res: NextApiResponse) 
       res.status(200).json({ message: "logout Success" })
     }
     else {
-      console.log('User forbidden');
-
       res.status(403).json({ message: 'User forbidden' })
     }
 

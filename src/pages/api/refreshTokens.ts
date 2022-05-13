@@ -15,7 +15,6 @@ export default async function refreshTokens(req: NextApiRequest, res: NextApiRes
         const token = cookie.parse(req.headers.cookie)
 
         const rt = token.RT
-        console.log("RT ", token);
 
         const response = await fetch(`${API_URL}/auth/refresh`, {
             method: 'POST',
@@ -25,10 +24,6 @@ export default async function refreshTokens(req: NextApiRequest, res: NextApiRes
         })
 
         const data = await response.json()
-
-
-
-        console.log("den her er fra refresh", data)
         if (response.ok) {
             res.setHeader("Set-Cookie",
                 [
@@ -52,7 +47,7 @@ export default async function refreshTokens(req: NextApiRequest, res: NextApiRes
             res.status(200).json(data)
 
         } else {
-            console.log('User forbidden');
+   
 
             res.status(403).json({ message: 'User forbidden' })
         }
