@@ -3,12 +3,15 @@ import { NextApiResponse } from 'next'
 import { AppProps } from 'next/app'
 import { themeVaerkstedetCPH } from '../../styles/theme'
 import { AuthProvider } from '../context/AuthContext'
+import { BookingProvider } from '../context/bookingContext'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider resetCSS theme={themeVaerkstedetCPH}>
       <AuthProvider>
-        <Component {...pageProps} />
+        <BookingProvider>
+          <Component {...pageProps} />
+        </BookingProvider>
       </AuthProvider>
     </ChakraProvider>
   )
