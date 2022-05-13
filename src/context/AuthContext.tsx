@@ -13,6 +13,7 @@ export type AuthContextInterface = {
   authAlert: 'success' | 'error' | 'warning' | 'info'
   setIsLoading: Dispatch<SetStateAction<boolean>>
   refreshTokens: () => void
+  editUserData: ({ firstname, lastname, email }: editUserProps) => void
 }
 
 type userObj = {
@@ -28,6 +29,7 @@ export const authContextDefaultValues: AuthContextInterface = {
   logout: () => Promise.resolve(),
   setIsLoading: () => Promise.resolve(),
   refreshTokens: () => Promise.resolve(),
+  editUserData: () => Promise.resolve(),
 
   isLoading: true,
 }
@@ -44,6 +46,11 @@ type signupProps = {
   lastname: string
   phonenumber: string
   passwordConfirm: string
+}
+type editUserProps = {
+  email: string
+  firstname: string
+  lastname: string
 }
 type Props = {
   children: ReactNode
@@ -179,6 +186,34 @@ export function AuthProvider({ children }: Props) {
     }
   }
 
+  const editUserData = async ({ firstname, lastname, email }: editUserProps) => {
+    console.log("Auth C info", firstname, lastname, email);
+
+
+    const res = await fetch(`${API_URL}/api/editUserData`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        firstname: firstname,
+        lastname: lastname,
+      }),
+    })
+
+    const data = await res.json()
+    console.log(data);
+
+
+    if (res.ok) {
+      console.log('DET GIK GDOT', res, data)
+
+    } else {
+      console.error('DET GIK DÅRLIGT', res)
+    }
+  }
+
   const value = {
     user,
     login,
@@ -189,6 +224,7 @@ export function AuthProvider({ children }: Props) {
     refreshTokens,
     authAlert,
     authAlertActive,
+    editUserData
   }
   return (
     <>

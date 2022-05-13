@@ -6,7 +6,6 @@ import LandingPage from '../components/landing-page/LandingPage'
 
 import Layout from '../components/layouts/layout/Layout'
 import { Box, Skeleton } from '@chakra-ui/react'
-import TestPage from './testpage'
 
 const HomePage: FC<NextPage> = () => {
   const { user, isLoading, refreshTokens } = useAuth()
@@ -17,7 +16,7 @@ const HomePage: FC<NextPage> = () => {
 
   return (
     <>
-      <Skeleton isLoaded={!isLoading}>{!isLoading && <TestPage />}</Skeleton>
+      <Skeleton isLoaded={!isLoading}></Skeleton>
       {/*      <Layout pageTitle='Home'>
         {isLoading ? (
           <Box>Loading...</Box>

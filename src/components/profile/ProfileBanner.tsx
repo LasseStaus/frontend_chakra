@@ -1,30 +1,34 @@
 import { Box, Button, ButtonGroup, Container, Flex, Grid, GridItem, Heading, Spacer, Text, useDisclosure, Wrap } from "@chakra-ui/react";
+import { GetServerSideProps } from "next";
 import Image from 'next/image'
-import { useContext, useReducer } from "react";
+import { useContext, useEffect, useReducer } from "react";
 import DashboardContext from "../../context/dashboard/dashboard_context";
 // import UserContext, { UserProvider } from "../../context/dashboard/dashboard_context";
 // import { initialState, userReducer } from "../../context/dashboard/dashboard_reducer";
 import { UserDetails } from "../../pages";
 import { EditProfile } from "./EditProfile";
 
-const AvatarProfilePicture = () => {
-    <Box bg="darkgray" borderRadius="100" p="6" mr="5">
-        <Image src="/lillelogo.png" alt="me" width="50" height="40" />
-    </Box>
 
-}
-
-export function ProfileBanner({ data }: UserDetails) {
+export function ProfileBanner() {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
-    // const { firstname, lastname, phonenumber, email } = data
-    const { loggedInUser } = useContext(DashboardContext);
-    // const [state, dispatch] = useReducer(userReducer, initialState.loggedInUser);
+    // // const { firstname, lastname, phonenumber, email } = data
+    //  const { loggedInUser } = useContext(DashboardContext);
+    // // const [state, dispatch] = useReducer(userReducer, initialState.loggedInUser);
 
-    console.log("REDUCER dataen loggedin", loggedInUser);
+    // console.log("REDUCER dataen loggedin", loggedInUser);
 
-    if (loggedInUser) { console.log("USER DATA NAMES", loggedInUser.firstname, loggedInUser.lastname) }
-    //const { firstname, lastname, email } = loggedInUser
+    // if (!loggedInUser) { null } else {
+
+    const userData = useContext(DashboardContext);
+    useEffect(() => {
+        console.log(userData);
+    }, []);
+    const { firstname, lastname } = userData
+
+
+    // console.log(data);
+
 
 
     return (
@@ -47,7 +51,7 @@ export function ProfileBanner({ data }: UserDetails) {
 
                     <GridItem colSpan={{ base: 4, md: 4 }} alignSelf="center">
                         <Flex justifyContent="start" direction={{ base: 'column', md: 'row' }} alignItems='center' gap={{ base: "2", md: "8" }}>
-                            <Heading fontSize={{ base: "sm", md: "xl", lg: "3xl" }}>TEST</Heading>
+                            <Heading fontSize={{ base: "sm", md: "xl", lg: "3xl" }}>{firstname} {lastname}</Heading>
                             <Button w="40" variant="secondary" size="sm" onClick={onOpen}>Rediger Profil</Button>
                         </Flex>
                     </GridItem>

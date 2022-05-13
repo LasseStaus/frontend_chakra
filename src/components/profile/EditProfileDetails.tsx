@@ -1,14 +1,18 @@
 import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Heading, Stack, useDisclosure } from "@chakra-ui/react";
-import React, { FC } from "react";
+import React, { FC, useContext, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import DashboardContext from "../../context/dashboard/dashboard_context";
 import { FormField } from "../forms/FormField";
 import InputField from "../forms/Input";
+import cookie from 'cookie'
+import { useAuth } from "../../context/AuthContext";
+
 
 type FormValues = {
     firstname: string
     lastname: string
     email: string
-    phonenumber: string
+    phonenumber: number | null
 }
 
 type Props = {
@@ -16,12 +20,24 @@ type Props = {
     onClose: () => void
 }
 
-export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
+export const EditProfileDetails = ({ onClose }: Props) => {
 
-    const methods = useForm<FormValues>({ mode: 'onBlur' })
+    const userData = useContext(DashboardContext);
+    const [data, setData] = useState(userData)
+    const { editUserData } = useAuth()
 
-    const firstname = "Johanne"
-    const lastname = "Justesen"
+
+
+    const methods = useForm<FormValues>({
+        mode: 'onBlur', defaultValues: {
+            firstname: data.firstname,
+            lastname: data.lastname,
+            email: data.email,
+            phonenumber: data.phonenumber
+        },
+    })
+
+
     // TO DO FETCH EXISTING DATA
     // TO DO UPDATE USERINFO
 
@@ -32,7 +48,6 @@ export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
 
-
         const body = {
             email: data.email,
             firstname: data.firstname,
@@ -40,7 +55,8 @@ export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
             phonenumber: data.phonenumber,
         }
 
-        // const test = signup(body)
+        editUserData(body)
+
     }
 
     return (
@@ -58,7 +74,6 @@ export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
                                 as={InputField}
                                 name='firstname'
                                 labeltitle='First Name'
-                                defaultValue={firstname}
                                 rules={{
                                     required: 'Required',
                                     minLength: {
@@ -72,7 +87,6 @@ export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
                                 as={InputField}
                                 name='lastname'
                                 labeltitle='Last Name'
-                                defaultValue=''
                                 rules={{
                                     required: 'Required',
                                     minLength: {
@@ -86,7 +100,6 @@ export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
                                 as={InputField}
                                 name='email'
                                 labeltitle='Email'
-                                defaultValue=''
                                 rules={{
                                     required: 'Required',
                                     pattern: {
@@ -100,7 +113,6 @@ export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
                                 as={InputField}
                                 name='phonenumber'
                                 labeltitle='Phonenumber'
-                                defaultValue=''
                                 rules={{
                                     required: 'Required',
                                     pattern: {
@@ -119,7 +131,7 @@ export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
                 <Button variant='outline' mr={3} onClick={onClose}>
                     Cancel
                 </Button>
-                <Button type='submit' colorScheme='blue'>Submit</Button>
+                <Button type='submit' colorScheme='blue' onClick={handleSubmit(onSubmit)}>Submit</Button>
             </DrawerFooter>
         </>
     )

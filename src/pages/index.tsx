@@ -1,11 +1,11 @@
-import { GetServerSideProps } from "next"
 import cookie from 'cookie'
 import LandingPage from "../components/landing-page/LandingPage"
 import Layout from '../components/layouts/layout/Layout'
 import { useContext, useEffect, useReducer } from "react"
 import DashboardContext, { DashboardProvider } from "../context/dashboard/dashboard_context"
 import { DashbaordReducer, initialState } from "../context/dashboard/dashboard_reducer"
-import { ActionType } from "../context/dashboard/dashboard_state"
+import { ActionType, StateProps } from "../context/dashboard/dashboard_state"
+import { GetServerSideProps } from 'next'
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
@@ -16,8 +16,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       Authorization: `Bearer ${at} `
     }
   })
+
   const data = await res.json()
-  console.log("hrelloooo", data);
 
 
   if (!res.ok || !data) {
@@ -43,22 +43,15 @@ export type UserDetails = {
   }
 }
 
-const Dashboard = ({ data }: UserDetails) => {
-  // const [state, dispatch] = useReducer(userReducer, initialState);
-  // const [state, dispatch] = useReducer(
-  //   userReducer,
-  //   { loggedInUser: data }
-  // );
-
-  // // console.log("SE NU", state);
+export const Dashboard = ({ data }: UserDetails) => {
 
   return (
     <>
-      <DashboardProvider>
+      <DashboardContext.Provider value={data}>
         <Layout pageTitle='Home'>
-          <LandingPage data={data} />
+          <LandingPage />
         </Layout>
-      </DashboardProvider>
+      </DashboardContext.Provider>
     </>
   )
 }

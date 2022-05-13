@@ -3,6 +3,7 @@ import { NextApiResponse } from 'next'
 import { AppProps } from 'next/app'
 import { themeVaerkstedetCPH } from '../../styles/theme'
 import { AuthProvider } from '../context/AuthContext'
+import { DashboardProvider } from '../context/dashboard/dashboard_context'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

@@ -19,17 +19,6 @@ type Props = {
     data: any
 }
 
-// export async function getInitialProps() {
-
-//     const response = await fetch(`http://localhost:3000/api/getUser`)
-
-//     const data = await response.json()
-
-//     return {
-//         props: { data }, // Will be passed to the page component as props
-//     }
-// }
-
 export const EditProfile: FC<any> = ({ isOpen, onClose, data }: Props) => {
 
     const methods = useForm<FormValues>({ mode: 'onChange' })
