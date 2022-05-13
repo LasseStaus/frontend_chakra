@@ -52,17 +52,6 @@ const Dashboard = ({ data }: UserDetails) => {
 
   // // console.log("SE NU", state);
 
-  const { getUserData } = useContext(DashboardContext);
-  // const [state, dispatch] = useReducer(DashbaordReducer, initialState);
-
-  getUserData(data)
-  useEffect(() => {
-    console.log("SE DATA", data);
-
-    getUserData(data)
-  }, [])
-
-
   return (
     <>
       <DashboardProvider>

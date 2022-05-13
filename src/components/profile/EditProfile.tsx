@@ -33,7 +33,6 @@ type Props = {
 export const EditProfile: FC<any> = ({ isOpen, onClose, data }: Props) => {
 
     const methods = useForm<FormValues>({ mode: 'onChange' })
-    console.log("SÅ ER DETR NU", data);
 
 
     const {

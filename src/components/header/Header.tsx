@@ -5,7 +5,6 @@ import Logo from './Logo'
 
 const Header: FC = () => {
   const { user, logout } = useAuth()
-  console.log("USER USER", user);
 
 
   const { isOpen: isAlertOpen, onOpen: onAlertOpen, onClose: onAlertClose } = useDisclosure()

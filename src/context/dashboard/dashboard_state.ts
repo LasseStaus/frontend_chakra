@@ -1,5 +1,4 @@
 
-
 // An interface for our state
 export interface StateProps {
     loggedInUser: loggedInUserProps | undefined

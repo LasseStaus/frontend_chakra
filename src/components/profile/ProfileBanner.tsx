@@ -1,6 +1,7 @@
 import { Box, Button, ButtonGroup, Container, Flex, Grid, GridItem, Heading, Spacer, Text, useDisclosure, Wrap } from "@chakra-ui/react";
 import Image from 'next/image'
 import { useContext, useReducer } from "react";
+import DashboardContext from "../../context/dashboard/dashboard_context";
 // import UserContext, { UserProvider } from "../../context/dashboard/dashboard_context";
 // import { initialState, userReducer } from "../../context/dashboard/dashboard_reducer";
 import { UserDetails } from "../../pages";
@@ -17,10 +18,13 @@ export function ProfileBanner({ data }: UserDetails) {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     // const { firstname, lastname, phonenumber, email } = data
-    // const { loggedInUser } = useContext(UserContext);
+    const { loggedInUser } = useContext(DashboardContext);
     // const [state, dispatch] = useReducer(userReducer, initialState.loggedInUser);
 
-    // console.log("REDUCER DATA", state);
+    console.log("REDUCER dataen loggedin", loggedInUser);
+
+    if (loggedInUser) { console.log("USER DATA NAMES", loggedInUser.firstname, loggedInUser.lastname) }
+    //const { firstname, lastname, email } = loggedInUser
 
 
     return (

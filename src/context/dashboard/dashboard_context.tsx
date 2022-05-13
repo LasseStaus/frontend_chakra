@@ -35,6 +35,7 @@ export const DashboardProvider = ({ children }: Props) => {
     console.log("VI ER INDE I PROVIDER");
 
     const value = {
+        loggedInUser: state.loggedInUser,
         getUserData: (userData: any) => {
             console.log("VI ER INDE I PROVIDER 2", userData);
             dispatch({ type: ActionType.GET_USER_DATA, payload: userData });
