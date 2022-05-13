@@ -21,6 +21,7 @@
     "next": "12.1.5",
     "react": "18.1.0",
     "react-calendar": "^3.7.0",
+    "react-date-object": "^2.1.5",
     "react-dom": "18.1.0",
     "react-hook-form": "^7.30.0",
     "react-icons": "^4.3.1",

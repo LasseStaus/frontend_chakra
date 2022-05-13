@@ -5,6 +5,7 @@ import CalendarModal from './calendarModal'
 
 function Calendar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
   return (
     <Container boxShadow={'lg'} maxW={'container.lg'}>
       <Flex flexDir={'column'} p={4}>

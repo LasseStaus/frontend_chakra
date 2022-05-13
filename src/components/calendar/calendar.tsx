@@ -5,43 +5,114 @@ import DatePanel from 'react-multi-date-picker/plugins/date_panel'
 import { useEffect, useState, useRef } from 'react'
 import gregorian from 'react-date-object/calendars/gregorian'
 import gregorian_fa from 'react-date-object/locales/gregorian_en'
-import { Box } from '@chakra-ui/react'
+import { Box, Button } from '@chakra-ui/react'
+import { useBooking } from '../../context/bookingContext'
+
 export default function CalendarTest() {
   const date = new Date()
-  const format = 'dd/MM/YYYY'
-  const calenderRef = useRef<any>()
-  //const test = new DateObject()
+  const format = 'YYYY-MM-DD'
+  const { booking, createBooking } = useBooking()
+  const [dates, setDates] = useState<DateObject | DateObject[] | null>()
 
-  const [dates, setDates] = useState<Value>()
+  const [selectedDates, setSelectedDates] = useState<any>([])
 
   //unix time in milliseconds (August 21 2020)
 
+  function sendIt() {
+    createBooking(selectedDates)
+  }
   useEffect(() => {
-    console.log(typeof dates)
+    console.log('NEW SELECTED DATES', selectedDates)
+  }, [selectedDates])
 
-    const test = new DateObject().format('YYYY-MM-DD:hh')
+  function handleDates() {
+    console.log(dates)
 
-    console.log(test, 'test')
+    console.log('WE WANT THIS', dates?.toLocaleString)
+
+    if (dates) {
+      const asRealFormat = dates?.toLocaleString()
+      //console.log(asRealFormat)
+
+      const stringify = JSON.stringify(dates)
+
+      console.log('Stringify', stringify)
+
+      const parse = JSON.parse(stringify)
+
+      console.log(parse, typeof parse)
+      for (const item in parse) {
+        console.log(`${item}: ${parse[item]}`, 'single date')
+        const dateUnix = `${parse[item]}`
+        const realDate = new Date(parseInt(dateUnix))
+        const test = realDate.toISOString()
+        console.log(test, 'realdate')
+        console.log('LOOKING IN THIS', selectedDates, typeof selectedDates)
+
+        /* const exists = selectedDates.find((element: string) => element}) */
+        /*         if (selectedDates) {
+          console.log('IT CONTAINS IT')
+          const { test, ...rest } = selectedDates
+          setSelectedDates(rest)
+          console.log(selectedDates)
+        } else {
+        } */
+        setSelectedDates([...selectedDates, test])
+        console.log(selectedDates)
+      }
+    }
+    /*     const date = new Date(parse) */
+  }
+  useEffect(() => {
+    console.log('useffect', dates)
+
+    handleDates()
+
+    //   console.log(typeof dates)
+
+    /*   const asRealFormat = dates?.toLocaleString() */
+    //console.log(asRealFormat)
+
+    /*     const stringify = JSON.stringify(dates)
+
+    const parse = JSON.parse(stringify) */
+    // console.log(parse)
+    /* 
+    const date = new Date(parse) */
+
+    //console.log('Date: ' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds())
+
+    //console.log(test, 'test')
 
     //console.log(dates?.toString())
+    /*   for (date in dates) {
+    }
+
+    dates?.forEach((e) => {
+      console.log(e)
+    }) */
     if (dates) {
-      console.log(dates, typeof dates)
+      //   console.log(dates, typeof dates)
 
       const realFormat = dates.toLocaleString()
       const numbers = JSON.stringify(dates)
 
-      const test = console.log('realforat', realFormat, typeof realFormat)
-      console.log('numbers', numbers, typeof numbers)
+      // const test = console.log('realforat', realFormat, typeof realFormat)
+      // console.log('numbers', numbers, typeof numbers)
     }
+
+    /*     handleDates(dates) */
   }, [dates])
+
+  const test = new DateObject()
   return (
     <>
       <Box>
-        <Calendar value={dates} onChange={setDates} format={format} sort multiple />
+        <Calendar value={dates} onChange={setDates} format={format} sort multiple plugins={[<DatePanel key={null} />]} />
       </Box>
       <Box>
-        {dates?.toString()}
-        {/*  {dates?.map((date: any, index: any) => (
+        {/* {dates?.toString()}
+        {dates?.map((date: any, index: any) => (
           <li key={index}>{date.format()}</li>
         ))} */}
       </Box>
