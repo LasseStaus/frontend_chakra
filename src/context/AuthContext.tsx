@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
 
 const API_URL = 'http://localhost:3000'
@@ -11,7 +12,7 @@ export type AuthContextInterface = {
   authAlertActive: boolean
   authAlert: 'success' | 'error' | 'warning' | 'info'
   setIsLoading: Dispatch<SetStateAction<boolean>>
-  getUser: () => void
+  refreshTokens: () => void
 }
 
 type userObj = {
@@ -26,7 +27,7 @@ export const authContextDefaultValues: AuthContextInterface = {
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
   setIsLoading: () => Promise.resolve(),
-  getUser: () => Promise.resolve(),
+  refreshTokens: () => Promise.resolve(),
 
   isLoading: true,
 }
@@ -55,7 +56,10 @@ export function AuthProvider({ children }: Props) {
   const [authAlert, setAuthAlert] = useState<'success' | 'error' | 'warning' | 'info'>('info')
   const [authAlertActive, setauthAlertActive] = useState(false)
 
-  console.log('in authprovider')
+  useEffect(() => {
+    refreshTokens()
+  }, [])
+  const router = useRouter()
 
   const signup = async ({ firstname, lastname, email, password, phonenumber, passwordConfirm }: signupProps) => {
     const res = await fetch(`${API_URL}/api/signup`, {
@@ -114,46 +118,41 @@ export function AuthProvider({ children }: Props) {
     console.log('hallo', data)
 
     if (res.ok) {
-      console.log('LOGIN USER', user)
-
-      console.log('LOGIN USER after set', user)
+      console.log('you good', data)
       setUser({ access_token: data.access_token, refresh_token: data.refresh_token })
 
-      //  router.push('/user')
+      router.push('/')
     } else {
       console.log(data)
     }
     // Making a post request to hit our backend api-endpoint
   }
 
-  //getUser
 
-  // Check if user is logged in
+  // Refresh tokens
   // ================================================
-  const getUser = async () => {
-    console.log('Get User')
+  const refreshTokens = async () => {
 
-    const res = await fetch(`${API_URL}/api/user`, {
+    const res = await fetch(`${API_URL}/api/refreshTokens`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
     })
+
     const data = await res.json()
 
     if (res.ok && data) {
-      console.log('getUser', user)
 
-      console.log('GetUser AT', data.access_token)
-      console.log('GetUser RT', data.refresh_token)
+      console.log('refreshToken AT', data.access_token)
+      console.log('refreshToken RT', data.refresh_token)
 
       setUser({ access_token: data.access_token, refresh_token: data.refresh_token })
       setIsLoading(false)
-      console.log('getuser After set', user)
 
-      //   router.push('/')
     } else {
-      console.log('User is NOT logged in')
+      console.log('refreshTokens can not be refreshed: User not authenticated')
+      router.push('/login')
       setIsLoading(false)
       //    setUser({ access_token: '', refresh_token: '' })
     }
@@ -167,10 +166,14 @@ export function AuthProvider({ children }: Props) {
       },
     })
 
+    console.log("Logout contenxt");
+
+
     if (res.ok) {
       console.log('UD MED DIG')
 
       setUser({ access_token: undefined, refresh_token: undefined })
+      router.push('/login')
     } else {
       console.error('error logging out user')
     }
@@ -183,7 +186,7 @@ export function AuthProvider({ children }: Props) {
     signup,
     setIsLoading,
     isLoading,
-    getUser,
+    refreshTokens,
     authAlert,
     authAlertActive,
   }

@@ -19,7 +19,7 @@ type FormValues = {
 const SignupForm: FC<any> = (props) => {
   const { user, login, signup, isLoading } = useAuth()
 
-  const methods = useForm<FormValues>({ mode: 'onChange' })
+  const methods = useForm<FormValues>({ mode: 'onBlur' })
   const {
     handleSubmit,
     watch,
