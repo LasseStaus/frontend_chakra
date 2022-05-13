@@ -1,7 +1,25 @@
 import { Alert, AlertIcon, Stack } from '@chakra-ui/react'
+import { useEffect } from 'react'
+import { useAuth } from '../../context/AuthContext'
 
 const AlertBox = ({ status }: any) => {
-  let text = 'lol'
+  let text
+
+  const { authAlertActive, setauthAlertActive } = useAuth()
+
+  useEffect(() => {
+
+    if (authAlertActive) {
+      const timeId = setTimeout(() => {
+        setauthAlertActive(false)
+      }, 3000)
+
+      return () => {
+        clearTimeout(timeId)
+      }
+    }
+  }, [])
+
 
   if (status === 'success') {
     text = 'Success! Your account has been created'

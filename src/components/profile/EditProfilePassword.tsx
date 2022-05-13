@@ -5,11 +5,13 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FormField } from "../forms/FormField";
 import InputField from "../forms/Input";
 import cookie from 'cookie'
+import { useAuth } from "../../context/AuthContext";
 
 
 type FormValues = {
-    password: string
-    passwordConfirm: string
+    passwordCurrent: string
+    passwordNew: string
+    passwordNewConfirm: string
 }
 
 type Props = {
@@ -20,7 +22,7 @@ type Props = {
 export const EditProfilePassword: FC<any> = ({ onClose }: Props) => {
 
     const methods = useForm<FormValues>({ mode: 'onBlur' })
-
+    const { editUserPassword } = useAuth()
 
     const {
         handleSubmit, watch,
@@ -28,18 +30,17 @@ export const EditProfilePassword: FC<any> = ({ onClose }: Props) => {
     } = methods
     const password = useRef({})
 
-    password.current = watch('password', '')
-
+    password.current = watch('passwordNew', '')
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
 
-
         const body = {
-            password: data.password,
-            passwordConfirm: data.passwordConfirm,
+            passwordCurrent: data.passwordCurrent,
+            passwordNew: data.passwordNew,
+            passwordNewConfirm: data.passwordNewConfirm,
         }
-
-        // const test = signup(body)
+        editUserPassword(body)
+        onClose()
     }
 
     return (
@@ -54,8 +55,18 @@ export const EditProfilePassword: FC<any> = ({ onClose }: Props) => {
                         <Stack spacing='24px'>
                             <FormField
                                 as={InputField}
-                                name='password'
-                                labeltitle='Password'
+                                name='passwordCurrent'
+                                labeltitle='Current Password'
+                                defaultValue=''
+                                rules={{
+                                    required: 'Required',
+                                }}
+                                errors={errors.passwordCurrent}
+                            />
+                            <FormField
+                                as={InputField}
+                                name='passwordNew'
+                                labeltitle='New Password'
                                 defaultValue=''
                                 rules={{
                                     required: 'Required',
@@ -72,18 +83,18 @@ export const EditProfilePassword: FC<any> = ({ onClose }: Props) => {
                                         message: 'Password must be between 8 and 50 characters',
                                     },
                                 }}
-                                errors={errors.password}
+                                errors={errors.passwordNew}
                             />
                             <FormField
                                 as={InputField}
-                                name='passwordConfirm'
+                                name='passwordNewConfirm'
                                 labeltitle='Confirm Password'
                                 defaultValue=''
                                 rules={{
                                     required: 'Required',
                                     validate: (value) => value === password.current || 'The passwords do not match',
                                 }}
-                                errors={errors.passwordConfirm}
+                                errors={errors.passwordNewConfirm}
                             />
                         </Stack>
                     </form>
@@ -94,7 +105,7 @@ export const EditProfilePassword: FC<any> = ({ onClose }: Props) => {
                 <Button variant='outline' mr={3} onClick={onClose}>
                     Cancel
                 </Button>
-                <Button type='submit' colorScheme='blue'>Submit</Button>
+                <Button type='submit' colorScheme='blue' onClick={handleSubmit(onSubmit)}>Submit</Button>
             </DrawerFooter>
         </>
     )

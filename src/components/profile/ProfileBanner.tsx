@@ -2,6 +2,7 @@ import { Box, Button, ButtonGroup, Container, Flex, Grid, GridItem, Heading, Spa
 import Image from 'next/image'
 import { useContext, useReducer } from 'react'
 import { useAuth } from '../../context/AuthContext'
+import AlertBox from '../alert/Alert'
 
 // import UserContext, { UserProvider } from "../../context/dashboard/dashboard_context";
 // import { initialState, userReducer } from "../../context/dashboard/dashboard_reducer";
@@ -9,14 +10,13 @@ import { useAuth } from '../../context/AuthContext'
 import { EditProfile } from './EditProfile'
 
 const AvatarProfilePicture = () => {
-  ;<Box bg='darkgray' borderRadius='100' p='6' mr='5'>
+  ; <Box bg='darkgray' borderRadius='100' p='6' mr='5'>
     <Image src='/lillelogo.png' alt='me' width='50' height='40' />
   </Box>
 }
 
 export function ProfileBanner() {
   const { isOpen, onOpen, onClose } = useDisclosure()
-
   const { user } = useAuth()
 
   return (

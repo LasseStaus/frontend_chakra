@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 const API_URL = 'http://localhost:3333' // TO DO
 
-export default async function editUserData(req: NextApiRequest, res: NextApiResponse) {
+export default async function editUserPassword(req: NextApiRequest, res: NextApiResponse) {
 
 
   if (req.method === 'PATCH') {
@@ -13,7 +13,7 @@ export default async function editUserData(req: NextApiRequest, res: NextApiResp
     }
     const token = cookie.parse(req.headers.cookie)
 
-    const response = await fetch(`${API_URL}/user/edit/userInfo`, {
+    const response = await fetch(`${API_URL}/user/edit/password`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -27,15 +27,11 @@ export default async function editUserData(req: NextApiRequest, res: NextApiResp
 
     const data = await response.json()
 
-
     if (response.ok) {
-
       return res.status(200).json(data)
 
-
     } else {
-
-      return res.status(403).json({ message: 'User forbidden' })
+      res.status(data.statusCode).json({ message: data.message })
 
     }
   } else {
