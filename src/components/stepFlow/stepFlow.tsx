@@ -1,5 +1,6 @@
 import { Box, Button, Flex, flexbox, Text, Wrap } from '@chakra-ui/react'
 import { Step, Steps, useSteps } from 'chakra-ui-steps'
+import React, { useRef } from 'react'
 import { FC, useEffect, useState } from 'react'
 import { DateObject } from 'react-multi-date-picker'
 import { useBooking } from '../../context/bookingContext'
@@ -13,15 +14,6 @@ const content = (
   </Flex>
 )
 
-/* type Props = {
-  activeStep: number
-  nextStep: () => void
-  prevStep: () => void
-  setStep: (step: number) => void
-  reset: () => void
-  initialStep: number
-} */
-
 const steps = [
   { label: 'Vælg datoer', content },
   { label: 'Bekræft', content },
@@ -33,13 +25,26 @@ const StepFlow = () => {
     initialStep: 0,
   })
 
-  const { createBooking } = useBooking()
+  const [selectedDates, setSelectedDates] = useState<[] | string[]>([])
 
-  const [selectedDates, setSelectedDates] = useState<[]>([])
+  useEffect(() => {
+    console.log('in stepflow', selectedDates)
+
+    setTimeout(() => {
+      // setSelectedDates(selectedDates)
+      console.log('timeout', selectedDates)
+    }, 3000)
+  }, [selectedDates])
+
+  const { createBooking } = useBooking()
+  const childFunc = useRef()
 
   function handleNext() {
     console.log('handleNext', selectedDates)
     console.log('done in handle', selectedDates)
+
+    nextStep()
+
     //  createBooking(selectedDates)
   }
 
@@ -53,7 +58,7 @@ const StepFlow = () => {
         ))}
       </Steps>
 
-      <Wrap minHeight={80}>{activeStep === 0 ? <StepDates /> : activeStep === 1 ? <StepConfirm /> : <StepEnd />}</Wrap>
+      <Wrap minHeight={80}>{activeStep === 0 ? <StepDates selectedDates={selectedDates} setSelectedDates={setSelectedDates} /> : activeStep === 1 ? <StepConfirm /> : <StepEnd />}</Wrap>
       {activeStep === steps.length ? (
         <Flex p={4}>
           <Button mx='auto' size='sm' onClick={reset}>
