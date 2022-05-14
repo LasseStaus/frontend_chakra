@@ -1,27 +1,18 @@
-import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Heading, Stack, useDisclosure } from "@chakra-ui/react";
-import { GetServerSideProps, NextApiRequest, NextApiResponse } from "next";
-import React, { FC, useRef } from "react";
+import { Button, DrawerBody, DrawerFooter, Stack } from "@chakra-ui/react";
+import React, { useRef } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FormField } from "../forms/FormField";
 import InputField from "../forms/Input";
-import cookie from 'cookie'
 import { useAuth } from "../../context/AuthContext";
-
-
-type FormValues = {
-    passwordCurrent: string
-    passwordNew: string
-    passwordNewConfirm: string
-}
+import { EditUserPasswordProps } from "../../context/AuthTypes";
 
 type Props = {
-    isOpen: boolean
     onClose: () => void
 }
 
-export const EditProfilePassword: FC<any> = ({ onClose }: Props) => {
+export const EditProfilePassword = ({ onClose }: Props) => {
 
-    const methods = useForm<FormValues>({ mode: 'onBlur' })
+    const methods = useForm<EditUserPasswordProps>({ mode: 'onBlur' })
     const { editUserPassword } = useAuth()
 
     const {
@@ -32,7 +23,7 @@ export const EditProfilePassword: FC<any> = ({ onClose }: Props) => {
 
     password.current = watch('passwordNew', '')
 
-    const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const onSubmit: SubmitHandler<EditUserPasswordProps> = async (data) => {
 
         const body = {
             passwordCurrent: data.passwordCurrent,

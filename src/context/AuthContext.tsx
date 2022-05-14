@@ -1,27 +1,24 @@
-import { useRouter } from 'next/router'
 import React, { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
+import { EditUserPasswordProps, EditUserProps, LoginProps, SignupProps, UserObjProps } from './AuthTypes'
 
 const API_URL = 'http://localhost:3000'
 
-type userObj = {
-  firstname: string
-  lastname: string
-  email: string
-  phonenumber: number
+type Props = {
+  children: ReactNode
 }
 
 export type AuthContextInterface = {
-  user: undefined | userObj
-  signup: ({ firstname, lastname, email, password, phonenumber, passwordConfirm }: signupProps) => void
-  editUser: ({ firstname, lastname, email }: editUserProps) => void
-  editUserPassword: ({ passwordCurrent, passwordNew, passwordNewConfirm }: editUserPasswordProps) => void
-  login: ({ email, password }: loginProps) => void
+  user: undefined | UserObjProps
+  signup: ({ firstname, lastname, email, password, phonenumber, passwordConfirm }: SignupProps) => void
+  editUser: ({ firstname, lastname, email }: EditUserProps) => void
+  editUserPassword: ({ passwordCurrent, passwordNew, passwordNewConfirm }: EditUserPasswordProps) => void
+  login: ({ email, password }: LoginProps) => void
   logout: () => void
   isLoading: boolean
-  authAlertActive: boolean
+  alertActive: boolean
   authAlert: 'success' | 'error' | 'warning' | 'info'
-  authAlertText: string
-  setauthAlertActive: Dispatch<SetStateAction<boolean>>
+  alertText: string
+  setAlertActive: Dispatch<SetStateAction<boolean>>
   setIsLoading: Dispatch<SetStateAction<boolean>>
   refreshTokens: () => void
   getUserData: () => void
@@ -30,65 +27,38 @@ export type AuthContextInterface = {
 export const authContextDefaultValues: AuthContextInterface = {
   user: undefined,
   authAlert: 'info',
-  authAlertActive: false,
-  authAlertText: '',
+  alertActive: false,
+  alertText: '',
   signup: () => Promise.resolve(),
   editUser: () => Promise.resolve(),
   editUserPassword: () => Promise.resolve(),
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
-  setauthAlertActive: () => Promise.resolve(),
+  setAlertActive: () => Promise.resolve(),
   setIsLoading: () => Promise.resolve(),
   refreshTokens: () => Promise.resolve(),
   getUserData: () => Promise.resolve(),
-
   isLoading: true,
 }
+
 const AuthContext = createContext<AuthContextInterface>(authContextDefaultValues)
 
-type loginProps = {
-  email: string
-  password: string
-}
-type signupProps = {
-  email: string
-  password: string
-  firstname: string
-  lastname: string
-  phonenumber: string
-  passwordConfirm: string
-}
-type editUserProps = {
-  email?: string
-  firstname?: string
-  lastname?: string
-  phonenumber?: number
-}
-
-type editUserPasswordProps = {
-  passwordCurrent: string
-  passwordNew: string
-  passwordNewConfirm: string
-}
-type Props = {
-  children: ReactNode
-}
 
 export function AuthProvider({ children }: Props) {
-  const [user, setUser] = useState<userObj | undefined>(undefined)
-
+  const [user, setUser] = useState<UserObjProps | undefined>(undefined)
   const [isLoading, setIsLoading] = useState(true)
   const [authAlert, setAuthAlert] = useState<'success' | 'error' | 'warning' | 'info'>('info')
-  const [authAlertText, setAuthAlertText] = useState<string>('')
-  const [authAlertActive, setauthAlertActive] = useState(false)
+  const [alertText, setAlertText] = useState<string>('')
+  const [alertActive, setAlertActive] = useState(false)
 
   useEffect(() => {
     refreshTokens()
   }, [])
 
-  //Clear alerts after 3 seconds
 
-  const signup = async ({ firstname, lastname, email, password, phonenumber, passwordConfirm }: signupProps) => {
+  // signup
+  // ================================================
+  const signup = async ({ firstname, lastname, email, password, phonenumber, passwordConfirm }: SignupProps) => {
     const res = await fetch(`${API_URL}/api/signup`, {
       method: 'POST',
       headers: {
@@ -106,17 +76,20 @@ export function AuthProvider({ children }: Props) {
 
     const data = await res.json()
 
-    if (res.ok) {
-      setauthAlertActive(true)
+    if (res.ok && data) {
       setAuthAlert('success')
+      setAlertText('Congratulations, you signed up successfully')
     } else {
-      setauthAlertActive(true)
       setAuthAlert('error')
+      setAlertText(data?.message)
     }
+    setAlertActive(true)
   }
 
-  // LOGIN
-  const login = async ({ email, password }: loginProps) => {
+
+  // login
+  // ================================================
+  const login = async ({ email, password }: LoginProps) => {
     console.log('in login')
 
     console.log(email, password)
@@ -136,9 +109,10 @@ export function AuthProvider({ children }: Props) {
       const userData = await getUserData()
       setUser({ firstname: userData.firstname, lastname: userData.lastname, email: userData.email, phonenumber: userData.phonenumber })
     } else {
-      //TODO What here
+      setAuthAlert('error')
+      setAlertText(data?.message)
+      setAlertActive(true)
     }
-    // Making a post request to hit our backend api-endpoint
   }
 
   // Refresh tokens
@@ -158,13 +132,12 @@ export function AuthProvider({ children }: Props) {
       setUser({ firstname: userData.firstname, lastname: userData.lastname, email: userData.email, phonenumber: userData.phonenumber })
       setIsLoading(false)
     } else {
-      //TODO What here
       setIsLoading(false)
       setUser(undefined)
     }
   }
 
-  // Refresh tokens
+  // logout
   // ================================================
   const logout = async () => {
     const res = await fetch(`${API_URL}/api/logout`, {
@@ -174,15 +147,20 @@ export function AuthProvider({ children }: Props) {
       },
     })
 
+    const data = await res.json()
+
     if (res.ok) {
       setUser(undefined)
+
     } else {
+      setAuthAlert('error')
+      setAlertText(data?.message)
+      setAlertActive(true)
+
       //todo this is backup incase something messes up
       setUser(undefined)
     }
   }
-
-
 
   // ==============================
   // ==========USER DATA===========
@@ -203,18 +181,17 @@ export function AuthProvider({ children }: Props) {
 
     if (res.ok && data) {
       setUser({ firstname: data.firstname, lastname: data.lastname, email: data.email, phonenumber: data.phonenumber })
-
       return data
     } else {
       setAuthAlert('error')
-      setAuthAlertText(data?.message)
-      setauthAlertActive(true)
+      setAlertText(data?.message)
+      setAlertActive(true)
     }
   }
 
-  // editUser
+  // editUserData
   // ================================================
-  const editUser = async ({ firstname, lastname, email, phonenumber }: editUserProps) => {
+  const editUser = async ({ firstname, lastname, email, phonenumber }: EditUserProps) => {
     const res = await fetch(`${API_URL}/api/editUser`, {
       method: 'PATCH',
       headers: {
@@ -235,19 +212,19 @@ export function AuthProvider({ children }: Props) {
 
       setUser({ firstname: userData.firstname, lastname: userData.lastname, email: userData.email, phonenumber: userData.phonenumber })
 
-      setAuthAlert('success')
-      setAuthAlertText('User information updated successfully')
+      setAuthAlert('info')
+      setAlertText('User information updated successfully')
     } else {
       setAuthAlert('error')
-      setAuthAlertText(data?.message)
+      setAlertText(data?.message)
     }
-    setauthAlertActive(true)
+    setAlertActive(true)
   }
 
 
   // editUserPassword
   // ================================================
-  const editUserPassword = async ({ passwordCurrent, passwordNew, passwordNewConfirm }: editUserPasswordProps) => {
+  const editUserPassword = async ({ passwordCurrent, passwordNew, passwordNewConfirm }: EditUserPasswordProps) => {
     const res = await fetch(`${API_URL}/api/editUserPassword`, {
       method: 'PATCH',
       headers: {
@@ -263,13 +240,13 @@ export function AuthProvider({ children }: Props) {
     const data = await res.json()
 
     if (res.ok && data) {
-      setAuthAlert('success')
-      setAuthAlertText('Password updated successfully')
+      setAuthAlert('info')
+      setAlertText('Password updated successfully')
     } else {
       setAuthAlert('error')
-      setAuthAlertText(data?.message)
+      setAlertText(data?.message)
     }
-    setauthAlertActive(true)
+    setAlertActive(true)
   }
 
   const value = {
@@ -281,9 +258,9 @@ export function AuthProvider({ children }: Props) {
     isLoading,
     refreshTokens,
     authAlert,
-    authAlertText,
-    authAlertActive,
-    setauthAlertActive,
+    alertText,
+    alertActive,
+    setAlertActive,
     getUserData,
     editUser,
     editUserPassword,

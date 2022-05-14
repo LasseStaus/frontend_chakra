@@ -2,17 +2,17 @@ import { Alert, AlertIcon, Stack } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useAuth } from '../../context/AuthContext'
 
-const AlertBox = () => {
+export const AlertBox = () => {
 
-  const { authAlertActive, setauthAlertActive, authAlert, authAlertText } = useAuth()
+  const { alertActive, setAlertActive, authAlert, alertText } = useAuth()
   const status = authAlert
-  const text = authAlertText
+  const text = alertText
 
   useEffect(() => {
 
-    if (authAlertActive) {
+    if (alertActive) {
       const timeId = setTimeout(() => {
-        setauthAlertActive(false)
+        setAlertActive(false)
       }, 7000)
 
       return () => {
@@ -20,20 +20,6 @@ const AlertBox = () => {
       }
     }
   }, [])
-
-
-  // if (status === 'success') {
-  //   text = 'Success! Your account has been created'
-  // }
-  // if (status === 'error') {
-  //   text = 'Something went wrong, try again or FIND ANOTHER PLACE TO DO YOUR WOOD WORK'
-  // }
-  // if (status === 'error') {
-  //   text = 'nedtur'
-  // }
-  // if (status === 'error') {
-  //   text = 'nedtur'
-  // }
 
   return (
     <Alert status={status}>

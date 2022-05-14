@@ -2,32 +2,22 @@ import { Button, Container } from '@chakra-ui/react'
 import { FC } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useAuth } from '../../context/AuthContext'
+import { LoginProps } from '../../context/AuthTypes'
 import { FormField } from './FormField'
 import { InputField } from './Input'
 
-type FormValues = {
-  email: string
-  password: string
-}
+const Loginform = () => {
+  const { login } = useAuth()
 
-//TO DO backend error message?
-const Loginform: FC<any> = (props) => {
-  const { user, login, isLoading } = useAuth()
-
-  const methods = useForm<FormValues>({ mode: 'onBlur' })
+  const methods = useForm<LoginProps>({ mode: 'onChange' })
   const {
     handleSubmit,
     formState: { errors, isValid, isDirty },
   } = methods
 
-  //toddo e type
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    console.log('handleLoginSubmit')
-    console.log(`Signup with ${data.email} and ${data.password}`)
-
+  const onSubmit: SubmitHandler<LoginProps> = async (data) => {
     const body = { email: data.email, password: data.password }
-
-    login(body) // TO DO API KALD I CONTEXT DRILLER, MÅSKE FORDI COMPONENTS ER RYKKET UD FRA PAGES MAPPEN?
+    login(body)
   }
 
   return (
@@ -68,7 +58,7 @@ const Loginform: FC<any> = (props) => {
               }}
               errors={errors.password}
             />
-            <Button disabled={!isDirty || !isValid} mt={4} colorScheme='teal' type='submit' isLoading={props.isSubmitting} onClick={handleSubmit(onSubmit)}>
+            <Button disabled={!isDirty || !isValid} mt={4} colorScheme='teal' type='submit' onClick={handleSubmit(onSubmit)}>
               Submit
             </Button>
           </form>

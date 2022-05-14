@@ -9,7 +9,7 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
 
     const { email, password } = req.body
-    const apiRes = await fetch(`${API_URL}/auth/local/signin`, {
+    const response = await fetch(`${API_URL}/auth/local/signin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -20,9 +20,9 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
       })
     })
 
-    const data = await apiRes.json()
+    const data = await response.json()
 
-    if (apiRes.ok) {
+    if (response.ok) {
 
       res.setHeader("Set-Cookie",
         [
@@ -49,10 +49,7 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     } else {
       res.status(data.statusCode).json({ message: data.message })
     }
-
   } else {
-
-    //TODO What does this do??
     res.setHeader('Allow', ['POST'])
     res.status(405).json({ message: `Method ${req.method} not allowed` })
   }

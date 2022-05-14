@@ -3,7 +3,9 @@ import Image from 'next/image'
 import { useAuth } from '../../context/AuthContext'
 import { EditProfileDrawer } from './EditProfileDrawer'
 
-export function ProfileBanner() {
+
+export const ProfileBanner = () => {
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { user } = useAuth()
 

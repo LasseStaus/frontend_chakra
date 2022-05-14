@@ -11,6 +11,7 @@ export default async function editUserPassword(req: NextApiRequest, res: NextApi
       res.status(403).json({ message: 'Not Authorized' })
       return
     }
+
     const token = cookie.parse(req.headers.cookie)
 
     const response = await fetch(`${API_URL}/user/edit/password`, {
@@ -29,12 +30,11 @@ export default async function editUserPassword(req: NextApiRequest, res: NextApi
 
     if (response.ok) {
       return res.status(200).json(data)
-
     } else {
       res.status(data.statusCode).json({ message: data.message })
-
     }
   } else {
-    //TODO What here
+    res.setHeader('Allow', ['PATCH'])
+    res.status(405).json({ message: `Method ${req.method} not allowed` })
   }
 }

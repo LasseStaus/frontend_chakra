@@ -2,32 +2,25 @@ import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, Draw
 import React, { FC } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useAuth } from '../../context/AuthContext'
+import { EditUserProps } from '../../context/AuthTypes'
 import { FormField } from '../forms/FormField'
 import InputField from '../forms/Input'
 
-type FormValues = {
-    firstname: string
-    lastname: string
-    email: string
-    phonenumber: number
-}
-
-type Props = {
-    isOpen: boolean
+interface Props {
     onClose: () => void
 }
 
-export const EditProfileDetails: FC<any> = ({ isOpen, onClose }: Props) => {
+export const EditProfileDetails = ({ onClose }: Props) => {
 
     const { user, editUser } = useAuth()
-    const methods = useForm<FormValues>({ mode: 'onBlur', defaultValues: { firstname: user?.firstname, lastname: user?.lastname, email: user?.email, phonenumber: user?.phonenumber } })
+    const methods = useForm<EditUserProps>({ mode: 'onBlur', defaultValues: { firstname: user?.firstname, lastname: user?.lastname, email: user?.email, phonenumber: user?.phonenumber } })
 
     const {
         handleSubmit,
         formState: { errors, isValid, isDirty },
     } = methods
 
-    const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const onSubmit: SubmitHandler<EditUserProps> = async (data) => {
         const body = {
             email: data.email,
             firstname: data.firstname,

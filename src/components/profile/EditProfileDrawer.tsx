@@ -1,18 +1,14 @@
-import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Heading, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, useDisclosure } from "@chakra-ui/react";
+import { Drawer, DrawerCloseButton, DrawerContent, DrawerOverlay, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import React, { FC } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { FormField } from "../forms/FormField";
-import InputField from "../forms/Input";
 import { EditProfileDetails } from "./EditProfileDetails";
 import { EditProfilePassword } from "./EditProfilePassword";
 
 type Props = {
     isOpen: boolean
     onClose: () => void
-    data: any
 }
 
-export const EditProfileDrawer: FC<any> = ({ isOpen, onClose }: Props) => {
+export const EditProfileDrawer = ({ isOpen, onClose }: Props) => {
 
     return (
         <>
