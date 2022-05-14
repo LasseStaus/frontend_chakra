@@ -48,7 +48,6 @@ const RenderFormField: React.FC<RenderFormFieldProps> = ({
     id,
     field,
     labeltitle,
-    fieldState,
     type,
     disabled
 }) => {
@@ -62,7 +61,6 @@ const RenderFormField: React.FC<RenderFormFieldProps> = ({
                         labeltitle={labeltitle}
                         type={type}
                         disabled={disabled}
-                    // error={!!(fieldState?.error && fieldState?.invalid ? true : undefined)}
                     />
                 </Box >
             );
@@ -116,7 +114,7 @@ const FormField: React.FC<FormFieldProps> = ({
             {...otherProps}
             control={control}
             render={(data) =>
-                render ? ( // If render exist then render and show FieldError
+                render ? ( // If render is defined then render and show FieldError
                     <>
                         {render(data)}
                         <FieldError fieldState={data.fieldState} />

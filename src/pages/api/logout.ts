@@ -5,10 +5,9 @@ const API_URL = 'http://localhost:3333'
 export default async function logout(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === 'POST') {
-          //TODO Hvad mener du her johanne
+    //TODO Hvad mener du her johanne
     // TO DO MÅSKE LAVES OM
     // DESTROY COOKIE
-
 
     if (!req.headers.cookie) {
       res.status(403).json({ message: 'Not Authorized' })
@@ -17,18 +16,15 @@ export default async function logout(req: NextApiRequest, res: NextApiResponse) 
 
     const token = cookie.parse(req.headers.cookie)
 
-    const at = token.AT
-
-
-
     const response = await fetch(`${API_URL}/auth/logout`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${at}`
+        Authorization: `Bearer ${token.AT}`
       }
     })
 
     if (response.ok) {
+
       res.setHeader("Set-Cookie",
         [
           cookie.serialize("AT", '', {
@@ -45,16 +41,14 @@ export default async function logout(req: NextApiRequest, res: NextApiResponse) 
             sameSite: 'strict',
             path: '/'
           }),
-
         ],
-
       )
 
       res.setHeader("clearCookie", '')
-      res.status(200).json({ message: "logout Success" })
+      res.status(200).json({ message: "Logout Success" })
     }
     else {
-      res.status(403).json({ message: 'User forbidden' })
+      res.status(403).json({ message: 'Something went wrong' })
     }
 
   } else {

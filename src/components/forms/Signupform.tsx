@@ -4,22 +4,14 @@ import React from 'react'
 import { FC, useRef } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useAuth } from '../../context/AuthContext'
+import { SignupProps } from '../../context/AuthTypes'
 import { FormField } from './FormField'
 import { InputField } from './Input'
 
-type FormValues = {
-  firstname: string
-  lastname: string
-  email: string
-  phonenumber: string
-  password: string
-  passwordConfirm: string
-}
+const SignupForm = () => {
+  const { signup } = useAuth()
 
-const SignupForm: FC<any> = (props) => {
-  const { user, login, signup, isLoading } = useAuth()
-
-  const methods = useForm<FormValues>({ mode: 'onBlur' })
+  const methods = useForm<SignupProps>({ mode: 'onChange' })
   const {
     handleSubmit,
     watch,
@@ -29,11 +21,8 @@ const SignupForm: FC<any> = (props) => {
 
   password.current = watch('password', '')
 
-  //toddo e type
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    /*     props.setStatus('success')
-    props.setStatusText('Congratulations, your account has been successfully created')
-    props.setTabIndex(0) */
+  const onSubmit: SubmitHandler<SignupProps> = async (data) => {
+
     const body = {
       email: data.email,
       password: data.password,
@@ -113,6 +102,7 @@ const SignupForm: FC<any> = (props) => {
               name='password'
               labeltitle='Password'
               defaultValue=''
+              type="password"
               rules={{
                 required: 'Required',
                 pattern: {
@@ -135,13 +125,14 @@ const SignupForm: FC<any> = (props) => {
               name='passwordConfirm'
               labeltitle='Confirm Password'
               defaultValue=''
+              type="password"
               rules={{
                 required: 'Required',
                 validate: (value) => value === password.current || 'The passwords do not match',
               }}
               errors={errors.passwordConfirm}
             />
-            <Button variant="primary" disabled={!isDirty || !isValid} mt={4} type='submit' isLoading={props.isSubmitting} onClick={handleSubmit(onSubmit)}>
+            <Button variant="primary" disabled={!isDirty || !isValid} mt={4} type='submit' onClick={handleSubmit(onSubmit)}>
               Submit
             </Button>
           </form>

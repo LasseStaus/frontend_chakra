@@ -42,7 +42,7 @@ const SocialButton = ({
   );
 };
 
-export default function Footer() {
+export const Footer = () => {
   return (
 
     <Flex
@@ -72,3 +72,5 @@ export default function Footer() {
     </Flex>
   );
 }
+
+export default Footer
