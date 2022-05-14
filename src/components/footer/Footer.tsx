@@ -1,25 +1,8 @@
-import {
-  Box,
-  chakra,
-  Container,
-  Flex,
-  Stack,
-  Text,
-  useColorModeValue,
-  VisuallyHidden,
-} from '@chakra-ui/react';
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
-import { ReactNode } from 'react';
+import { Box, chakra, Container, Flex, Stack, Text, useColorModeValue, VisuallyHidden } from '@chakra-ui/react'
+import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
+import { ReactNode } from 'react'
 
-const SocialButton = ({
-  children,
-  label,
-  href,
-}: {
-  children: ReactNode;
-  label: string;
-  href: string;
-}) => {
+const SocialButton = ({ children, label, href }: { children: ReactNode; label: string; href: string }) => {
   return (
     <chakra.button
       bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
@@ -39,12 +22,11 @@ const SocialButton = ({
       <VisuallyHidden>{label}</VisuallyHidden>
       {children}
     </chakra.button>
-  );
-};
+  )
+}
 
 export const Footer = () => {
   return (
-
     <Flex
       bg={useColorModeValue('gray.50', 'gray.900')}
       position='absolute'
