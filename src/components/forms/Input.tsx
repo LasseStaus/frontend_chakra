@@ -1,7 +1,7 @@
 import { Button, Container, FormControl, FormLabel, Heading, Input } from '@chakra-ui/react'
 import React from 'react'
 
-type InputProps = {
+interface InputProps {
     labeltitle?: string | undefined,
     id: string | undefined,
     type?: string,

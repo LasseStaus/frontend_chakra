@@ -3,10 +3,10 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 const API_URL = 'http://localhost:3333' // TO DO
 
-export default async function getUserData(req: NextApiRequest, res: NextApiResponse) {
+export default async function editUserPassword(req: NextApiRequest, res: NextApiResponse) {
 
 
-  if (req.method === 'GET') {
+  if (req.method === 'PATCH') {
     if (!req.headers.cookie) {
       res.status(403).json({ message: 'Not Authorized' })
       return
@@ -14,11 +14,16 @@ export default async function getUserData(req: NextApiRequest, res: NextApiRespo
 
     const token = cookie.parse(req.headers.cookie)
 
-    const response = await fetch(`${API_URL}/user/profile`, {
-      method: 'GET',
+    const response = await fetch(`${API_URL}/user/edit/password`, {
+      method: 'PATCH',
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token.AT} `,
       },
+      body: JSON.stringify(
+        req.body
+      )
+
     })
 
     const data = await response.json()
@@ -29,7 +34,7 @@ export default async function getUserData(req: NextApiRequest, res: NextApiRespo
       res.status(data.statusCode).json({ message: data.message })
     }
   } else {
-    res.setHeader('Allow', ['GET'])
+    res.setHeader('Allow', ['PATCH'])
     res.status(405).json({ message: `Method ${req.method} not allowed` })
   }
 }

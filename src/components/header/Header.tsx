@@ -6,8 +6,6 @@ import Logo from './Logo'
 const Header: FC = () => {
   const { user, logout } = useAuth()
 
-  const { isOpen: isAlertOpen, onOpen: onAlertOpen, onClose: onAlertClose } = useDisclosure()
-
   return (
     <Flex bg='white' minWidth='max-content' pr='5' alignItems='center' gap='2'>
       <Box p='2'>
