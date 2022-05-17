@@ -43,6 +43,16 @@ export const ButtonStyles = {
                 color: 'primary',
 
             }
+        }),
+        linkButton: (props: any) => ({
+            bg: 'none',
+            color: 'brandBlack',
+            border: 'none',
+            _hover: {
+                borderColor: 'primary',
+                color: 'primary',
+
+            }
         })
     },
     // default values for `size` and `variant`
