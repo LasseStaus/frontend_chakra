@@ -3,15 +3,16 @@ import { Step, Steps, useSteps } from 'chakra-ui-steps'
 import React, { useRef } from 'react'
 import { FC, useEffect, useState } from 'react'
 import { DateObject } from 'react-multi-date-picker'
-import StepConfirm from './stepConfirm'
 import StepDates from './stepTypeTicket'
-import StepEnd from './stepEnd'
+import StepEnd from './stepPayment'
 import StepTypeTicket from './stepTypeTicket'
+import StepConfirmTicket from './stepConfirm'
+import StepPaymentTicket from './stepPayment'
 
 const steps = [
   { label: 'Choose ticket card' },
-  { label: 'Summary' },
   { label: 'Payment' },
+  { label: 'Confirmation' },
 ]
 
 const StepFlowTicket = () => {
@@ -49,7 +50,7 @@ const StepFlowTicket = () => {
         ))}
       </Steps>
 
-      <Wrap minHeight={80}>{activeStep === 0 ? <StepTypeTicket ticketType={ticketType} setTicketType={setTicketType} /> : activeStep === 1 ? <StepConfirm ticketType={ticketType} /> : <StepEnd />}</Wrap>
+      <Wrap minHeight={80}>{activeStep === 0 ? <StepTypeTicket ticketType={ticketType} setTicketType={setTicketType} /> : activeStep === 1 ? <StepPaymentTicket ticketType={ticketType} /> : <StepConfirmTicket ticketType={ticketType} />}</Wrap>
       {activeStep === steps.length ? (
         <Flex p={4}>
           <Button mx='auto' size='sm' onClick={reset}>
