@@ -16,7 +16,7 @@ interface mockDataProps {
 }
 
 const mockDataBookings: mockDataProps[] = [{
-  id: 297482719,
+  id: 297482718,
   bookedFor: new Date('Mon May 20 2022 12:21:15 GMT+0200'),
   createdAt: new Date("Mon May 3 2022 12:21:15 GMT+0200"),
   userId: "bc761fa6-011b-443f-88ab-32062cf09192",
@@ -38,7 +38,7 @@ const mockDataBookings: mockDataProps[] = [{
   }
 },
 {
-  id: 297482719,
+  id: 297482717,
   bookedFor: new Date("Mon June 21 2022 12:21:15 GMT+0200"),
   createdAt: new Date("Mon May 16 2022 12:21:15 GMT+0200"),
   userId: "bc761fa6-011b-443f-88ab-32062cf09192",
@@ -96,7 +96,7 @@ export const UpcommingBookings = () => {
             </Thead>
             <Tbody>
               {filteredBookings?.map((booking) =>
-                <Tr>
+                <Tr key={booking.id}>
                   <Td>Frederiksberg</Td>
                   <Td>{formatDate(booking.bookedFor)}</Td>
                   <Td>{formatDate(booking.createdAt)}</Td>
