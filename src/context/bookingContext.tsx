@@ -40,7 +40,9 @@ export function BookingProvider({ children }: any) {
     const data = await res.json()
 
     if (res.ok && data) {
-      setIsLoading(false)
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 4000)
       console.log('Context OK', data)
     } else {
       console.log('Context NOT OK', data)

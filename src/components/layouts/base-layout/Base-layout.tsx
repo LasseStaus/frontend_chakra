@@ -16,7 +16,7 @@ const BaseLayout: FC<BaseLayoutProps> = (p: BaseLayoutProps) => {
       <Head>
         <title>{p.pageTitle} | CPH Værksted</title>
       </Head>
-      <Box minH={'100vh'} bg='brandGrey' flexDir={'column'}>
+      <Box minH={'100vh'} bg="brandGrey" flexDir={'column'}>
         <Header />
         <main>{p.children}</main>
         <Footer />

@@ -8,7 +8,7 @@ import StepConfirm from './stepConfirm'
 import StepDates from './stepDates'
 import StepEnd from './stepEnd'
 
-const steps = [{ label: 'Vælg datoer' }, { label: 'Bekræft' }, { label: 'Fedt!' }]
+const steps = [{ label: 'Vælg datoer' }, { label: 'Bekræft' }, { label: 'Bestilt!' }]
 
 const StepFlow = () => {
   const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
@@ -83,7 +83,7 @@ const StepFlow = () => {
         </Flex>
       ) : (
         <Flex width="100%" justify="flex-end">
-          <Button isDisabled={activeStep === 0} mr={4} onClick={prevStep} size="sm" variant="ghost">
+          <Button isDisabled={activeStep === 0 || activeStep === 2} mr={4} onClick={prevStep} size="sm" variant="ghost">
             Tilbage
           </Button>
           <Button size="sm" onClick={handleNext}>
