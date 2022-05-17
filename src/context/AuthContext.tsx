@@ -22,6 +22,7 @@ export type AuthContextInterface = {
   setIsLoading: Dispatch<SetStateAction<boolean>>
   refreshTokens: () => void
   getUserData: () => void
+  purchaseTicket: (amountOfTickets: number | null) => void
 }
 
 export const authContextDefaultValues: AuthContextInterface = {
@@ -38,6 +39,7 @@ export const authContextDefaultValues: AuthContextInterface = {
   setIsLoading: () => Promise.resolve(),
   refreshTokens: () => Promise.resolve(),
   getUserData: () => Promise.resolve(),
+  purchaseTicket: () => Promise.resolve(),
   isLoading: true,
 }
 
@@ -249,6 +251,34 @@ export function AuthProvider({ children }: Props) {
     setAlertActive(true)
   }
 
+  // ==============================
+  // ============TICKET============
+  // ==============================
+
+  const purchaseTicket = async (amountOfTickets: number | null) => {
+    console.log("Auth", amountOfTickets);
+
+    const res = await fetch(`${API_URL}/api/purchaseTicket`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        amountOfTickets
+      ),
+    })
+
+    const data = await res.json()
+
+    if (res.ok && data) {
+      console.log("Ticket purchased successfully");
+    } else {
+      console.log("ERROR Ticket purchase");
+    }
+
+  }
+
+
   const value = {
     user,
     login,
@@ -264,6 +294,7 @@ export function AuthProvider({ children }: Props) {
     getUserData,
     editUser,
     editUserPassword,
+    purchaseTicket
   }
   return (
     <>

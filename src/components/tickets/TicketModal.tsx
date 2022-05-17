@@ -1,7 +1,5 @@
 import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Text } from '@chakra-ui/react'
-import { useSteps } from 'chakra-ui-steps'
 import { FC } from 'react'
-import StepFlow from '../stepFlow/stepFlow'
 import StepFlowTicket from './stepFlowTicket/stepFlow'
 
 type Props = {
