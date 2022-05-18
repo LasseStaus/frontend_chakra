@@ -1,6 +1,7 @@
 import { TimeIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, Flex, Heading, useDisclosure, Text, Center } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAuth } from '../../context/AuthContext'
 import TicketModal from './TicketModal'
 import CalendarModal from './TicketModal'
 
@@ -62,22 +63,27 @@ const mockDataPurchase = [{
   }
 }]
 
+export interface TicketsProps {
+  activeTickets: number,
+  usedTickets: number,
+}
+
+
 export const Ticket = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const userId = 'bc761fa6-011b-443f-88ab-32062cf09192'
+  const { ticketData, getTickets, getPurchases, purchaseData } = useAuth()
 
-  const filteredMockDataTickets = mockDataTickets.filter(
-    (tickets) => tickets.userId === userId
-  );
-  const filteredMockDataPurchase = mockDataPurchase.filter(
-    (purchase) => purchase.userId === userId
-  );
+  useEffect(() => {
+    getTickets()
+    getPurchases()
+  }, [])
 
-  console.log("SE HER", filteredMockDataTickets);
+  if (!ticketData && !purchaseData) return null
 
-  const { activeTickets, usedTickets } = filteredMockDataTickets[0]
-  const userPurchases = filteredMockDataPurchase.length
+  const purchaseDataLength = purchaseData?.length
+
+
 
   return (
     <Container boxShadow={'lg'} maxW={'container.lg'} bg='white'>
@@ -94,17 +100,17 @@ export const Ticket = () => {
         <Flex flexDir={{ base: 'column', md: "row" }} my={4} gap={8} height={80} align="center" >
           <Flex flexDir="column" w={{ base: '100%', md: "33%" }} alignItems="center" justify="center" alignSelf="stretch" bg="#F2F2F2">
             <TimeIcon width={30} height={30} />
-            <Text>{activeTickets}</Text>
+            <Text>{ticketData?.activeTickets}</Text>
             <Text>Active Tickets</Text>
           </Flex>
           <Flex flexDir="column" w={{ base: '100%', md: "33%" }} alignItems="center" justify="center" alignSelf="stretch" bg="#F2F2F2">
             <TimeIcon width={30} height={30} />
-            <Text>{usedTickets}</Text>
+            <Text>{ticketData?.usedTickets}</Text>
             <Text>Used Tickets</Text>
           </Flex>
           <Flex flexDir="column" w={{ base: '100%', md: "33%" }} alignItems="center" justify="center" alignSelf="stretch" bg="#F2F2F2">
             <TimeIcon width={30} height={30} />
-            <Text>{userPurchases}</Text>
+            <Text>{purchaseDataLength}</Text>
             <Text>Purchase of tickets</Text>
           </Flex>
         </Flex>

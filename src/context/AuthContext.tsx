@@ -1,4 +1,5 @@
 import React, { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
+import { TicketsProps } from '../components/tickets/TicketContainer'
 import { EditUserPasswordProps, EditUserProps, LoginProps, SignupProps, UserObjProps } from './AuthTypes'
 
 const API_URL = 'http://localhost:3000'
@@ -22,11 +23,16 @@ export type AuthContextInterface = {
   setIsLoading: Dispatch<SetStateAction<boolean>>
   refreshTokens: () => void
   getUserData: () => void
+  getTickets: () => void
+  getPurchases: () => void
   purchaseTicket: (amountOfTickets: number | null) => void
+  ticketData: TicketsProps | null
+  purchaseData: [] | undefined
 }
 
 export const authContextDefaultValues: AuthContextInterface = {
   user: undefined,
+  ticketData: null,
   authAlert: 'info',
   alertActive: false,
   alertText: '',
@@ -39,7 +45,10 @@ export const authContextDefaultValues: AuthContextInterface = {
   setIsLoading: () => Promise.resolve(),
   refreshTokens: () => Promise.resolve(),
   getUserData: () => Promise.resolve(),
+  getTickets: () => Promise.resolve(),
+  getPurchases: () => Promise.resolve(),
   purchaseTicket: () => Promise.resolve(),
+  purchaseData: undefined,
   isLoading: true,
 }
 
@@ -48,6 +57,9 @@ const AuthContext = createContext<AuthContextInterface>(authContextDefaultValues
 
 export function AuthProvider({ children }: Props) {
   const [user, setUser] = useState<UserObjProps | undefined>(undefined)
+  const [ticketData, setTicketData] = useState<TicketsProps | null>(null)
+  const [purchaseData, setPurchaseData] = useState<[] | undefined>(undefined)
+
   const [isLoading, setIsLoading] = useState(true)
   const [authAlert, setAuthAlert] = useState<'success' | 'error' | 'warning' | 'info'>('info')
   const [alertText, setAlertText] = useState<string>('')
@@ -255,6 +267,51 @@ export function AuthProvider({ children }: Props) {
   // ============TICKET============
   // ==============================
 
+  // getPurchases
+  // ================================================
+  const getPurchases = async () => {
+    const res = await fetch(`${API_URL}/api/getPurchases`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const data = await res.json()
+
+    if (res.ok && data) {
+      setPurchaseData(data)
+
+    } else {
+      setAuthAlert('error')
+      setAlertText(data?.message)
+      setAlertActive(true)
+    }
+  }
+  // getTickets
+  // ================================================
+  const getTickets = async () => {
+    const res = await fetch(`${API_URL}/api/getTickets`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const data = await res.json()
+
+    if (res.ok && data) {
+      setTicketData(data)
+
+    } else {
+      setAuthAlert('error')
+      setAlertText(data?.message)
+      setAlertActive(true)
+    }
+  }
+
+  // purchaseTicket
+  // ================================================
   const purchaseTicket = async (amountOfTickets: number | null) => {
     console.log("Auth", amountOfTickets);
 
@@ -271,9 +328,12 @@ export function AuthProvider({ children }: Props) {
     const data = await res.json()
 
     if (res.ok && data) {
-      console.log("Ticket purchased successfully");
+      getPurchases()
+      getTickets()
     } else {
-      console.log("ERROR Ticket purchase");
+      setAuthAlert('error')
+      setAlertText(data?.message)
+      setAlertActive(true)
     }
 
   }
@@ -294,7 +354,11 @@ export function AuthProvider({ children }: Props) {
     getUserData,
     editUser,
     editUserPassword,
-    purchaseTicket
+    purchaseTicket,
+    getTickets,
+    ticketData,
+    getPurchases,
+    purchaseData
   }
   return (
     <>
