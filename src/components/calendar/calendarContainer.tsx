@@ -9,14 +9,14 @@ function Calendar() {
   return (
     <Container boxShadow={'lg'} maxW={'container.lg'}>
       <Flex flexDir={'column'} p={4}>
-        <Flex gap={4} alignItems='center'>
+        <Flex gap={4} alignItems="center">
           <TimeIcon width={30} height={30} />
           <Heading fontSize={'4xl'}>CPH Værkstedet lige nu</Heading>
         </Flex>
         {/* calendar */}
 
-        <Box my={4} height={80} bg='orange.400'></Box>
-        <Flex ml={'auto'} gap={4} justifySelf='flex-end'>
+        <Box my={4} height={80} bg="orange.400"></Box>
+        <Flex ml={'auto'} gap={4} justifySelf="flex-end">
           {/*   <Button variant={'primary'} w='min-content'>
             Book with tickets
           </Button>

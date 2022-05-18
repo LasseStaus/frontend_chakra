@@ -8,7 +8,11 @@ import StepConfirm from './stepConfirm'
 import StepDates from './stepDates'
 import StepEnd from './stepEnd'
 
-const steps = [{ label: 'Vælg datoer' }, { label: 'Bekræft' }, { label: 'Bestilt!' }]
+const steps = [
+  { label: 'Vælg datoer', key: 0 },
+  { label: 'Bekræft', key: 1 },
+  { label: 'Bestilt!', key: 2 }
+]
 
 const StepFlow = () => {
   const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
