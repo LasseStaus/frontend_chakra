@@ -8,8 +8,8 @@ const Dashboard = () => {
   const { user, isLoading } = useAuth()
   return (
     <>
-      <Skeleton startColor='white' endColor='white' isLoaded={!isLoading}>
-        <Layout pageTitle='Home'>{user ? <LandingPage /> : <AuthenticatedPage />}</Layout>
+      <Skeleton startColor="white" endColor="white" isLoaded={!isLoading}>
+        <Layout pageTitle="Home">{user ? <LandingPage /> : <AuthenticatedPage />}</Layout>
       </Skeleton>
     </>
   )
