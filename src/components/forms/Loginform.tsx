@@ -1,71 +1,77 @@
-import { Button, Container } from '@chakra-ui/react'
-import { FC, useContext } from 'react'
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
-import { login } from '../../context/AuthActions'
-import { AuthContext } from '../../context/AuthContext'
-import { ActionTypes } from '../../context/AuthReducer'
-import { LoginProps } from '../../context/AuthTypes'
-import { FormField } from './FormField'
-import { InputField } from './Input'
+import { Box, Button, Container } from "@chakra-ui/react"
+import { FC, useContext } from "react"
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
+import { useDispatch, useSelector } from "react-redux"
+import { login } from "../../context/AuthActions"
+import { AuthContext } from "../../context/AuthContext"
+import { ActionTypes } from "../../context/AuthReducer"
+import { LoginProps } from "../../context/AuthTypes"
+import { loginToApi } from "../../redux/userSlice"
+import { FormField } from "./FormField"
+import { InputField } from "./Input"
 
 const Loginform = () => {
+  /*   const { state, dispatch } = useContext(AuthContext) */
 
-  const { state, dispatch } = useContext(AuthContext);
-
-  const methods = useForm<LoginProps>({ mode: 'onChange' })
+  const methods = useForm<LoginProps>({ mode: "onChange" })
   const {
     handleSubmit,
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isValid, isDirty }
   } = methods
 
+  const dispatch = useDispatch<any>()
   const onSubmit: SubmitHandler<LoginProps> = async (data) => {
-    login(data)
-      .then(user =>
-        dispatch({
-          type: ActionTypes.LOGIN,
-          payload: user
-        }));
+    /*     login(data).then((user) =>
+      dispatch({
+        type: ActionTypes.LOGIN,
+        payload: user
+      })
+    ) */
+
+    dispatch(loginToApi(data))
   }
 
+  const testUser = useSelector((state: any) => state.user.user)
   return (
     <>
-      <Container maxW={'container.sm'}>
+      <Container maxW={"container.sm"}>
+        <Box> {testUser?.firstname}</Box>
         <FormProvider {...methods}>
           <form onSubmit={(e) => e.preventDefault()}>
             <FormField
               as={InputField}
-              name='email'
-              labeltitle='Email'
-              defaultValue=''
+              name="email"
+              labeltitle="Email"
+              defaultValue=""
               rules={{
-                required: 'Required',
+                required: "Required",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address',
-                },
+                  message: "Invalid email address"
+                }
               }}
               errors={errors.email}
             />
             <FormField
               as={InputField}
-              name='password'
-              labeltitle='Password'
-              defaultValue=''
+              name="password"
+              labeltitle="Password"
+              defaultValue=""
               type="password"
               rules={{
-                required: 'Required',
+                required: "Required",
                 minLength: {
                   value: 8,
-                  message: 'Password must be between 8 and 50 characters',
+                  message: "Password must be between 8 and 50 characters"
                 },
                 maxLength: {
                   value: 50,
-                  message: 'Password must be between 8 and 50 characters',
-                },
+                  message: "Password must be between 8 and 50 characters"
+                }
               }}
               errors={errors.password}
             />
-            <Button disabled={!isDirty || !isValid} mt={4} colorScheme='teal' type='submit' onClick={handleSubmit(onSubmit)}>
+            <Button disabled={!isDirty || !isValid} mt={4} colorScheme="teal" type="submit" onClick={handleSubmit(onSubmit)}>
               Submit
             </Button>
           </form>

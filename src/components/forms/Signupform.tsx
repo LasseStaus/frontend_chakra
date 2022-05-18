@@ -31,7 +31,7 @@ const SignupForm = () => {
   const testUser = useSelector((state: any) => state.user.user)
   const testTokens = useSelector((state: any) => state.user.tokens)
   const onSubmit: SubmitHandler<SignupProps> = async (data) => {
-    dispatch(signupToApi())
+    dispatch(signupToApi(data))
 
     /*     signup(data) */
   }
@@ -43,6 +43,7 @@ const SignupForm = () => {
   return (
     <>
       <Container maxW={"container.sm"}>
+        <Button onClick={(e) => dispatch(signupUser({ firstname: "test", lastname: "henrikkkk", email: "aksjdlasjd" }))}></Button>
         <Box>{testUser?.firstname}</Box>
         {/*   <Box>{testUser.lastname}</Box>
         <Box>{testTokens}</Box> */}

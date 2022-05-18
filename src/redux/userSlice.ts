@@ -29,9 +29,10 @@ export const signupToApi = createAsyncThunk(
             return thunkApi.rejectWithValue(data)
           }
      }) */
-     export const signupToApi = createAsyncThunk(
+   export const signupToApi = createAsyncThunk(
         "users/signupUser",
-        async (data, thunkAPI) => {
+        async (data:any, thunkAPI) => {
+
         
             const response = await fetch(
               "http://localhost:3333/auth/local/signup",
@@ -54,18 +55,56 @@ export const signupToApi = createAsyncThunk(
         
             if (response.status === 201) {
            console.log("no error", resData);
-           
+          /*  dispatch(signupUser({firstname: "henrikke", lastname: 'lol', email:'chips'})) */
               return resData
             } else {
                 console.log(" error", resData);
-              return thunkAPI.rejectWithValue('noob')
+              return thunkAPI.rejectWithValue(resData.message)
             }
       
         }
       )
 
+
+      export const loginToApi = createAsyncThunk(
+        "users/loginUser",
+        async (data:any, thunkAPI) => {
+
+            console.log("login slice",data);
+            
+        
+            const response = await fetch(
+              "http://localhost:3333/auth/local/signin",
+              {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              }
+            )
+            let resData = await response.json()
+            console.log("data", data)
+        
+          /*   setJwtFromApi(resData, res) */
+        /*     return resData */
+
+        console.log(response.status);
+        
+            if (response.status === 200) {
+           console.log("no error", resData);
+          /*  dispatch(signupUser({firstname: "henrikke", lastname: 'lol', email:'chips'})) */
+              return resData
+            } else {
+                console.log(" error", resData);
+              return thunkAPI.rejectWithValue(resData.message)
+            }
+      
+        }
+      )
 interface User {
-    firstname: string
+    firstname: any
     lastname: String
     email: string
 
@@ -99,7 +138,7 @@ export const userSlice = createSlice({
     initialState:initialState,
     reducers: {
         signupUser: (state, action: PayloadAction<User>) => {
-            state.user = action.payload
+            state.user = action.payload 
         },
         loginUser: (state, action: PayloadAction<User>) => {
 
@@ -121,8 +160,22 @@ export const userSlice = createSlice({
         }),
         builder.addCase(signupToApi.rejected, (state, action) => {
             state.pending = false
-
-            state.user.firstname = "KANONDÅRLIGT"
+            state.user.firstname = action.payload
+    
+          }),
+          builder.addCase(loginToApi.fulfilled, (state, action) => {
+            state.pending = false
+            state.user.firstname = action.payload.access_token
+            
+    /*         state.user = {firstname:action.payload.user.firstname, lastname:action.payload.user.lastname, email:action.payload.user.email} */
+            state.tokens = action.payload.access_token
+          }),
+        builder.addCase(loginToApi.pending, (state, action) => {
+          state.pending = true
+        }),
+        builder.addCase(loginToApi.rejected, (state, action) => {
+            state.pending = false
+            state.user.firstname = action.payload
     
           })
    
