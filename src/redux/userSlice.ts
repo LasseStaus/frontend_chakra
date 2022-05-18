@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { StringDecoder } from "string_decoder";
 import { setJwtFromApi } from "../pages/api/setJwtTest";
 import signup from "../pages/api/signup";
+import cookie from 'cookie'
 
 
 /* 
@@ -85,8 +86,9 @@ export const signupToApi = createAsyncThunk(
               }
             )
             let resData = await response.json()
-            console.log("data", data)
-        
+
+           
+            
           /*   setJwtFromApi(resData, res) */
         /*     return resData */
 
@@ -94,6 +96,36 @@ export const signupToApi = createAsyncThunk(
         
             if (response.status === 200) {
            console.log("no error", resData);
+
+           console.log("HALLO")
+           console.log("HALLO")
+           console.log("set this", resData.access_token)
+           
+           
+           console.log("HALLO")
+           console.log("HALLO")
+           console.log("HALLO")
+           cookie.serialize('Set-Cookie', cookie.serialize('name', String("askldasd"), {
+            httpOnly: false,
+
+            maxAge: 60 * 60 * 24 * 7, // 1 week
+         
+           }))
+
+      
+           cookie.serialize("AT", String(resData.access_token), {
+            httpOnly: false,
+
+            maxAge: 60 * 60 * 24 * 7, // 1 week
+         
+          }),
+          cookie.serialize("RT", String(resData.refresh_token), {
+            httpOnly: true,
+
+            maxAge: 60 * 60 * 24 * 7, // 1 week
+            sameSite: 'strict',
+            path: '/'
+          })
           /*  dispatch(signupUser({firstname: "henrikke", lastname: 'lol', email:'chips'})) */
               return resData
             } else {
