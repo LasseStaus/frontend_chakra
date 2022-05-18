@@ -106,6 +106,7 @@ export function BookingProvider({ children }: any) {
       console.log('BOOKING DELETED CONTEXT', data)
 
       getBookings()
+
       return data
       console.log('Context OK', data)
     } else {
