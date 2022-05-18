@@ -1,128 +1,145 @@
-import { Button, Container } from '@chakra-ui/react'
+import { Box, Button, Container } from "@chakra-ui/react"
 
-import React from 'react'
-import { FC, useRef } from 'react'
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import React, { useEffect } from "react"
+import { FC, useRef } from "react"
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
 // import { useAuth } from '../../context/AuthContext'
-import { SignupProps } from '../../context/AuthTypes'
-import { signup } from '../../context/AuthActions'
-import { FormField } from './FormField'
-import { InputField } from './Input'
+import { SignupProps } from "../../context/AuthTypes"
+import { signup } from "../../context/AuthActions"
+import { FormField } from "./FormField"
+import { InputField } from "./Input"
+import { useDispatch, useSelector } from "react-redux"
+import type AppDispatch from "react-redux"
+import { selectUser, signupUser, logoutUser, signupToApi } from "../../redux/userSlice"
 
 const SignupForm = () => {
   // const { signup } = useAuth()
 
-  const methods = useForm<SignupProps>({ mode: 'onChange' })
+  const methods = useForm<SignupProps>({ mode: "onChange" })
   const {
     handleSubmit,
     watch,
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isValid, isDirty }
   } = methods
   const password = useRef({})
 
-  password.current = watch('password', '')
+  password.current = watch("password", "")
 
+  const dispatch = useDispatch<any>()
+  const user = useSelector(selectUser)
+
+  const testUser = useSelector((state: any) => state.user.user)
+  const testTokens = useSelector((state: any) => state.user.tokens)
   const onSubmit: SubmitHandler<SignupProps> = async (data) => {
-    signup(data)
+    dispatch(signupToApi())
+
+    /*     signup(data) */
   }
+  useEffect(() => {
+    console.log(testTokens)
+    console.log(testUser)
+  }, [testUser])
 
   return (
     <>
-      <Container maxW={'container.sm'}>
+      <Container maxW={"container.sm"}>
+        <Box>{testUser?.firstname}</Box>
+        {/*   <Box>{testUser.lastname}</Box>
+        <Box>{testTokens}</Box> */}
         <FormProvider {...methods}>
           <form onSubmit={(e) => e.preventDefault()}>
             <FormField
               as={InputField}
-              name='firstname'
-              labeltitle='First Name'
-              defaultValue=''
+              name="firstname"
+              labeltitle="First Name"
+              defaultValue=""
               rules={{
-                required: 'Required',
+                required: "Required",
                 minLength: {
                   value: 2,
-                  message: 'First name must be a minimum of 2 characters',
-                },
+                  message: "First name must be a minimum of 2 characters"
+                }
               }}
               errors={errors.firstname}
             />
             <FormField
               as={InputField}
-              name='lastname'
-              labeltitle='Last Name'
-              defaultValue=''
+              name="lastname"
+              labeltitle="Last Name"
+              defaultValue=""
               rules={{
-                required: 'Required',
+                required: "Required",
                 minLength: {
                   value: 2,
-                  message: 'Last name must be a minimum of 2 characters',
-                },
+                  message: "Last name must be a minimum of 2 characters"
+                }
               }}
               errors={errors.lastname}
             />
             <FormField
               as={InputField}
-              name='email'
-              labeltitle='Email'
-              defaultValue=''
+              name="email"
+              labeltitle="Email"
+              defaultValue=""
               rules={{
-                required: 'Required',
+                required: "Required",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address',
-                },
+                  message: "Invalid email address"
+                }
               }}
               errors={errors.email}
             />
             <FormField
               as={InputField}
-              name='phonenumber'
-              labeltitle='Phonenumber'
-              defaultValue=''
+              name="phonenumber"
+              labeltitle="Phonenumber"
+              defaultValue=""
               rules={{
-                required: 'Required',
+                required: "Required",
                 pattern: {
                   value: /^[1-9]\d{7}$/,
-                  message: 'Phone number cannot start with a 0, and must be 8 digits',
-                },
+                  message: "Phone number cannot start with a 0, and must be 8 digits"
+                }
               }}
               errors={errors.phonenumber}
             />
             <FormField
               as={InputField}
-              name='password'
-              labeltitle='Password'
-              defaultValue=''
+              name="password"
+              labeltitle="Password"
+              defaultValue=""
               type="password"
               rules={{
-                required: 'Required',
+                required: "Required",
                 pattern: {
                   value: /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
-                  message: 'Password must be at least 8 characters long, have at least one uppercase letter and one numeric character',
+                  message: "Password must be at least 8 characters long, have at least one uppercase letter and one numeric character"
                 },
                 minLength: {
                   value: 8,
-                  message: 'Password must be between 8 and 50 characters',
+                  message: "Password must be between 8 and 50 characters"
                 },
                 maxLength: {
                   value: 50,
-                  message: 'Password must be between 8 and 50 characters',
-                },
+                  message: "Password must be between 8 and 50 characters"
+                }
               }}
               errors={errors.password}
             />
             <FormField
               as={InputField}
-              name='passwordConfirm'
-              labeltitle='Confirm Password'
-              defaultValue=''
+              name="passwordConfirm"
+              labeltitle="Confirm Password"
+              defaultValue=""
               type="password"
               rules={{
-                required: 'Required',
-                validate: (value) => value === password.current || 'The passwords do not match',
+                required: "Required",
+                validate: (value) => value === password.current || "The passwords do not match"
               }}
               errors={errors.passwordConfirm}
             />
-            <Button variant="primary" disabled={!isDirty || !isValid} mt={4} type='submit' onClick={handleSubmit(onSubmit)}>
+            <Button variant="primary" disabled={!isDirty || !isValid} mt={4} type="submit" onClick={handleSubmit(onSubmit)}>
               Submit
             </Button>
           </form>

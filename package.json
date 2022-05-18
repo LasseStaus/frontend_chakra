@@ -26,7 +26,9 @@
     "react-dom": "18.1.0",
     "react-hook-form": "^7.30.0",
     "react-icons": "^4.3.1",
-    "react-multi-date-picker": "^3.3.0"
+    "react-multi-date-picker": "^3.3.0",
+    "react-redux": "^8.0.1",
+    "redux": "^4.2.0"
   },
   "devDependencies": {
     "@types/node": "17.0.31",

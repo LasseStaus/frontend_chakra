@@ -1,11 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import cookie from 'cookie'
+import { useDispatch } from "react-redux";
 
 // const API_URL = process.env.BACKEND_URL
 const API_URL = 'http://localhost:3333';
+import { selectUser, signupUser, logoutUser, signupToApi } from "../../redux/userSlice"
 
-export default async function signup(req: NextApiRequest, res: NextApiResponse) {
-
+export default async function SignupOldApi(req: NextApiRequest, res: NextApiResponse) {
+const dispatch = useDispatch()
   if (req.method === 'POST') {
 
     const response = await fetch(`${API_URL}/auth/local/signup`, {
@@ -20,6 +22,9 @@ export default async function signup(req: NextApiRequest, res: NextApiResponse) 
 
     if (response.ok) {
       res.status(200).json(data)
+      console.log("api data", data);
+      
+      dispatch(signupUser(data))
     } else {
       res.status(data.statusCode).json({ message: data.message })
     }
