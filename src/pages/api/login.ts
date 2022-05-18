@@ -8,6 +8,9 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === 'POST') {
 
+    console.log(req.body);
+
+
     const { email, password } = req.body
     const response = await fetch(`${API_URL}/auth/local/signin`, {
       method: 'POST',

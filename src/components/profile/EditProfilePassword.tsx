@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FormField } from "../forms/FormField";
 import InputField from "../forms/Input";
-import { useAuth } from "../../context/AuthContext";
+// import { useAuth } from "../../context/AuthContext";
 import { EditUserPasswordProps } from "../../context/AuthTypes";
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 export const EditProfilePassword = ({ onClose }: Props) => {
 
     const methods = useForm<EditUserPasswordProps>({ mode: 'onBlur' })
-    const { editUserPassword } = useAuth()
+    // const { editUserPassword } = useAuth()
 
     const {
         handleSubmit, watch,
@@ -30,7 +30,7 @@ export const EditProfilePassword = ({ onClose }: Props) => {
             passwordNew: data.passwordNew,
             passwordNewConfirm: data.passwordNewConfirm,
         }
-        editUserPassword(body)
+        // editUserPassword(body)
         onClose()
     }
 

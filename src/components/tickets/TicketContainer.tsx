@@ -1,7 +1,7 @@
 import { TimeIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, Flex, Heading, useDisclosure, Text, Center } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../../context/AuthContext'
+// import { useAuth } from '../../context/AuthContext'
 import TicketModal from './TicketModal'
 import CalendarModal from './TicketModal'
 
@@ -72,16 +72,19 @@ export interface TicketsProps {
 export const Ticket = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const { ticketData, getTickets, getPurchases, purchaseData } = useAuth()
+  // const { ticketData, getTickets, getPurchases, purchaseData } = useAuth()
 
-  useEffect(() => {
-    getTickets()
-    getPurchases()
-  }, [])
+  // useEffect(() => {
+  //   getTickets()
+  //   getPurchases()
+  // }, [])
 
-  if (!ticketData && !purchaseData) return null
+  const ticketData = undefined
 
-  const purchaseDataLength = purchaseData?.length
+  //  if (!ticketData && !purchaseData) return null
+  if (!ticketData) return null
+
+  // const purchaseDataLength = purchaseData?.length
 
 
 
@@ -100,17 +103,17 @@ export const Ticket = () => {
         <Flex flexDir={{ base: 'column', md: "row" }} my={4} gap={8} height={80} align="center" >
           <Flex flexDir="column" w={{ base: '100%', md: "33%" }} alignItems="center" justify="center" alignSelf="stretch" bg="#F2F2F2">
             <TimeIcon width={30} height={30} />
-            <Text>{ticketData?.activeTickets}</Text>
+            {/* <Text>{ticketData?.activeTickets}</Text> */}
             <Text>Active Tickets</Text>
           </Flex>
           <Flex flexDir="column" w={{ base: '100%', md: "33%" }} alignItems="center" justify="center" alignSelf="stretch" bg="#F2F2F2">
             <TimeIcon width={30} height={30} />
-            <Text>{ticketData?.usedTickets}</Text>
+            {/* <Text>{ticketData?.usedTickets}</Text> */}
             <Text>Used Tickets</Text>
           </Flex>
           <Flex flexDir="column" w={{ base: '100%', md: "33%" }} alignItems="center" justify="center" alignSelf="stretch" bg="#F2F2F2">
             <TimeIcon width={30} height={30} />
-            <Text>{purchaseDataLength}</Text>
+            {/* <Text>{purchaseDataLength}</Text> */}
             <Text>Purchase of tickets</Text>
           </Flex>
         </Flex>

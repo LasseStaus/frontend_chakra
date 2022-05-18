@@ -1,13 +1,16 @@
 import { Button, Container } from '@chakra-ui/react'
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
-import { useAuth } from '../../context/AuthContext'
+import { login } from '../../context/AuthActions'
+import { AuthContext } from '../../context/AuthContext'
+import { ActionTypes } from '../../context/AuthReducer'
 import { LoginProps } from '../../context/AuthTypes'
 import { FormField } from './FormField'
 import { InputField } from './Input'
 
 const Loginform = () => {
-  const { login } = useAuth()
+
+  const { state, dispatch } = useContext(AuthContext);
 
   const methods = useForm<LoginProps>({ mode: 'onChange' })
   const {
@@ -16,8 +19,12 @@ const Loginform = () => {
   } = methods
 
   const onSubmit: SubmitHandler<LoginProps> = async (data) => {
-    const body = { email: data.email, password: data.password }
-    login(body)
+    login(data)
+      .then(user =>
+        dispatch({
+          type: ActionTypes.LOGIN,
+          payload: user
+        }));
   }
 
   return (

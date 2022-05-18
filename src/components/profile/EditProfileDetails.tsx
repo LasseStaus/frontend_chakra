@@ -1,7 +1,7 @@
 import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Heading, Stack, useDisclosure } from '@chakra-ui/react'
 import React, { FC } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
-import { useAuth } from '../../context/AuthContext'
+// import { useAuth } from '../../context/AuthContext'
 import { EditUserProps } from '../../context/AuthTypes'
 import { FormField } from '../forms/FormField'
 import InputField from '../forms/Input'
@@ -12,8 +12,9 @@ interface Props {
 
 export const EditProfileDetails = ({ onClose }: Props) => {
 
-    const { user, editUser } = useAuth()
-    const methods = useForm<EditUserProps>({ mode: 'onBlur', defaultValues: { firstname: user?.firstname, lastname: user?.lastname, email: user?.email, phonenumber: user?.phonenumber } })
+    // const { user, editUser } = useAuth()
+    // const methods = useForm<EditUserProps>({ mode: 'onBlur', defaultValues: { firstname: user?.firstname, lastname: user?.lastname, email: user?.email, phonenumber: user?.phonenumber } })
+    const methods = useForm<EditUserProps>({ mode: 'onBlur' })
 
     const {
         handleSubmit,
@@ -27,7 +28,7 @@ export const EditProfileDetails = ({ onClose }: Props) => {
             lastname: data.lastname,
             phone: data.phonenumber,
         }
-        editUser(body)
+        // editUser(body)
         onClose()
     }
 

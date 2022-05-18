@@ -3,13 +3,14 @@ import { Button, Container } from '@chakra-ui/react'
 import React from 'react'
 import { FC, useRef } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
-import { useAuth } from '../../context/AuthContext'
+// import { useAuth } from '../../context/AuthContext'
 import { SignupProps } from '../../context/AuthTypes'
+import { signup } from '../../context/AuthActions'
 import { FormField } from './FormField'
 import { InputField } from './Input'
 
 const SignupForm = () => {
-  const { signup } = useAuth()
+  // const { signup } = useAuth()
 
   const methods = useForm<SignupProps>({ mode: 'onChange' })
   const {
@@ -22,18 +23,7 @@ const SignupForm = () => {
   password.current = watch('password', '')
 
   const onSubmit: SubmitHandler<SignupProps> = async (data) => {
-
-    const body = {
-      email: data.email,
-      password: data.password,
-      firstname: data.firstname,
-      lastname: data.lastname,
-      phonenumber: data.phonenumber,
-      passwordConfirm: data.passwordConfirm,
-    }
-
-    const test = signup(body)
-    console.log('SIGNUP KNAP', test)
+    signup(data)
   }
 
   return (

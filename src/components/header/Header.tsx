@@ -1,10 +1,25 @@
 import { Box, Button, ButtonGroup, Flex, Spacer, Text, useDisclosure } from '@chakra-ui/react'
-import React, { FC, useState } from 'react'
-import { useAuth } from '../../context/AuthContext'
+import React, { FC, useContext, useState } from 'react'
+import { AuthContext } from '../../context/AuthContext'
+import { ActionTypes } from '../../context/AuthReducer'
+// import logout from '../../pages/api/logout'
+// import { useAuth } from '../../context/AuthContext'
 import Logo from './Logo'
+import { logout } from '../../context/AuthActions'
+
 
 const Header: FC = () => {
-  const { user, logout } = useAuth()
+  // const { user, logout } = useAuth()
+  const { state, dispatch } = useContext(AuthContext);
+  const { loggedInUser } = state
+
+  async function handleLogout() {
+    await logout().then(response => {
+      if (response.ok) {
+        dispatch({ type: ActionTypes.LOGOUT })
+      }
+    })
+  }
 
   return (
     <Flex bg='white' minWidth='max-content' pr='5' alignItems='center' gap='2'>
@@ -13,8 +28,8 @@ const Header: FC = () => {
       </Box>
       <Spacer />
       <ButtonGroup gap='2'>
-        {user ? (
-          <Button colorScheme='teal' onClick={logout}>
+        {loggedInUser ? (
+          <Button colorScheme='teal' onClick={handleLogout}>
             Logout
           </Button>
         ) : null}

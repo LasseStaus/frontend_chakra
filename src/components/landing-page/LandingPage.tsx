@@ -1,5 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react'
-import { useAuth } from '../../context/AuthContext'
+import { useEffect } from 'react'
+import { AuthProvider } from '../../context/AuthContext'
 
 import AlertBox from '../alert/Alert'
 import Calender from '../calendar/calendarContainer'
@@ -7,13 +8,18 @@ import UpcommingBookings from '../calendar/upcommingBookings/UpcommingBookingsCo
 import Footer from '../footer/Footer'
 import { ProfileBanner } from '../profile/ProfileBanner'
 import Ticket from '../tickets/TicketContainer'
+import { refreshTokens } from '../../context/AuthActions'
+
 
 function LandingPage() {
-  const { alertActive } = useAuth()
+
+  useEffect(() => {
+    refreshTokens()
+  })
 
   return (
     <>
-      {alertActive && <AlertBox />}
+      {/* {alertActive && <AlertBox />} */}
       <ProfileBanner />
       <Flex pb={10} flexDir='column'></Flex>
       <Calender />

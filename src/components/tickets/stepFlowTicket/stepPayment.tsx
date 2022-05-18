@@ -1,6 +1,6 @@
 import { Box, Button, Flex } from '@chakra-ui/react'
 import React from 'react'
-import { useAuth } from '../../../context/AuthContext'
+// import { useAuth } from '../../../context/AuthContext'
 
 interface Props {
   ticketType: "3 days" | "7 days" | "30 days"
@@ -8,7 +8,7 @@ interface Props {
 
 const StepPaymentTicket = ({ ticketType }: Props) => {
 
-  const { purchaseTicket } = useAuth()
+  // const { purchaseTicket } = useAuth()
 
 
   let amountOfTickets: number | null
@@ -23,7 +23,7 @@ const StepPaymentTicket = ({ ticketType }: Props) => {
 
   return (
     <Flex justifyContent={'center'} alignItems={'center'} w={'100%'} h={'100%'}>
-      <Button onClick={() => purchaseTicket(amountOfTickets)}>KØB</Button>
+      {/* <Button onClick={() => purchaseTicket(amountOfTickets)}>KØB</Button> */}
     </Flex>
   )
 }
