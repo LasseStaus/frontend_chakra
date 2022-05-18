@@ -1,5 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react'
 import { useAuth } from '../../context/AuthContext'
+import AllBookings from '../admin/adminPanel'
 
 import AlertBox from '../alert/Alert'
 import Calender from '../calendar/calendarContainer'
@@ -16,6 +17,7 @@ function LandingPage() {
       {alertActive && <AlertBox />}
       <ProfileBanner />
       <Flex pb={10} flexDir='column'></Flex>
+      <AllBookings />
       <Calender />
       <Flex pb={10} flexDir='column'></Flex>
       <UpcommingBookings />
