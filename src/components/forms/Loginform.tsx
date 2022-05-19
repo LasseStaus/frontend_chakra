@@ -2,7 +2,7 @@ import { Box, Button, Container } from "@chakra-ui/react"
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { LoginProps } from "../../context/AuthTypes"
-import { loginThunk } from "../../redux/authenticationSlice"
+import { loginThunk } from "../../redux/authenticationActions"
 import { FormField } from "./FormField"
 import { InputField } from "./Input"
 

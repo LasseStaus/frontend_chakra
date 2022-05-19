@@ -1,31 +1,24 @@
-import { Box, Flex } from '@chakra-ui/react'
-import { useEffect } from 'react'
-import { AuthProvider } from '../../context/AuthContext'
+import { Box, Flex } from "@chakra-ui/react"
+import { useEffect } from "react"
+import { AuthProvider } from "../../context/AuthContext"
 
-import AlertBox from '../alert/Alert'
-import Calender from '../calendar/calendarContainer'
-import UpcommingBookings from '../calendar/upcommingBookings/UpcommingBookingsContainer'
-import Footer from '../footer/Footer'
-import { ProfileBanner } from '../profile/ProfileBanner'
-import Ticket from '../tickets/TicketContainer'
-import { refreshTokens } from '../../context/AuthActions'
-
+import AlertBox from "../alert/Alert"
+import Calender from "../calendar/calendarContainer"
+import UpcommingBookings from "../calendar/upcommingBookings/UpcommingBookingsContainer"
+import Footer from "../footer/Footer"
+import { ProfileBanner } from "../profile/ProfileBanner"
+import Ticket from "../tickets/TicketContainer"
 
 function LandingPage() {
-
-  useEffect(() => {
-    refreshTokens()
-  })
-
   return (
     <>
       {/* {alertActive && <AlertBox />} */}
       <ProfileBanner />
-      <Flex pb={10} flexDir='column'></Flex>
+      <Flex pb={10} flexDir="column"></Flex>
       <Calender />
-      <Flex pb={10} flexDir='column'></Flex>
+      <Flex pb={10} flexDir="column"></Flex>
       <UpcommingBookings />
-      <Flex pb={10} flexDir='column'></Flex>
+      <Flex pb={10} flexDir="column"></Flex>
       <Ticket />
       <Footer />
     </>

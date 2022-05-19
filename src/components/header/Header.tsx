@@ -1,7 +1,7 @@
 import { Box, Button, ButtonGroup, Flex, Spacer } from "@chakra-ui/react"
 import React, { FC } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { logoutApi } from "../../redux/authenticationSlice"
+import { logoutThunk } from "../../redux/authenticationActions"
 
 import Logo from "./Logo"
 
@@ -12,7 +12,7 @@ const Header: FC = () => {
   async function handleLogout() {
     console.log("HANDLE LOGOUT")
     //todo why does it need data (its rejectWithValue in error) how to fix?
-    dispatch(logoutApi("smt"))
+    dispatch(logoutThunk("smt"))
   }
 
   return (

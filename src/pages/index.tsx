@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import AuthenticatedPage from "../components/authenticationPage/AuthenticationPage"
 import LandingPage from "../components/landing-page/LandingPage"
 import Layout from "../components/layouts/layout/Layout"
-import { authenticateOnLoad } from "../redux/authenticationSlice"
+import { authenticateOnLoad } from "../redux/authenticationActions"
 import { store } from "../redux/store"
 
 // import { useAuth } from '../context/AuthContext'
