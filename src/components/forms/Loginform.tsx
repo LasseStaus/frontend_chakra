@@ -1,25 +1,20 @@
 import { Button, Container } from '@chakra-ui/react'
 import { FC } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
-import { useAuth } from '../../context/AuthContext'
 import { LoginProps } from '../../context/AuthTypes'
 import { FormField } from './FormField'
 import { InputField } from './Input'
 
 const Loginform = () => {
-  const { login } = useAuth()
-
   const methods = useForm<LoginProps>({ mode: 'onChange' })
   const {
     handleSubmit,
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isValid, isDirty }
   } = methods
 
   const onSubmit: SubmitHandler<LoginProps> = async (data) => {
     const body = { email: data.email, password: data.password }
-    login(body)
   }
-
   return (
     <>
       <Container maxW={'container.sm'}>
@@ -27,38 +22,38 @@ const Loginform = () => {
           <form onSubmit={(e) => e.preventDefault()}>
             <FormField
               as={InputField}
-              name='email'
-              labeltitle='Email'
-              defaultValue=''
+              name="email"
+              labeltitle="Email"
+              defaultValue=""
               rules={{
                 required: 'Required',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address',
-                },
+                  message: 'Invalid email address'
+                }
               }}
               errors={errors.email}
             />
             <FormField
               as={InputField}
-              name='password'
-              labeltitle='Password'
-              defaultValue=''
+              name="password"
+              labeltitle="Password"
+              defaultValue=""
               type="password"
               rules={{
                 required: 'Required',
                 minLength: {
                   value: 8,
-                  message: 'Password must be between 8 and 50 characters',
+                  message: 'Password must be between 8 and 50 characters'
                 },
                 maxLength: {
                   value: 50,
-                  message: 'Password must be between 8 and 50 characters',
-                },
+                  message: 'Password must be between 8 and 50 characters'
+                }
               }}
               errors={errors.password}
             />
-            <Button disabled={!isDirty || !isValid} mt={4} colorScheme='teal' type='submit' onClick={handleSubmit(onSubmit)}>
+            <Button disabled={!isDirty || !isValid} mt={4} colorScheme="teal" type="submit" onClick={handleSubmit(onSubmit)}>
               Submit
             </Button>
           </form>

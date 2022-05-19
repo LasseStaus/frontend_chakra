@@ -1,11 +1,9 @@
 import { Box, Button, Container, Flex, Grid, GridItem, Heading, Text, useDisclosure, Wrap } from '@chakra-ui/react'
 import Image from 'next/image'
-import { useAuth } from '../../context/AuthContext'
 import { EditProfileDrawer } from './EditProfileDrawer'
 
 export const ProfileBanner = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { user } = useAuth()
 
   //TO DO - add user booking data
 
@@ -38,9 +36,7 @@ export const ProfileBanner = () => {
 
           <GridItem colSpan={{ base: 4, md: 4 }} alignSelf="center">
             <Flex justifyContent="start" direction={{ base: 'column', md: 'row' }} alignItems="center" gap={{ base: '2', md: '8' }}>
-              <Heading fontSize={{ base: 'sm', md: 'xl', lg: '3xl' }}>
-                {user?.firstname} {user?.lastname}
-              </Heading>
+              <Heading fontSize={{ base: 'sm', md: 'xl', lg: '3xl' }}></Heading>
               <Button w="40" variant="secondary" size="sm" onClick={onOpen}>
                 Rediger Profil
               </Button>
