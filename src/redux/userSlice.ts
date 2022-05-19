@@ -1,14 +1,16 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { NextApiResponse } from "next"
+import { useSelector } from "react-redux"
+import getHeaderTokens from "../components/apihelpers/getHeaderTokens"
 
 interface User {
   firstname: string | undefined
   lastname: string | undefined
   email: string | undefined
   phonenumber: string | number | undefined
-
 }
 
-interface Tickets{
+interface Tickets {
   activeTickets: string | number | undefined
   usedTickets: string | number | undefined
 }
@@ -21,7 +23,6 @@ interface userSliceState {
   tickets: Tickets | undefined
   bookings: Bookings | undefined
   pending: boolean
-
 }
 
 const initialState: userSliceState = {
@@ -34,35 +35,35 @@ const initialState: userSliceState = {
   bookings: undefined,
   tickets: undefined,
   pending: true
-  
-
 }
 
 const API_URL = "http://localhost:3333"
-export const getUserInfo = createAsyncThunk("authentication/login", async (data: any, thunkAPI) => {
-  const response = await fetch(`${API_URL}/sakdlaskd`, {
+
+export const getUserInfo = createAsyncThunk("loggedInUser/getUserInfo", async (thunkAPI) => {
+  // const state = getState()
+
+  const response = await fetch(`${API_URL}/user/profile`, {
     method: "GET",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
+      // Authorization: `Bearer ${tokenAT}`
+    }
   })
   const resData = await response.json()
 
   if (response.status === 200) {
     return resData
   } else {
-    return thunkAPI.rejectWithValue(resData.message)
+    // return thunkAPI.rejectWithValue(resData.message)
   }
 })
-
 
 export const userSlice = createSlice({
   name: "loggedInUser",
   initialState: initialState,
   reducers: {
-/*     updateBookings: (state, action: PayloadAction<User>) => {
+    /*     updateBookings: (state, action: PayloadAction<User>) => {
       state.user = action.payload
     },
     updateTickets: (state, action: PayloadAction<User>) => {
@@ -73,19 +74,15 @@ export const userSlice = createSlice({
     }, */
   },
   extraReducers: (builder) => {
-    builder.addCase(getUserInfo.fulfilled, (state, action) => {
- 
-    }),
-      builder.addCase(getUserInfo.pending, (state, action) => {
-  
-      }),
-      builder.addCase(getUserInfo.rejected, (state, action) => {
-
-      })
-     }
-
+    builder.addCase(getUserInfo.fulfilled, (state, action) => {}),
+      builder.addCase(getUserInfo.pending, (state, action) => {}),
+      builder.addCase(getUserInfo.rejected, (state, action) => {})
+  }
 })
 
-export const {  } = userSlice.actions
+function GetHeaderTokens(req: any, res: any) {
+  throw new Error("Function not implemented.")
+}
+// export const {} = userSlice.actions
 
-export const selectUser = (state: any) => state.user.user
+// export const selectUser = (state: any) => state.user.user

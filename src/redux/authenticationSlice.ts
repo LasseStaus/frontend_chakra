@@ -7,10 +7,14 @@ interface User {
   email: string
 }
 
-interface authenticationSliceState {
+export interface authenticationSliceState {
   user: User | undefined
   pending: boolean
-  tokens: any
+  tokens:
+    | {
+        AT: string | undefined
+      }
+    | undefined
   authenticated: boolean
   authenticationLoad: boolean
   loginMessageForUser: string | undefined | SerializedError | unknown
@@ -25,7 +29,9 @@ const initialState: authenticationSliceState = {
     email: ""
   },
   pending: true,
-  tokens: null,
+  tokens: {
+    AT: undefined
+  },
   authenticated: false,
   signupMessageForUser: undefined,
   loginMessageForUser: undefined,
@@ -37,15 +43,15 @@ export const authenticationSlice = createSlice({
   name: "authentication",
   initialState: initialState,
   reducers: {
-    updateUser: (state, action: PayloadAction<User>) => {
-      state.user = action.payload
-    }
+    // updateUser: (state, action: PayloadAction<User>) => {
+    //   state.user = action.payload
+    // }
   },
   extraReducers: (builder) => {
     builder.addCase(signupThunk.fulfilled, (state, action) => {
       state.pending = false
       state.signupMessageForUser = "Your user has been created! Please go to login"
-      state.tokens = action.payload.access_token
+      state.tokens = action.payload.access_tokens
     }),
       builder.addCase(signupThunk.pending, (state, action) => {
         state.pending = true
@@ -60,10 +66,8 @@ export const authenticationSlice = createSlice({
         state.pending = false
         state.authenticated = true
         state.user = undefined
-        state.tokens = '??'
         state.loginMessageForUser = "You've successfully logged in!"
-        /*         state.user = {firstname:action.payload.user.firstname, lastname:action.payload.user.lastname, email:action.payload.user.email} */
-        state.tokens = { AT: action.payload.access_token }
+        state.tokens = { AT: action.payload.access_tokens }
       }),
       builder.addCase(loginThunk.pending, (state, action) => {
         state.pending = true
@@ -116,6 +120,6 @@ export const authenticationSlice = createSlice({
   }
 })
 
-export const { updateUser } = authenticationSlice.actions
+// export const { updateUser } = authenticationSlice.actions
 
-export const selectUser = (state: any) => state.user.user
+export const selectAuthentication = (state: any) => state.authentication

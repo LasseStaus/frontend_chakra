@@ -11,8 +11,8 @@ import { store } from "../redux/store"
 type AppDispatch = typeof store.dispatch
 const Dashboard = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const authenticated = useSelector((state: any) => state.user.authenticated)
-  const authenticationLoad = useSelector((state: any) => state.user.authenticationLoad)
+  const authenticated = useSelector((state: any) => state.authentication.authenticated)
+  const authenticationLoad = useSelector((state: any) => state.authentication.authenticationLoad)
   useEffect(() => {
     dispatch(authenticateOnLoad())
   }, [])

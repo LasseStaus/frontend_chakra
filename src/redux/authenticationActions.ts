@@ -13,6 +13,8 @@ export const loginThunk = createAsyncThunk("authentication/login", async (data: 
   const resData = await response.json()
 
   if (response.status === 200) {
+    console.log("loginData", resData)
+
     return resData
   } else {
     return thunkAPI.rejectWithValue(resData.message)
@@ -53,6 +55,7 @@ export const logoutThunk = createAsyncThunk("authentication/logout", async (data
     return thunkAPI.rejectWithValue(resData.message)
   }
 })
+
 export const authenticateOnLoad = createAsyncThunk("authentication/authenticateOnLoad", async (data, thunkAPI) => {
   const response = await fetch(`${API_URL}/api/authenticateOnLoad`, {
     method: "POST",
