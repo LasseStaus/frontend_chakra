@@ -1,23 +1,16 @@
 import { Box, Button, Container, Flex, Grid, GridItem, Heading, Text, useDisclosure, Wrap } from "@chakra-ui/react"
 import Image from "next/image"
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { store } from "../../redux/store"
-import { getUserInfo } from "../../redux/userSlice"
-// import { useAuth } from '../../context/AuthContext'
+import { useSelector } from "react-redux"
 import { EditProfileDrawer } from "./EditProfileDrawer"
 
 export const ProfileBanner = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  // const { user } = useAuth()
 
-  //TO DO - add user booking data
-  /* 
-  type AppDispatch = typeof store.dispatch
-  const dispatch = useDispatch<AppDispatch>()
-  const user = useSelector((state: any) => state.loggedInUser) */
-
-  /*   console.log(user) */
+  const { firstname, lastname } = useSelector((state: any) => state.user.user)
+  const bookingData = useSelector((state: any) => state.user.bookings)
+  const { activeTickets } = useSelector((state: any) => state.user.tickets)
+  const purchaseData = useSelector((state: any) => state.user.purchases)
+  const amountOfBookings = bookingData.length
 
   return (
     <>
@@ -48,9 +41,9 @@ export const ProfileBanner = () => {
 
           <GridItem colSpan={{ base: 4, md: 4 }} alignSelf="center">
             <Flex justifyContent="start" direction={{ base: "column", md: "row" }} alignItems="center" gap={{ base: "2", md: "8" }}>
-              {/* <Heading fontSize={{ base: 'sm', md: 'xl', lg: '3xl' }}>
-                {user?.firstname} {user?.lastname}
-              </Heading> */}
+              <Heading fontSize={{ base: "sm", md: "xl", lg: "3xl" }}>
+                {firstname} {lastname}
+              </Heading>
               <Button w="40" variant="secondary" size="sm" onClick={onOpen}>
                 Rediger Profil
               </Button>
@@ -63,27 +56,28 @@ export const ProfileBanner = () => {
               {/* // TO DO - mapping */}
               <Wrap direction="column" maxW={20}>
                 <Heading fontSize="xs" textTransform="uppercase">
-                  Kommende bookinger
+                  Upcomming Bookings
                 </Heading>
+
                 <Text textTransform="uppercase" fontSize="xs">
-                  INGEN KOMMENDE BOOKINGER
+                  {amountOfBookings > 0 ? amountOfBookings + " " + "bookings" : "No bookings ahead"}
                 </Text>
               </Wrap>
               <Wrap direction="column" maxW={20}>
                 <Heading fontSize="xs" textTransform="uppercase">
-                  KLIPPEKORT
+                  Tickets
                 </Heading>
                 <Text textTransform="uppercase" fontSize="xs">
-                  10 KLIP
+                  {activeTickets} tickets
                 </Text>
               </Wrap>
               <Wrap direction="column" maxW={20}>
                 <Heading fontSize="xs" textTransform="uppercase">
                   {" "}
-                  Seneste besøg
+                  Latest Purchase
                 </Heading>
                 <Text textTransform="uppercase" fontSize="xs">
-                  D. 31. april 2022
+                  {purchaseData[0] ? purchaseData[0]?.purchasedAt : "No purchases"}
                 </Text>
               </Wrap>
             </Flex>

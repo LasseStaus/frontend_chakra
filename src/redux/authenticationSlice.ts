@@ -10,13 +10,12 @@ interface User {
 export interface authenticationSliceState {
   user: User | undefined
   pending: boolean
-  tokens:any
- 
+  tokens: any
+
   authenticated: boolean
   authenticationLoad: boolean
-  loginMessageForUser: string | undefined | SerializedError | unknown
-  signupMessageForUser: string | undefined | SerializedError | unknown
-  messageForUserState: "error" | "success" | undefined
+  alertMessage: string | undefined | SerializedError | unknown
+  alertType: "success" | "error" | "warning" | "info" | undefined
 }
 
 const initialState: authenticationSliceState = {
@@ -28,9 +27,8 @@ const initialState: authenticationSliceState = {
   pending: true,
   tokens: undefined,
   authenticated: false,
-  signupMessageForUser: undefined,
-  loginMessageForUser: undefined,
-  messageForUserState: undefined,
+  alertMessage: undefined,
+  alertType: undefined,
   authenticationLoad: true
 }
 
@@ -38,15 +36,18 @@ export const authenticationSlice = createSlice({
   name: "authentication",
   initialState: initialState,
   reducers: {
-    // updateUser: (state, action: PayloadAction<User>) => {
-    //   state.user = action.payload
-    // }
+    setAlertMessage: (state, action) => {
+      state.alertMessage = action.payload
+    }
   },
   extraReducers: (builder) => {
+    //
+    //signupThunk
     builder.addCase(signupThunk.fulfilled, (state, action) => {
       state.pending = false
-      state.signupMessageForUser = "Your user has been created! Please go to login"
       state.tokens = action.payload.access_tokens
+      state.alertMessage = "Your user has been created! Please go to login"
+      state.alertType = "success"
     }),
       builder.addCase(signupThunk.pending, (state, action) => {
         state.pending = true
@@ -55,14 +56,18 @@ export const authenticationSlice = createSlice({
       builder.addCase(signupThunk.rejected, (state, action) => {
         state.pending = false
         state.authenticated = false
-        state.signupMessageForUser = action.payload
+        state.alertMessage = action.payload
+        state.alertType = "error"
       }),
+      //
+      //loginThunk
       builder.addCase(loginThunk.fulfilled, (state, action) => {
         state.pending = false
         state.authenticated = true
         state.user = undefined
-        state.loginMessageForUser = "You've successfully logged in!"
         state.tokens = action.payload.access_token
+        state.alertMessage = "You've successfully logged in!"
+        state.alertType = "success"
       }),
       builder.addCase(loginThunk.pending, (state, action) => {
         state.pending = true
@@ -72,15 +77,18 @@ export const authenticationSlice = createSlice({
         state.pending = false
         state.user = undefined
         state.authenticated = false
-        state.loginMessageForUser = action.payload
+        state.alertMessage = action.payload
+        state.alertType = "error"
       }),
+      //
+      //logoutThunk
       builder.addCase(logoutThunk.fulfilled, (state, action) => {
         state.pending = false
         state.authenticated = false
         state.user = undefined
-        /*         state.user = {firstname:action.payload.user.firstname, lastname:action.payload.user.lastname, email:action.payload.user.email} */
         state.tokens = undefined
-        state.loginMessageForUser = action.payload.message
+        state.alertMessage = action.payload.message
+        state.alertType = "success"
       }),
       builder.addCase(logoutThunk.pending, (state, action) => {
         state.pending = true
@@ -91,11 +99,12 @@ export const authenticationSlice = createSlice({
         state.user = undefined
         state.authenticated = false
       }),
+      //
+      //authenticateOnLoad
       builder.addCase(authenticateOnLoad.fulfilled, (state, action) => {
         state.pending = false
         state.authenticated = true
         state.user = undefined
-        /*         state.user = {firstname:action.payload.user.firstname, lastname:action.payload.user.lastname, email:action.payload.user.email} */
         state.tokens = action.payload.access_token
         state.pending = false
         state.authenticationLoad = false
@@ -109,12 +118,13 @@ export const authenticationSlice = createSlice({
         state.pending = false
         state.user = undefined
         state.authenticated = false
-        state.loginMessageForUser = "It's been a while! Please login again "
+        state.alertMessage = "It's been a while! Please login again "
+        state.alertType = "info"
         state.authenticationLoad = false
       })
   }
 })
 
-// export const { updateUser } = authenticationSlice.actions
+export const { setAlertMessage } = authenticationSlice.actions
 
 export const selectAuthentication = (state: any) => state.authentication

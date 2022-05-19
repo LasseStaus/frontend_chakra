@@ -1,23 +1,24 @@
-import { createAsyncThunk, createSlice, PayloadAction, ThunkAction } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction, SerializedError, ThunkAction } from "@reduxjs/toolkit"
 import getPurchases from "../pages/api/getPurchases"
 import { authenticationSliceState } from "./authenticationSlice"
+import { editUserInfo, editUserPassword, getUserInfo } from "./userActions"
 
 interface User {
-  firstname: any
+  firstname: string | undefined
   lastname: string | undefined
   email: string | undefined
   phonenumber: string | number | undefined
 }
 
-interface Tickets {
+export interface Tickets {
   activeTickets: string | number | undefined
   usedTickets: string | number | undefined
 }
 
-interface Booking {
+export interface Booking {
   id: string
-  bookedFor: string
-  createdAt: string
+  bookedFor: Date
+  createdAt: Date
   userId: string
   iLOQKey?: string
 }
@@ -29,12 +30,14 @@ interface Purchase {
   userId: string
 }
 
-interface userSliceState {
-  user: User
+export interface userSliceState {
+  user: User | undefined
   tickets: Tickets
   bookings: Booking[]
   purchases: Purchase[]
   pending: boolean
+  alertMessage: string | undefined | SerializedError | unknown
+  alertType: "success" | "error" | "warning" | "info" | undefined
 }
 
 const initialState: userSliceState = {
@@ -50,50 +53,22 @@ const initialState: userSliceState = {
     activeTickets: undefined,
     usedTickets: undefined
   },
-  pending: true
+  pending: true,
+  alertMessage: undefined,
+  alertType: undefined
 }
-
-const API_URL = "http://localhost:3333"
-
-export const getUserInfo = createAsyncThunk("loggedInUser/getUserInfo", async (_, { getState }) => {
-  const token = getState() as { authentication: authenticationSliceState }
-
-  const response = await fetch(`${API_URL}/user/profile`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      authorization: `Bearer ${token.authentication.tokens}`
-    }
-  })
-  const resData = await response.json()
-
-  console.log(resData, "use info")
-
-  if (response.status === 200) {
-    console.log("status OK", resData)
-
-    return resData
-  } else {
-    return
-  }
-})
 
 export const userSlice = createSlice({
   name: "user",
   initialState: initialState,
   reducers: {
-    /*   updateBookings: (state, action: PayloadAction<User>) => {
-      state.user = action.payload
-    },
-    updateTickets: (state, action: PayloadAction<User>) => {
-      state.user = action.payload
-    },
-    updateUser: (state, action: PayloadAction<User>) => {
-      state.user = action.payload
-    } */
+    setAlertMessage: (state, action) => {
+      state.alertMessage = action.payload
+    }
   },
   extraReducers: (builder) => {
+    //
+    //getUserInfo
     builder.addCase(getUserInfo.fulfilled, (state, action) => {
       state.user = {
         firstname: action.payload.firstname,
@@ -101,21 +76,63 @@ export const userSlice = createSlice({
         email: action.payload.email,
         phonenumber: action.payload.phonenumber
       }
-      state.bookings.push(action.payload.bookings)
-      state.purchases.push(action.payload.purchase)
+      state.bookings = action.payload.bookings
+      state.purchases = action.payload.purchase
       state.tickets = {
         activeTickets: action.payload.ticket.activeTickets,
         usedTickets: action.payload.ticket.usedTickets
       }
     }),
-      builder.addCase(getUserInfo.pending, (state, action) => {}),
-      builder.addCase(getUserInfo.rejected, (state, action) => {})
+      builder.addCase(getUserInfo.pending, (state, action) => {
+        state.pending = true
+        // state.user = undefined - WHAT TO DO HERE? // TO DO
+      }),
+      builder.addCase(getUserInfo.rejected, (state, action) => {
+        state.pending = false
+        // state.user = state.user - WHAT TO DO HERE? // TO DO
+      }),
+      //
+      //editUserInfo
+      builder.addCase(editUserInfo.fulfilled, (state, action) => {
+        state.user = {
+          firstname: action.payload.firstname,
+          lastname: action.payload.lastname,
+          email: action.payload.email,
+          phonenumber: action.payload.phonenumber
+        }
+
+        state.alertMessage = "User information updated successfully"
+        state.alertType = "success"
+      }),
+      builder.addCase(editUserInfo.pending, (state, action) => {
+        state.pending = true
+        // state.user = undefined - WHAT TO DO HERE? // TO DO
+      }),
+      builder.addCase(editUserInfo.rejected, (state, action) => {
+        state.pending = false
+        state.alertMessage = action.payload
+        state.alertType = "error"
+        // state.user = state.user - WHAT TO DO HERE? // TO DO
+      }),
+      //
+      //editUserPassword
+      builder.addCase(editUserPassword.fulfilled, (state, action) => {
+        console.log("password success")
+      }),
+      builder.addCase(editUserPassword.pending, (state, action) => {
+        state.pending = true
+        // state.user = undefined - WHAT TO DO HERE? // TO DO
+      }),
+      builder.addCase(editUserPassword.rejected, (state, action) => {
+        state.pending = false
+        state.alertMessage = action.payload
+        state.alertType = "error"
+        // state.user = state.user - WHAT TO DO HERE? // TO DO
+      })
   }
 })
-
-function GetHeaderTokens(req: any, res: any) {
-  throw new Error("Function not implemented.")
-}
 // export const {} = userSlice.actions
+
+export const { setAlertMessage } = userSlice.actions
 
 // export const selectUser = (state: any) => state.user.user

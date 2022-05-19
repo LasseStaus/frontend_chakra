@@ -3,7 +3,6 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { LoginProps } from "../../context/AuthTypes"
 import { loginThunk } from "../../redux/authenticationActions"
-import { getUserInfo } from "../../redux/userSlice"
 import { FormField } from "./FormField"
 import { InputField } from "./Input"
 

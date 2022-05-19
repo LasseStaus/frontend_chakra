@@ -1,10 +1,9 @@
-import { Box, Button, Flex } from "@chakra-ui/react"
+import { Flex } from "@chakra-ui/react"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { AuthProvider } from "../../context/AuthContext"
 import { AppDispatch } from "../../redux/store"
-import { getUserInfo } from "../../redux/userSlice"
-
+import { getUserInfo } from "../../redux/userActions"
+import { setAlertMessage } from "../../redux/userSlice"
 import AlertBox from "../alert/Alert"
 import Calender from "../calendar/calendarContainer"
 import UpcommingBookings from "../calendar/upcommingBookings/UpcommingBookingsContainer"
@@ -15,24 +14,28 @@ import Ticket from "../tickets/TicketContainer"
 function LandingPage() {
   const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
-  const token = useSelector((state: any) => state.authentication.tokens)
+  const alertMessage = useSelector((state: any) => state.user.alertMessage)
+  const alertType = useSelector((state: any) => state.user.alertType)
+  console.log(alertMessage)
 
-  const userData = useSelector((state: any) => state.user.user)
-  const bookingData = useSelector((state: any) => state.user.bookings)
-  const ticketData = useSelector((state: any) => state.user.tickets)
-  const purchaseData = useSelector((state: any) => state.user.purchases)
-  console.log("user", userData, "bookingdata", bookingData, "tickets", ticketData, "purchaseData", purchaseData)
-
+  // TO DO, maybe another solution to this?
   useEffect(() => {
     dispatch(getUserInfo())
+
+    if (alertMessage != undefined) {
+      const timeId = setTimeout(() => {
+        dispatch(setAlertMessage(undefined))
+      }, 7000)
+
+      return () => {
+        clearTimeout(timeId)
+      }
+    }
   }, [])
 
   return (
     <>
-      {/* {alertActive && <AlertBox />} */}
-      {token && <Box>{token}</Box>}
-      <br></br>
-      <Button onClick={(e) => dispatch(getUserInfo())}></Button>
+      {alertMessage != undefined ? <AlertBox alertMessage={alertMessage} alertType={alertType} /> : null}
       <ProfileBanner />
       <Flex pb={10} flexDir="column"></Flex>
       <Calender />
