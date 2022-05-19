@@ -10,11 +10,8 @@ interface User {
 export interface authenticationSliceState {
   user: User | undefined
   pending: boolean
-  tokens:
-    | {
-        AT: string | undefined
-      }
-    | undefined
+  tokens:any
+ 
   authenticated: boolean
   authenticationLoad: boolean
   loginMessageForUser: string | undefined | SerializedError | unknown
@@ -29,9 +26,7 @@ const initialState: authenticationSliceState = {
     email: ""
   },
   pending: true,
-  tokens: {
-    AT: undefined
-  },
+  tokens: undefined,
   authenticated: false,
   signupMessageForUser: undefined,
   loginMessageForUser: undefined,
@@ -67,7 +62,7 @@ export const authenticationSlice = createSlice({
         state.authenticated = true
         state.user = undefined
         state.loginMessageForUser = "You've successfully logged in!"
-        state.tokens = { AT: action.payload.access_tokens }
+        state.tokens = action.payload.access_token
       }),
       builder.addCase(loginThunk.pending, (state, action) => {
         state.pending = true
@@ -101,7 +96,7 @@ export const authenticationSlice = createSlice({
         state.authenticated = true
         state.user = undefined
         /*         state.user = {firstname:action.payload.user.firstname, lastname:action.payload.user.lastname, email:action.payload.user.email} */
-        state.tokens = undefined
+        state.tokens = action.payload.access_token
         state.pending = false
         state.authenticationLoad = false
       }),

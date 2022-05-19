@@ -1,10 +1,14 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction, ThunkAction } from "@reduxjs/toolkit"
 import { NextApiResponse } from "next"
 import { useSelector } from "react-redux"
 import getHeaderTokens from "../components/apihelpers/getHeaderTokens"
+import GetTokenForSlice from "../components/apihelpers/getTokenForSlices"
+import Logo from "../components/header/Logo"
+import { authenticationSliceState } from "./authenticationSlice"
+import { RootState, store } from "./store"
 
 interface User {
-  firstname: string | undefined
+  firstname: any 
   lastname: string | undefined
   email: string | undefined
   phonenumber: string | number | undefined
@@ -19,10 +23,12 @@ interface Bookings {
 }
 
 interface userSliceState {
-  user: User | undefined
+  user: User 
   tickets: Tickets | undefined
   bookings: Bookings | undefined
-  pending: boolean
+  firstname: string |undefined
+  pending: boolean,
+   test: string
 }
 
 const initialState: userSliceState = {
@@ -30,8 +36,11 @@ const initialState: userSliceState = {
     firstname: undefined,
     lastname: undefined,
     email: undefined,
-    phonenumber: undefined
+    phonenumber: undefined,
   },
+  firstname: undefined,
+
+  test: '',
   bookings: undefined,
   tickets: undefined,
   pending: true
@@ -39,31 +48,39 @@ const initialState: userSliceState = {
 
 const API_URL = "http://localhost:3333"
 
-export const getUserInfo = createAsyncThunk("loggedInUser/getUserInfo", async (thunkAPI) => {
-  // const state = getState()
+ 
+export const getUserInfo = createAsyncThunk("loggedInUser/getUserInfo", async (_, { getState,}  ) => {
+
+
+const token = getState()  as {authentication: authenticationSliceState}
+
 
   const response = await fetch(`${API_URL}/user/profile`, {
     method: "GET",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
-      // Authorization: `Bearer ${tokenAT}`
+      "Content-Type": "application/json",
+       authorization: `Bearer ${token.authentication.tokens}`
     }
   })
   const resData = await response.json()
 
+  console.log(resData, "use info");
+  
   if (response.status === 200) {
+    console.log("status OK", resData);
+    
     return resData
   } else {
-    // return thunkAPI.rejectWithValue(resData.message)
+    return
   }
 })
 
 export const userSlice = createSlice({
-  name: "loggedInUser",
+  name: "user",
   initialState: initialState,
   reducers: {
-    /*     updateBookings: (state, action: PayloadAction<User>) => {
+        updateBookings: (state, action: PayloadAction<User>) => {
       state.user = action.payload
     },
     updateTickets: (state, action: PayloadAction<User>) => {
@@ -71,11 +88,14 @@ export const userSlice = createSlice({
     },
     updateUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload
-    }, */
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(getUserInfo.fulfilled, (state, action) => {}),
+    builder.addCase(getUserInfo.fulfilled, (state, action) => { 
+        state.user.firstname = action.payload.firstname
+    }),
       builder.addCase(getUserInfo.pending, (state, action) => {}),
+
       builder.addCase(getUserInfo.rejected, (state, action) => {})
   }
 })

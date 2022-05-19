@@ -7,6 +7,6 @@ export default function getHeaderTokens(req: NextApiRequest, res: NextApiRespons
   }
 
   const token = cookie.parse(req.headers.cookie)
-  console.log("Tokens are ok", token)
+
   return token
 }

@@ -12,15 +12,12 @@ export const ProfileBanner = () => {
   // const { user } = useAuth()
 
   //TO DO - add user booking data
-
+  /* 
   type AppDispatch = typeof store.dispatch
   const dispatch = useDispatch<AppDispatch>()
-  const user = useSelector((state: any) => state.loggedInUser)
-  useEffect(() => {
-    dispatch(getUserInfo())
-  }, [])
+  const user = useSelector((state: any) => state.loggedInUser) */
 
-  console.log(user)
+  /*   console.log(user) */
 
   return (
     <>

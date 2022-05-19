@@ -7,5 +7,20 @@ export  const store = configureStore({
         authentication: authenticationSlice.reducer,
         user: userSlice.reducer
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+    middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: {
+        
+          otherValue: 42
+        }
+      }
+    })
 })
+  /*   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger), */
+
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch
