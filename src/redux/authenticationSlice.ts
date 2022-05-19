@@ -60,6 +60,7 @@ export const authenticationSlice = createSlice({
         state.pending = false
         state.authenticated = true
         state.user = undefined
+        state.tokens = '??'
         state.loginMessageForUser = "You've successfully logged in!"
         /*         state.user = {firstname:action.payload.user.firstname, lastname:action.payload.user.lastname, email:action.payload.user.email} */
         state.tokens = { AT: action.payload.access_token }
