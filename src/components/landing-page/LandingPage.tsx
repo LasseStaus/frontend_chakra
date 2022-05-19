@@ -16,13 +16,22 @@ function LandingPage() {
   const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
   const token = useSelector((state: any) => state.authentication.tokens)
-  const testemail = useSelector((state: any) => state.user.user.firstname)
+
+  const userData = useSelector((state: any) => state.user.user)
+  const bookingData = useSelector((state: any) => state.user.bookings)
+  const ticketData = useSelector((state: any) => state.user.tickets)
+  const purchaseData = useSelector((state: any) => state.user.purchases)
+  console.log("user", userData, "bookingdata", bookingData, "tickets", ticketData, "purchaseData", purchaseData)
+
+  useEffect(() => {
+    dispatch(getUserInfo())
+  }, [])
+
   return (
     <>
       {/* {alertActive && <AlertBox />} */}
       {token && <Box>{token}</Box>}
       <br></br>
-      {testemail && <Box>{testemail}</Box>}
       <Button onClick={(e) => dispatch(getUserInfo())}></Button>
       <ProfileBanner />
       <Flex pb={10} flexDir="column"></Flex>

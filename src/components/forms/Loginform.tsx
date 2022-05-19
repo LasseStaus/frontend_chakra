@@ -3,6 +3,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { LoginProps } from "../../context/AuthTypes"
 import { loginThunk } from "../../redux/authenticationActions"
+import { getUserInfo } from "../../redux/userSlice"
 import { FormField } from "./FormField"
 import { InputField } from "./Input"
 
@@ -14,6 +15,7 @@ const Loginform = () => {
   } = methods
 
   const dispatch = useDispatch<any>()
+
   const onSubmit: SubmitHandler<LoginProps> = async (data) => {
     dispatch(loginThunk(data))
   }

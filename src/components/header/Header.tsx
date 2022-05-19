@@ -6,7 +6,7 @@ import { logoutThunk } from "../../redux/authenticationActions"
 import Logo from "./Logo"
 
 const Header: FC = () => {
-  const authenticated = useSelector((state: any) => state.user.authenticated)
+  const authenticated = useSelector((state: any) => state.authentication.authenticated)
 
   const dispatch = useDispatch<any>()
   async function handleLogout() {
