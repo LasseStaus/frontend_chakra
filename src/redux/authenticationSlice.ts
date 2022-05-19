@@ -148,39 +148,6 @@ export const authenticateOnLoad = createAsyncThunk(
 )
 
 
-    /*   export const loginToApi = createAsyncThunk(
-        "users/loginUser",
-        async (data:any, thunkAPI) => {
-
-            console.log("login slice",data);
-            
-        
-            const response = await fetch(
-              "http://localhost:3000/api/setJwtTest",
-              {
-                method: "POST",
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-              }
-            )
-            let resData = await response.json()
-
-        console.log("resData login thunk", resData);
-        
-            if (response.status === 200) {
-           console.log("no error", resData);
-
-              return resData
-            } else {
-                console.log(" error", resData);
-              return thunkAPI.rejectWithValue(resData.message)
-            }
-      
-        }
-      ) */
 interface User {
     firstname: any
     lastname: String
@@ -242,7 +209,7 @@ export const authenticationSlice = createSlice({
         builder.addCase(signupToApi.rejected, (state, action) => {
             state.pending = false
             state.authenticated = false
-            state.loginMessageForUser = action.payload
+            state.signupMessageForUser = action.payload
           }),
         builder.addCase(loginToApi.fulfilled, (state, action) => {
           state.pending = false

@@ -1,7 +1,6 @@
-import {configureStore } from '@reduxjs/toolkit'
-import ThunkMiddleware  from 'redux-thunk'
-import { authenticationSlice } from './authenticationSlice'
+import { configureStore } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
+import { authenticationSlice } from './authenticationSlice'
 export  const store = configureStore({
     reducer: {
         user: authenticationSlice.reducer

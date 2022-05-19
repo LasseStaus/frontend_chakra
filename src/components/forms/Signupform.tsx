@@ -1,16 +1,12 @@
 import { Box, Button, Container } from "@chakra-ui/react"
-
-import React, { useEffect } from "react"
-import { FC, useRef } from "react"
+import React, { useRef } from "react"
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
+import { useDispatch, useSelector } from "react-redux"
 // import { useAuth } from '../../context/AuthContext'
 import { SignupProps } from "../../context/AuthTypes"
-import { signup } from "../../context/AuthActions"
+import { signupToApi } from "../../redux/authenticationSlice"
 import { FormField } from "./FormField"
 import { InputField } from "./Input"
-import { useDispatch, useSelector } from "react-redux"
-import type AppDispatch from "react-redux"
-import { selectUser, signupUser, logoutUser, signupToApi } from "../../redux/authenticationSlice"
 
 const SignupForm = () => {
   // const { signup } = useAuth()

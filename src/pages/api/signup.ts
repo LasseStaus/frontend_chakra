@@ -21,10 +21,10 @@ const dispatch = useDispatch()
     const data = await response.json()
 
     if (response.ok) {
-      res.status(200).json(data)
+    return  res.status(200).json(data)
       console.log("api data", data);
       
-      dispatch(signupUser(data))
+
     } else {
       res.status(data.statusCode).json({ message: data.message })
     }
