@@ -19,7 +19,7 @@ const SignupForm = () => {
   password.current = watch("password", "")
 
   const dispatch = useDispatch<any>()
-  const messageForUser = useSelector((state: any) => state.user.signupMessageForUser)
+  const messageForUser = useSelector((state: any) => state.authentication.signupMessageForUser)
   const onSubmit: SubmitHandler<SignupProps> = async (data) => {
     dispatch(signupThunk(data))
   }

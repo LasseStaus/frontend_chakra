@@ -3,6 +3,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { LoginProps } from "../../context/AuthTypes"
 import { loginThunk } from "../../redux/authenticationActions"
+
 import { getUserInfo } from "../../redux/userSlice"
 import { FormField } from "./FormField"
 import { InputField } from "./Input"
@@ -20,7 +21,7 @@ const Loginform = () => {
     dispatch(loginThunk(data))
   }
 
-  const userMessage = useSelector((state: any) => state.user.loginMessageForUser)
+  const userMessage = useSelector((state: any) => state.authentication.loginMessageForUser)
   return (
     <>
       <Container maxW={"container.sm"}>
