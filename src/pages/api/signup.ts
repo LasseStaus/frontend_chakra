@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 // const API_URL = process.env.BACKEND_URL
 const API_URL = 'http://localhost:3333';
-import { selectUser, signupUser, logoutUser, signupToApi } from "../../redux/userSlice"
+import { selectUser, logoutUser, signupToApi } from "../../redux/authenticationSlice"
 
 export default async function SignupOldApi(req: NextApiRequest, res: NextApiResponse) {
 const dispatch = useDispatch()

@@ -1,27 +1,26 @@
-import { Skeleton } from '@chakra-ui/react'
-import { useContext, useEffect } from 'react'
-import AuthenticatedPage from '../components/authenticationPage/AuthenticationPage'
-import LandingPage from '../components/landing-page/LandingPage'
-import Layout from '../components/layouts/layout/Layout'
-import { AuthContext } from '../context/AuthContext'
+import { Skeleton } from "@chakra-ui/react"
+import { useContext, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import AuthenticatedPage from "../components/authenticationPage/AuthenticationPage"
+import LandingPage from "../components/landing-page/LandingPage"
+import Layout from "../components/layouts/layout/Layout"
+import { AuthContext } from "../context/AuthContext"
+import { authenticateOnLoad } from "../redux/authenticationSlice"
+import { AppDispatch } from "../redux/store"
 // import { useAuth } from '../context/AuthContext'
 
 const Dashboard = () => {
-  // const { user, isLoading } = useAuth()
-  const { state, dispatch } = useContext(AuthContext);
-
-  const { loggedInUser } = state
-
+  const dispatch = useDispatch<AppDispatch>()
+  const authenticated = useSelector((state: any) => state.user.authenticated)
+  const authenticationLoad = useSelector((state: any) => state.user.authenticationLoad)
+  useEffect(() => {
+    dispatch(authenticateOnLoad())
+  }, [])
 
   return (
-    <>
-      {/* <Skeleton startColor='white' endColor='white' isLoaded={!isLoading}>
-        <Layout pageTitle='Home'>{user ? <LandingPage /> : <AuthenticatedPage />}</Layout>
-      </Skeleton> */}
-      {/* <Skeleton startColor='white' endColor='white' > */}
-      <Layout pageTitle='Home'>{loggedInUser ? <LandingPage /> : <AuthenticatedPage />}</Layout>
-      {/* </Skeleton> */}
-    </>
+    <Skeleton startColor="white" endColor="white" isLoaded={!authenticationLoad}>
+      <Layout pageTitle="Home">{authenticated ? <LandingPage /> : <AuthenticatedPage />}</Layout>
+    </Skeleton>
   )
 }
 

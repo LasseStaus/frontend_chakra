@@ -9,6 +9,9 @@ export default async function logout(req: NextApiRequest, res: NextApiResponse) 
     // TO DO MÅSKE LAVES OM
     // DESTROY COOKIE
 
+    console.log("INSIDE LOGOUT API");
+    
+
     if (!req.headers.cookie) {
       res.status(403).json({ message: 'Not Authorized' })
       return
@@ -44,7 +47,7 @@ export default async function logout(req: NextApiRequest, res: NextApiResponse) 
         ],
       )
 
-      res.setHeader("clearCookie", '')
+
       res.status(200).json({ message: "Logout Success" })
     }
     else {

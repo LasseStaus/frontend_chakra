@@ -1,11 +1,29 @@
-import { NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import cookie from 'cookie'
-export function setJwtFromApi(data:any, res: NextApiResponse) {
+export default async function setJwtFromApi(reg:NextApiRequest, res: NextApiResponse) {
 
+console.log("HALLO");
+console.log("HALLO");
 
-    console.log(data);
+console.log("JWT API",reg.body);
+console.log("HALLO");
+console.log("HALLO");
+console.log("HALLO");
     
-    res.setHeader("Set-Cookie",
+
+const response = await fetch(`http://localhost:3333/auth/local/signin`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(reg.body)
+})
+
+const data = await response.json()
+
+if (response.ok) {
+
+  res.setHeader("Set-Cookie",
     [
       cookie.serialize("AT", String(data.access_token), {
         httpOnly: true,
@@ -25,5 +43,10 @@ export function setJwtFromApi(data:any, res: NextApiResponse) {
     ],
 
   )
+
+  res.status(200).json(data)
+} else {
+  res.status(data.statusCode).json({ message: data.message })
+}
 
 }

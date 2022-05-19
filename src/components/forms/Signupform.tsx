@@ -10,7 +10,7 @@ import { FormField } from "./FormField"
 import { InputField } from "./Input"
 import { useDispatch, useSelector } from "react-redux"
 import type AppDispatch from "react-redux"
-import { selectUser, signupUser, logoutUser, signupToApi } from "../../redux/userSlice"
+import { selectUser, signupUser, logoutUser, signupToApi } from "../../redux/authenticationSlice"
 
 const SignupForm = () => {
   // const { signup } = useAuth()
@@ -26,27 +26,17 @@ const SignupForm = () => {
   password.current = watch("password", "")
 
   const dispatch = useDispatch<any>()
-  const user = useSelector(selectUser)
 
-  const testUser = useSelector((state: any) => state.user.user)
-  const testTokens = useSelector((state: any) => state.user.tokens)
+  const messageForUser = useSelector((state: any) => state.user.signupMessageForUser)
+
   const onSubmit: SubmitHandler<SignupProps> = async (data) => {
     dispatch(signupToApi(data))
-
-    /*     signup(data) */
   }
-  useEffect(() => {
-    console.log(testTokens)
-    console.log(testUser)
-  }, [testUser])
 
   return (
     <>
       <Container maxW={"container.sm"}>
-        <Button onClick={(e) => dispatch(signupUser({ firstname: "test", lastname: "henrikkkk", email: "aksjdlasjd" }))}></Button>
-        <Box>{testUser?.firstname}</Box>
-        {/*   <Box>{testUser.lastname}</Box>
-        <Box>{testTokens}</Box> */}
+        {messageForUser && <Box>{messageForUser} </Box>}
         <FormProvider {...methods}>
           <form onSubmit={(e) => e.preventDefault()}>
             <FormField

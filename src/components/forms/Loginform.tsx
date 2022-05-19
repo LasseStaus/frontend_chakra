@@ -1,18 +1,12 @@
 import { Box, Button, Container } from "@chakra-ui/react"
-import { FC, useContext } from "react"
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
-import { login } from "../../context/AuthActions"
-import { AuthContext } from "../../context/AuthContext"
-import { ActionTypes } from "../../context/AuthReducer"
 import { LoginProps } from "../../context/AuthTypes"
-import { loginToApi } from "../../redux/userSlice"
+import { loginToApi } from "../../redux/authenticationSlice"
 import { FormField } from "./FormField"
 import { InputField } from "./Input"
 
 const Loginform = () => {
-  /*   const { state, dispatch } = useContext(AuthContext) */
-
   const methods = useForm<LoginProps>({ mode: "onChange" })
   const {
     handleSubmit,
@@ -21,21 +15,14 @@ const Loginform = () => {
 
   const dispatch = useDispatch<any>()
   const onSubmit: SubmitHandler<LoginProps> = async (data) => {
-    /*     login(data).then((user) =>
-      dispatch({
-        type: ActionTypes.LOGIN,
-        payload: user
-      })
-    ) */
-
     dispatch(loginToApi(data))
   }
 
-  const testUser = useSelector((state: any) => state.user.user)
+  const userMessage = useSelector((state: any) => state.user.loginMessageForUser)
   return (
     <>
       <Container maxW={"container.sm"}>
-        <Box> {testUser?.firstname}</Box>
+        {userMessage && <Box>{userMessage} </Box>}
         <FormProvider {...methods}>
           <form onSubmit={(e) => e.preventDefault()}>
             <FormField
