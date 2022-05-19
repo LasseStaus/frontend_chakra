@@ -19,7 +19,7 @@ const Loginform = () => {
     dispatch(loginThunk(data))
   }
 
-  const userMessage = useSelector((state: any) => state.user.loginMessageForUser)
+  const userMessage = useSelector((state: any) => state.authentication.loginMessageForUser)
   return (
     <>
       <Container maxW={"container.sm"}>
