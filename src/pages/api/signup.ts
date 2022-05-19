@@ -14,7 +14,7 @@ export default async function SignupOldApi(req: NextApiRequest, res: NextApiResp
     const data = await response.json()
     if (response.ok) {
       return res.status(200).json(data)
-      
+
     } else {
       return res.status(data.statusCode).json({ message: data.message })
     }

@@ -1,31 +1,18 @@
-import { Box, Button, ButtonGroup, Flex, Spacer, Text, useDisclosure } from "@chakra-ui/react"
-import React, { FC, useContext, useState } from "react"
-import { AuthContext } from "../../context/AuthContext"
-import { ActionTypes } from "../../context/AuthReducer"
-// import logout from '../../pages/api/logout'
-// import { useAuth } from '../../context/AuthContext'
-import Logo from "./Logo"
-import { logout } from "../../context/AuthActions"
+import { Box, Button, ButtonGroup, Flex, Spacer } from "@chakra-ui/react"
+import React, { FC } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { logoutApi } from "../../redux/authenticationSlice"
 
+import Logo from "./Logo"
+
 const Header: FC = () => {
-  // const { user, logout } = useAuth()
-  /*   const { state, dispatch } = useContext(AuthContext) */
-  /*   const { loggedInUser } = state */
   const authenticated = useSelector((state: any) => state.user.authenticated)
 
   const dispatch = useDispatch<any>()
   async function handleLogout() {
-    /*     await logout().then((response) => {
-      if (response.ok) {
-        dispatch({ type: ActionTypes.LOGOUT })
-      }
-    }) */
-
     console.log("HANDLE LOGOUT")
-
-    dispatch(logoutApi())
+    //todo why does it need data (its rejectWithValue in error) how to fix?
+    dispatch(logoutApi("smt"))
   }
 
   return (

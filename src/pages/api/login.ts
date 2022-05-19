@@ -1,12 +1,11 @@
-import { NextApiRequest, NextApiResponse } from "next"
-import cookie from 'cookie'
+import { NextApiRequest, NextApiResponse } from "next";
 import setCookies from "../../components/apihelpers/setCookies";
 
 // const API_URL = process.env.BACKEND_URL
 const API_URL = 'http://localhost:3333';
-
 export default async function login(req: NextApiRequest, res: NextApiResponse) {
-
+  console.log("inside api login");
+  
   if (req.method === 'POST') {
     const { email, password } = req.body
     const response = await fetch(`${API_URL}/auth/local/signin`, {
@@ -19,14 +18,13 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
         password
       })
     })
-
     const data = await response.json()
 
     if (response.ok) {
       setCookies(res, data)
       return res.status(200).json(data)
     } else {
-      res.status(data.statusCode).json({ message: data.message })
+     return res.status(data.statusCode).json({ message: data.message })
     }
   } else {
     res.setHeader('Allow', ['POST'])

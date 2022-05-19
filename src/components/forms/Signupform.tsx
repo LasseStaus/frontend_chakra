@@ -2,15 +2,12 @@ import { Box, Button, Container } from "@chakra-ui/react"
 import React, { useRef } from "react"
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
-// import { useAuth } from '../../context/AuthContext'
 import { SignupProps } from "../../context/AuthTypes"
-import { signupToApi } from "../../redux/authenticationSlice"
+import { signupThunk } from "../../redux/authenticationSlice"
 import { FormField } from "./FormField"
 import { InputField } from "./Input"
 
 const SignupForm = () => {
-  // const { signup } = useAuth()
-
   const methods = useForm<SignupProps>({ mode: "onChange" })
   const {
     handleSubmit,
@@ -22,11 +19,9 @@ const SignupForm = () => {
   password.current = watch("password", "")
 
   const dispatch = useDispatch<any>()
-
   const messageForUser = useSelector((state: any) => state.user.signupMessageForUser)
-
   const onSubmit: SubmitHandler<SignupProps> = async (data) => {
-    dispatch(signupToApi(data))
+    dispatch(signupThunk(data))
   }
 
   return (
