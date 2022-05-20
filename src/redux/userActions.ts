@@ -132,10 +132,7 @@ export const purchaseTicket = createAsyncThunk('loggedInUser/purchaseTicket', as
 // ==============================
 
 export const createBooking = createAsyncThunk('loggedInUser/createBooking', async (data: string[], thunkAPI) => {
-  const token = thunkAPI.getState() as { authentication: authenticationSliceState }
-
-  console.log('in creatbokiing api ', data)
-
+  const token = thunkAPI.getState() as { authentication: authenticationSliceState }  
   const response = await fetch(`${API_URL}/booking/createBooking`, {
     method: 'POST',
     headers: {
@@ -147,12 +144,9 @@ export const createBooking = createAsyncThunk('loggedInUser/createBooking', asyn
   })
 
   const resData = await response.json()
-  console.log
-  if (response.status === 200) {
-    return thunkAPI.fulfillWithValue(resData.message)
+  if (response.status === 201) {
+    return resData
   } else {
-    console.log(resData)
-
     return thunkAPI.rejectWithValue(resData.message)
   }
 })

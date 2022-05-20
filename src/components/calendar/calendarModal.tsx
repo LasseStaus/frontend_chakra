@@ -24,10 +24,10 @@ const CalendarModal: FC<Props> = ({ isOpen, onClose }, param) => {
     <>
       <Modal size={'5xl'} onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
-        <ModalContent padding={4}>
-          <ModalHeader textAlign={'center'}>Tidsbestilling i værkstedet</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
+        <ModalContent pt={0}>
+          {/*           <ModalCloseButton />
+           */}
+          <ModalBody p={0}>
             <StepFlow />
           </ModalBody>
         </ModalContent>

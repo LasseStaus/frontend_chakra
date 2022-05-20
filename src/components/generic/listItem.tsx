@@ -4,7 +4,7 @@ import React from 'react'
 export default function listItem({ element }: any) {
   return (
     <Box>
-      <Text>{element}</Text>
+      <Text fontSize={'1xl'}>{element}</Text>
     </Box>
   )
 }
