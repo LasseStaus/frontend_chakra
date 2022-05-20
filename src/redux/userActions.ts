@@ -129,7 +129,7 @@ export const purchaseTicket = createAsyncThunk('loggedInUser/purchaseTicket', as
 export const createBooking = createAsyncThunk("loggedInUser/createBooking", async (data: string[], thunkAPI) => {
   const token = thunkAPI.getState() as { authentication: authenticationSliceState }
 
-  console.log("in creatbokiing api ", data);
+  console.log("in start creatbokiing api ", data);
   
   const response = await fetch(`${API_URL}/booking/createBooking`, {
     method: "POST",
@@ -142,13 +142,24 @@ export const createBooking = createAsyncThunk("loggedInUser/createBooking", asyn
   })
 
   const resData = await response.json()
-console.log
-  if (response.status === 200) {
-    
-    return thunkAPI.fulfillWithValue(resData.message)
-  } else {
-    console.log(resData)
 
+  console.log("reponse status", response.status);
+  console.log("reponse status", response);
+  
+  
+  if (response.status === 201) {
+    
+    console.log("Response from createbooking", resData)
+
+    return resData
+  } else {
+
+    console.log("HALLO");
+    console.log("HALLO");
+    console.log("HALLO");
+    console.log("HALLO");
+
+    console.log("response NOT OK from createbooking",resData)
     return thunkAPI.rejectWithValue(resData.message)
   }
 })
