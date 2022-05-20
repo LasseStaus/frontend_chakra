@@ -1,15 +1,15 @@
-import { Flex } from "@chakra-ui/react"
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { AppDispatch } from "../../redux/store"
-import { getUserInfo } from "../../redux/userActions"
-import { setAlertMessage } from "../../redux/userSlice"
-import AlertBox from "../alert/Alert"
-import Calender from "../calendar/calendarContainer"
-import UpcommingBookings from "../calendar/upcommingBookings/UpcommingBookingsContainer"
-import Footer from "../footer/Footer"
-import { ProfileBanner } from "../profile/ProfileBanner"
-import Ticket from "../tickets/TicketContainer"
+import { Flex } from '@chakra-ui/react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../../redux/store'
+import { getUserInfo } from '../../redux/userActions'
+import { setAlertMessage } from '../../redux/userSlice'
+import AlertBox from '../alert/Alert'
+import Calender from '../calendar/calendarContainer'
+import UpcommingBookings from '../calendar/upcommingBookings/UpcommingBookingsContainer'
+import Footer from '../footer/Footer'
+import { ProfileBanner } from '../profile/ProfileBanner'
+import Ticket from '../tickets/TicketContainer'
 
 function LandingPage() {
   const dispatch: AppDispatch = useDispatch<AppDispatch>()

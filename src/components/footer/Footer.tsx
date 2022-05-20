@@ -27,18 +27,7 @@ const SocialButton = ({ children, label, href }: { children: ReactNode; label: s
 
 export const Footer = () => {
   return (
-    <Flex
-      bg={useColorModeValue('gray.50', 'gray.900')}
-      position='absolute'
-      bottom={0}
-      left={0}
-      w='full'
-      color={useColorModeValue('gray.700', 'gray.200')}
-      py={4}
-      px={10}
-      direction={{ base: 'column', md: 'row' }}
-      justify={{ base: 'center', md: 'space-between' }}
-      align={{ base: 'center', md: 'center' }}>
+    <Flex bg={useColorModeValue('gray.50', 'gray.900')} position='absolute' bottom={0} left={0} w='full' color={useColorModeValue('gray.700', 'gray.200')} py={4} px={10} direction={{ base: 'column', md: 'row' }} justify={{ base: 'center', md: 'space-between' }} align={{ base: 'center', md: 'center' }}>
       <Text>© 2022 VærkstedetCPH</Text>
       <Stack direction={'row'} spacing={6}>
         <SocialButton label={'Twitter'} href={'#'}>
@@ -52,7 +41,7 @@ export const Footer = () => {
         </SocialButton>
       </Stack>
     </Flex>
-  );
+  )
 }
 
 export default Footer

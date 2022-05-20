@@ -1,7 +1,7 @@
-import { Box, Button, Container, Flex, Grid, GridItem, Heading, Text, useDisclosure, Wrap } from "@chakra-ui/react"
-import Image from "next/image"
-import { useSelector } from "react-redux"
-import { EditProfileDrawer } from "./EditProfileDrawer"
+import { Box, Button, Container, Flex, Grid, GridItem, Heading, Text, useDisclosure, Wrap } from '@chakra-ui/react'
+import Image from 'next/image'
+import { useSelector } from 'react-redux'
+import { EditProfileDrawer } from './EditProfileDrawer'
 
 export const ProfileBanner = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -34,14 +34,14 @@ export const ProfileBanner = () => {
             justifySelf="center"
             p="4"
           >
-            <Box boxSize={{ base: "20", md: "40" }}>
+            <Box boxSize={{ base: '20', md: '40' }}>
               <Image src="/lillelogo.png" alt="me" width="50" height="45" layout="responsive" />
             </Box>
           </GridItem>
 
           <GridItem colSpan={{ base: 4, md: 4 }} alignSelf="center">
-            <Flex justifyContent="start" direction={{ base: "column", md: "row" }} alignItems="center" gap={{ base: "2", md: "8" }}>
-              <Heading fontSize={{ base: "sm", md: "xl", lg: "3xl" }}>
+            <Flex justifyContent="start" direction={{ base: 'column', md: 'row' }} alignItems="center" gap={{ base: '2', md: '8' }}>
+              <Heading fontSize={{ base: 'sm', md: 'xl', lg: '3xl' }}>
                 {firstname} {lastname}
               </Heading>
               <Button w="40" variant="secondary" size="sm" onClick={onOpen}>
@@ -52,7 +52,6 @@ export const ProfileBanner = () => {
 
           <GridItem colSpan={{ base: 5, md: 4 }} rowSpan={1}>
             <Flex justifyContent="space-between" w="full">
-              {" "}
               {/* // TO DO - mapping */}
               <Wrap direction="column" maxW={20}>
                 <Heading fontSize="xs" textTransform="uppercase">
@@ -60,7 +59,7 @@ export const ProfileBanner = () => {
                 </Heading>
 
                 <Text textTransform="uppercase" fontSize="xs">
-                  {amountOfBookings > 0 ? amountOfBookings + " " + "bookings" : "No bookings ahead"}
+                  {amountOfBookings > 0 ? amountOfBookings + ' ' + 'bookings' : 'No bookings ahead'}
                 </Text>
               </Wrap>
               <Wrap direction="column" maxW={20}>
@@ -73,20 +72,19 @@ export const ProfileBanner = () => {
               </Wrap>
               <Wrap direction="column" maxW={20}>
                 <Heading fontSize="xs" textTransform="uppercase">
-                  {" "}
                   Latest Purchase
                 </Heading>
                 <Text textTransform="uppercase" fontSize="xs">
-                  {purchaseData[0] ? purchaseData[0]?.purchasedAt : "No purchases"}
+                  {purchaseData[0] ? purchaseData[0]?.purchasedAt : 'No purchases'}
                 </Text>
               </Wrap>
             </Flex>
           </GridItem>
 
-          <GridItem colSpan={5} alignSelf={{ base: "center", md: "end" }}>
-            <Flex w="full" justify={{ base: "center", md: "end" }} gap="2">
-              <Button w={{ base: "full", md: "40" }}>Book Plads</Button>
-              <Button w={{ base: "full", md: "40" }} variant="secondary">
+          <GridItem colSpan={5} alignSelf={{ base: 'center', md: 'end' }}>
+            <Flex w="full" justify={{ base: 'center', md: 'end' }} gap="2">
+              <Button w={{ base: 'full', md: '40' }}>Book Plads</Button>
+              <Button w={{ base: 'full', md: '40' }} variant="secondary">
                 Køb billet
               </Button>
             </Flex>

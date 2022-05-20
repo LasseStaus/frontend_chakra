@@ -1,13 +1,12 @@
-import { Skeleton } from "@chakra-ui/react"
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import AuthenticatedPage from "../components/authenticationPage/AuthenticationPage"
-import LandingPage from "../components/landing-page/LandingPage"
-import Layout from "../components/layouts/layout/Layout"
-import { authenticateOnLoad } from "../redux/authenticationActions"
-import { store } from "../redux/store"
+import { Skeleton } from '@chakra-ui/react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import AuthenticatedPage from '../components/authenticationPage/AuthenticationPage'
+import LandingPage from '../components/landing-page/LandingPage'
+import Layout from '../components/layouts/layout/Layout'
+import { authenticateOnLoad } from '../redux/authenticationActions'
+import { store } from '../redux/store'
 
-// import { useAuth } from '../context/AuthContext'
 type AppDispatch = typeof store.dispatch
 const Dashboard = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -16,12 +15,9 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(authenticateOnLoad())
   }, [])
-
   return (
     <Skeleton startColor="white" endColor="white" isLoaded={!authenticationLoad}>
       <Layout pageTitle="Home">{authenticated ? <LandingPage /> : <AuthenticatedPage />}</Layout>
     </Skeleton>
   )
 }
-
-export default Dashboard

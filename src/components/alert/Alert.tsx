@@ -1,8 +1,8 @@
-import { Alert, AlertIcon } from "@chakra-ui/react"
+import { Alert, AlertIcon } from '@chakra-ui/react'
 
 type Props = {
   alertMessage?: string | undefined
-  alertType?: "success" | "error" | "warning" | "info"
+  alertType?: 'success' | 'error' | 'warning' | 'info'
 }
 
 export const AlertBox = ({ alertMessage, alertType }: Props) => {

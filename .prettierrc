@@ -2,7 +2,7 @@
   "semi": false,
   "trailingComma": "none",
   "prettier.semi": true,
-  "singleQuote": false,
+  "singleQuote": true,
   "printWidth": 140,
   "tabWidth": 2
 }

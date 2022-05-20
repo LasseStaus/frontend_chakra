@@ -74,6 +74,7 @@ export const themeVaerkstedetCPH = extendTheme({
     },
     Container: {
       baseStyle: {
+
         paddingTop: { sm: 10, xl: 12, xxl: 20 },
         paddingBottom: { sm: 10, xl: 12, xxl: 20 },
       },

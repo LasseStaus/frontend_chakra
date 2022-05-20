@@ -1,13 +1,12 @@
-import { Button, DrawerBody, DrawerFooter, Stack } from "@chakra-ui/react"
-import React, { useRef } from "react"
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
-import { FormField } from "../forms/FormField"
-import InputField from "../forms/Input"
-// import { useAuth } from "../../context/AuthContext";
-import { EditUserPasswordProps } from "../../context/AuthTypes"
-import { editUserPassword } from "../../redux/userActions"
-import { AppDispatch } from "../../redux/store"
-import { useDispatch } from "react-redux"
+import { Button, DrawerBody, DrawerFooter, Stack } from '@chakra-ui/react'
+import React, { useRef } from 'react'
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import { FormField } from '../forms/FormField'
+import InputField from '../forms/Input'
+import { EditUserPasswordProps } from '../../context/AuthTypes'
+import { editUserPassword } from '../../redux/userActions'
+import { AppDispatch } from '../../redux/store'
+import { useDispatch } from 'react-redux'
 
 type Props = {
   onClose: () => void
@@ -16,7 +15,7 @@ type Props = {
 export const EditProfilePassword = ({ onClose }: Props) => {
   const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
-  const methods = useForm<EditUserPasswordProps>({ mode: "onBlur" })
+  const methods = useForm<EditUserPasswordProps>({ mode: 'onBlur' })
 
   const {
     handleSubmit,
@@ -25,7 +24,7 @@ export const EditProfilePassword = ({ onClose }: Props) => {
   } = methods
   const password = useRef({})
 
-  password.current = watch("passwordNew", "")
+  password.current = watch('passwordNew', '')
 
   const onSubmit: SubmitHandler<EditUserPasswordProps> = async (data) => {
     const body = {
@@ -50,7 +49,7 @@ export const EditProfilePassword = ({ onClose }: Props) => {
                 defaultValue=""
                 type="password"
                 rules={{
-                  required: "Required"
+                  required: 'Required'
                 }}
                 errors={errors.passwordCurrent}
               />
@@ -61,18 +60,18 @@ export const EditProfilePassword = ({ onClose }: Props) => {
                 defaultValue=""
                 type="password"
                 rules={{
-                  required: "Required",
+                  required: 'Required',
                   pattern: {
                     value: /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
-                    message: "Password must be at least 8 characters long, have at least one uppercase letter and one numeric character"
+                    message: 'Password must be at least 8 characters long, have at least one uppercase letter and one numeric character'
                   },
                   minLength: {
                     value: 8,
-                    message: "Password must be between 8 and 50 characters"
+                    message: 'Password must be between 8 and 50 characters'
                   },
                   maxLength: {
                     value: 50,
-                    message: "Password must be between 8 and 50 characters"
+                    message: 'Password must be between 8 and 50 characters'
                   }
                 }}
                 errors={errors.passwordNew}
@@ -84,8 +83,8 @@ export const EditProfilePassword = ({ onClose }: Props) => {
                 defaultValue=""
                 type="password"
                 rules={{
-                  required: "Required",
-                  validate: (value) => value === password.current || "The passwords do not match"
+                  required: 'Required',
+                  validate: (value) => value === password.current || 'The passwords do not match'
                 }}
                 errors={errors.passwordNewConfirm}
               />
