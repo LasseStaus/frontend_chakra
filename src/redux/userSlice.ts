@@ -118,6 +118,8 @@ export const userSlice = createSlice({
       //editUserPassword
       builder.addCase(editUserPassword.fulfilled, (state, action) => {
         console.log("password success")
+        state.alertMessage = action.payload
+        state.alertType = 'success'
       }),
       builder.addCase(editUserPassword.pending, (state, action) => {
         state.pending = true

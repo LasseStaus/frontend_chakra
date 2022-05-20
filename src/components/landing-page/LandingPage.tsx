@@ -21,7 +21,9 @@ function LandingPage() {
   // TO DO, maybe another solution to this?
   useEffect(() => {
     dispatch(getUserInfo())
+  }, [])
 
+  useEffect(() => {
     if (alertMessage != undefined) {
       const timeId = setTimeout(() => {
         dispatch(setAlertMessage(undefined))
@@ -31,7 +33,7 @@ function LandingPage() {
         clearTimeout(timeId)
       }
     }
-  }, [])
+  }, [alertMessage, dispatch])
 
   return (
     <>
