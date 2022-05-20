@@ -41,6 +41,7 @@ export interface userSliceState {
   tickets: Tickets
   ticketTypes: TicketType[]
   bookings: Booking[]
+  selectedBookings: Booking[]
   purchases: Purchase[]
   pending: boolean
   alertMessage: string | undefined | SerializedError | unknown
@@ -55,6 +56,7 @@ const initialState: userSliceState = {
     phonenumber: undefined
   },
   bookings: [],
+  selectedBookings: [],
   purchases: [],
   tickets: {
     activeTickets: undefined,
@@ -74,7 +76,7 @@ export const userSlice = createSlice({
       state.alertMessage = action.payload
     },
     updateSelectedBookings: (state, action) => {
-      state.bookings = action.payload
+      state.selectedBookings = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -181,6 +183,12 @@ export const userSlice = createSlice({
       //createBooking
       builder.addCase(createBooking.fulfilled, (state, action) => {
         state.pending = false
+        console.log("payload hahaha", action.payload)
+        state.tickets = {
+          activeTickets: action.payload.tickets.activeTickets,
+          usedTickets: action.payload.tickets.usedTickets,
+        }
+        state.bookings= action.payload.updatedBookings
       }),
       builder.addCase(createBooking.pending, (state, action) => {
         state.pending = true
