@@ -31,7 +31,7 @@ export const AllUserBookings = () => {
   const { isOpen: isUpdateBookingOpen, onOpen: onUpdateBookingOpen, onClose: onUpdateBookingClose } = useDisclosure()
 
   const [cancelThisBooking, setCancelThisBooking] = useState<allUserBookingsData | undefined>(undefined)
-  const bookings = useSelector((state: any) => state.user.AllUserBookings)
+  const bookings = useSelector((state: any) => state.user.allUserBookings)
 
   function openModal(booking: allUserBookingsData) {
     console.log('bookingscontainer', booking)
@@ -67,26 +67,25 @@ export const AllUserBookings = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {bookings &&
-                bookings.map((booking: allUserBookingsData) => (
-                  <Tr key={booking.id}>
-                    <Td>{formatDate(booking.bookedFor)}</Td>
-                    <Td>Frederiksberg</Td>
+              {bookings?.map((booking: allUserBookingsData) => (
+                <Tr key={booking.id}>
+                  <Td>{formatDate(booking.bookedFor)}</Td>
+                  <Td>Frederiksberg</Td>
 
-                    <Td>
-                      {booking.iLOQKey ? (
-                        booking.iLOQKey
-                      ) : (
-                        <Button variant="linkButton" onClick={() => openModal(booking)}>
-                          Assign key
-                        </Button>
-                      )}
-                    </Td>
-                    <Td>{booking?.user?.phonenumber}</Td>
-                    <Td>{booking?.user?.email}</Td>
-                    <Td>{formatDate(booking.createdAt)}</Td>
-                  </Tr>
-                ))}
+                  <Td>
+                    {booking.iLOQKey ? (
+                      booking.iLOQKey
+                    ) : (
+                      <Button variant="linkButton" onClick={() => openModal(booking)}>
+                        Assign key
+                      </Button>
+                    )}
+                  </Td>
+                  <Td>{booking?.user?.phonenumber}</Td>
+                  <Td>{booking?.user?.email}</Td>
+                  <Td>{formatDate(booking.createdAt)}</Td>
+                </Tr>
+              ))}
             </Tbody>
           </Table>
         </TableContainer>
