@@ -9,60 +9,51 @@ import StepTypeTicket from './stepTypeTicket'
 import StepConfirmTicket from './stepConfirm'
 import StepPaymentTicket from './stepPayment'
 
-const steps = [
-  { label: 'Choose ticket card' },
-  { label: 'Payment' },
-  { label: 'Confirmation' },
-]
+const steps = [{ label: 'Choose ticket card' }, { label: 'Payment' }, { label: 'Confirmation' }]
 
 const StepFlowTicket = () => {
   const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
-    initialStep: 0,
+    initialStep: 0
   })
+  const [ticketType, setTicketType] = React.useState<'3 days' | '7 days' | '30 days'>('3 days')
 
-  const [selectedDates, setSelectedDates] = useState<[] | string[]>([])
-  const [ticketType, setTicketType] = React.useState<"3 days" | "7 days" | "30 days">("3 days");
-
-  useEffect(() => {
-    console.log('in stepflow', selectedDates)
-
-    setTimeout(() => {
-      // setSelectedDates(selectedDates)
-      console.log('timeout', selectedDates)
-    }, 3000)
-  }, [selectedDates])
+  console.log(ticketType, 'IN FLOW PARENT')
 
   function handleNext() {
-    console.log('handleNext', selectedDates)
-    console.log('done in handle', selectedDates)
-
     nextStep()
 
     //  createBooking(selectedDates)
   }
 
   return (
-    <Flex flexDir='column' width='100%'>
+    <Flex flexDir="column" width="100%">
       <Steps activeStep={activeStep}>
         {steps.map(({ label }) => (
-          <Step label={label} key={label}>
-          </Step>
+          <Step label={label} key={label}></Step>
         ))}
       </Steps>
 
-      <Wrap minHeight={80}>{activeStep === 0 ? <StepTypeTicket ticketType={ticketType} setTicketType={setTicketType} /> : activeStep === 1 ? <StepPaymentTicket ticketType={ticketType} /> : <StepConfirmTicket ticketType={ticketType} />}</Wrap>
+      <Wrap minHeight={80}>
+        {activeStep === 0 ? (
+          <StepTypeTicket ticketType={ticketType} setTicketType={setTicketType} />
+        ) : activeStep === 1 ? (
+          <StepPaymentTicket ticketType={ticketType} />
+        ) : (
+          <StepConfirmTicket ticketType={ticketType} />
+        )}
+      </Wrap>
       {activeStep === steps.length ? (
         <Flex p={4}>
-          <Button mx='auto' size='sm' onClick={reset}>
+          <Button mx="auto" size="sm" onClick={reset}>
             Reset
           </Button>
         </Flex>
       ) : (
-        <Flex width='100%' justify='flex-end'>
-          <Button isDisabled={activeStep === 0} mr={4} onClick={prevStep} size='sm' variant='ghost'>
+        <Flex width="100%" justify="flex-end">
+          <Button isDisabled={activeStep === 0} mr={4} onClick={prevStep} size="sm" variant="ghost">
             Tilbage
           </Button>
-          <Button size='sm' onClick={handleNext}>
+          <Button size="sm" onClick={handleNext}>
             {activeStep === steps.length - 1 ? 'Bekræft datoer' : 'Next'}
           </Button>
         </Flex>
