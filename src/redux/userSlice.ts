@@ -1,5 +1,5 @@
 import { createSlice, SerializedError } from '@reduxjs/toolkit'
-import { createBooking, editUserInfo, editUserPassword, getTicketTypes, getUserInfo, purchaseTicket } from './userActions'
+import { createBooking, deleteBooking, editUserInfo, editUserPassword, getTicketTypes, getUserInfo, purchaseTicket } from './userActions'
 
 interface User {
   firstname: string | undefined
@@ -177,6 +177,8 @@ export const userSlice = createSlice({
         state.alertType = 'error'
         // state.user = state.user - WHAT TO DO HERE? // TO DO
       }),
+      //
+      //createBooking
       builder.addCase(createBooking.fulfilled, (state, action) => {
         state.pending = false
       }),
@@ -188,6 +190,25 @@ export const userSlice = createSlice({
         state.pending = false
 
         // state.user = state.user - WHAT TO DO HERE? // TO DO
+      }),
+      builder.addCase(deleteBooking.fulfilled, (state, action) => {
+        console.log('In delete Booking', action.payload)
+        const newBookings = state.bookings.filter((booking) => booking.id !== action.payload.deletedBooking.id)
+        state.bookings = newBookings
+        state.tickets = {
+          activeTickets: action.payload.updatedTickets.activeTickets,
+          usedTickets: action.payload.updatedTickets.usedTickets
+        }
+        state.alertMessage = 'You have now canceled you booking'
+        state.alertType = 'success'
+      }),
+      builder.addCase(deleteBooking.pending, (state, action) => {
+        state.pending = true
+      }),
+      builder.addCase(deleteBooking.rejected, (state, action) => {
+        state.pending = false
+        state.alertMessage = action.payload
+        state.alertType = 'error'
       })
   }
 })

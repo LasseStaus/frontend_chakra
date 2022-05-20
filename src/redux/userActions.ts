@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authenticationSliceState } from './authenticationSlice'
+import { Booking } from './userSlice'
 
 const API_URL = 'http://localhost:3333'
 
@@ -126,28 +127,57 @@ export const purchaseTicket = createAsyncThunk('loggedInUser/purchaseTicket', as
   }
 })
 
-export const createBooking = createAsyncThunk("loggedInUser/createBooking", async (data: string[], thunkAPI) => {
+// ==============================
+// ===========BOOKINGS===========
+// ==============================
+
+export const createBooking = createAsyncThunk('loggedInUser/createBooking', async (data: string[], thunkAPI) => {
   const token = thunkAPI.getState() as { authentication: authenticationSliceState }
 
-  console.log("in creatbokiing api ", data);
-  
+  console.log('in creatbokiing api ', data)
+
   const response = await fetch(`${API_URL}/booking/createBooking`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
       authorization: `Bearer ${token.authentication.tokens}`
     },
     body: JSON.stringify(data)
   })
 
   const resData = await response.json()
-console.log
+  console.log
   if (response.status === 200) {
-    
     return thunkAPI.fulfillWithValue(resData.message)
   } else {
     console.log(resData)
+
+    return thunkAPI.rejectWithValue(resData.message)
+  }
+})
+
+export const deleteBooking = createAsyncThunk('loggedInUser/deleteBooking', async (booking: Booking, thunkAPI) => {
+  const token = thunkAPI.getState() as { authentication: authenticationSliceState }
+
+  const response = await fetch(`${API_URL}/booking/deleteBooking`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token.authentication.tokens}`
+    },
+    body: JSON.stringify(booking)
+  })
+
+  const resData = await response.json()
+  console.log(response.status)
+
+  if (response.status === 201) {
+    console.log('OK', resData)
+    return { deletedBooking: resData[0], updatedTickets: resData[1] }
+  } else {
+    console.log('NOT OK', resData)
 
     return thunkAPI.rejectWithValue(resData.message)
   }

@@ -6,26 +6,32 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-  Box,
   Button,
-  useDisclosure
+  Text
 } from '@chakra-ui/react'
 import React from 'react'
-import { bookingData, useBooking } from '../../context/bookingContext'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../redux/store'
+import { deleteBooking } from '../../redux/userActions'
+import { Booking } from '../../redux/userSlice'
+import { formatDate } from '../helpers/formatSingleDate'
 
 type Props = {
   param?: string
-  booking: bookingData | undefined
+  booking: Booking | undefined
   isCancelBookingOpen: boolean
   onCancelBookingClose: () => void
 }
 export default function CancelBookingAlert({ booking, isCancelBookingOpen, onCancelBookingClose }: Props) {
   const cancelRef = React.useRef() as React.MutableRefObject<HTMLInputElement>
+  const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
-  const { deleteBooking } = useBooking()
-  console.log(booking)
+  function handleDeleteBooking(booking: Booking) {
+    dispatch(deleteBooking(booking))
+    onCancelBookingClose()
+  }
 
-  console.log('date', booking?.createdAt, typeof booking?.createdAt)
+  if (!booking) return null
 
   return (
     <>
@@ -42,12 +48,15 @@ export default function CancelBookingAlert({ booking, isCancelBookingOpen, onCan
           <AlertDialogHeader>Discard ?</AlertDialogHeader>
           <AlertDialogCloseButton />
           <AlertDialogBody>
-            Are you sure you {booking?.userId} {booking?.createdAt} want to discard all of your notes? 44 words will be deleted.
+            You are about to cancel you booking <Text fontWeight="bold"> {formatDate(booking.bookedFor)} </Text> Are you sure you want to
+            cancel you booking
           </AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button onClick={onCancelBookingClose}>No</Button>
-            <Button colorScheme="red" ml={3} onClick={(e) => deleteBooking(booking)}></Button>
+            <Button onClick={onCancelBookingClose}>Cancel</Button>
+            <Button variant="secondary" colorScheme="red" ml={3} onClick={() => handleDeleteBooking(booking)}>
+              Yes
+            </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
