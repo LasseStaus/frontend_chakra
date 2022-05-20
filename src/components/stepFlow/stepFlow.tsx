@@ -1,9 +1,12 @@
-import { Box, Button, Container, Flex, flexbox, Text, Wrap } from '@chakra-ui/react'
+import { Button, Container, Flex } from '@chakra-ui/react'
 import { Step, Steps, useSteps } from 'chakra-ui-steps'
-import React, { useRef } from 'react'
-import { FC, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { DateObject } from 'react-multi-date-picker'
-import { useBooking } from '../../context/bookingContext'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../../redux/store'
+import { createBooking } from '../../redux/userActions'
+import { updateSelectedBookings } from '../../redux/userSlice'
+import { FormatDatesforState } from '../helpers/formatDatesForState'
 import StepConfirm from './stepConfirm'
 import StepDates from './stepDates'
 import StepEnd from './stepEnd'
@@ -15,53 +18,26 @@ const steps = [
 ]
 
 const StepFlow = () => {
+  const dispatch: AppDispatch = useDispatch<any>()
+
   const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
     initialStep: 0
   })
-
-  const [selectedDates, setSelectedDates] = useState<string[] | null[]>([])
   const [calenderDates, setCalendarDates] = useState<DateObject | DateObject[] | null>(null)
-  useEffect(() => {
-    console.log('in stepflow', selectedDates)
-    console.log('type selected dates parent', typeof selectedDates)
 
-    setTimeout(() => {
-      // setSelectedDates(selectedDates)
-      console.log('timeout', selectedDates)
-    }, 3000)
-  }, [selectedDates])
-  let selectedDatesFormatted: string[] = new Array()
-  function handleDates() {
-    if (calenderDates) {
-      const stringify = JSON.stringify(calenderDates)
-      const parse = JSON.parse(stringify)
-      for (const item in parse) {
-        console.log(`${item}: ${parse[item]}`, 'single date')
-        const dateUnix = `${parse[item]}`
-        const realDate = new Date(parseInt(dateUnix))
-        const test = realDate.toISOString()
-
-        selectedDatesFormatted.push(test)
-      }
-      console.log('selecntedDates handle dates', selectedDatesFormatted)
-    } else if (!calenderDates) {
-      return
-    }
-
-    setSelectedDates(selectedDatesFormatted)
-  }
+  const bookingsState = useSelector((state: any) => state.user.bookings)
   function handleNext() {
-    console.log('handleNext', selectedDates)
-    console.log('done in handle', selectedDates)
-
     if (activeStep === 0) {
-      handleDates()
+      const formattedDates = FormatDatesforState(calenderDates)
+      dispatch(updateSelectedBookings(formattedDates))
+
       return nextStep()
     }
-
-    nextStep()
+    if (activeStep === 1) {
+      dispatch(createBooking(bookingsState))
+      nextStep()
+    }
   }
-
   return (
     <Flex flexDir="column" width="100%">
       <Steps activeStep={activeStep}>
@@ -74,9 +50,9 @@ const StepFlow = () => {
         {activeStep === 0 ? (
           <StepDates calenderDates={calenderDates} setCalendarDates={setCalendarDates} />
         ) : activeStep === 1 ? (
-          <StepConfirm selectedDates={selectedDates} />
+          <StepConfirm />
         ) : (
-          <StepEnd selectedDates={selectedDates} />
+          <StepEnd />
         )}
       </Container>
       {activeStep === steps.length ? (
