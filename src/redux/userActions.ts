@@ -187,7 +187,7 @@ export const getAllUserBookings = createAsyncThunk('loggedInUser/getAllUserBooki
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      authorization: `Bearer ${token.authentication.tokens}`
+      authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZWVkYTAwZS0wZWZjLTRkOTgtYmFhNy1jMTc2MDE5MDA5MzMiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjUzMDY2NzcyLCJleHAiOjE2NTMwNjc2NzJ9.zdV2DrFYz0sZOndohjBFF6SR9r9qjgan8S1bieWpDxo`
     }
   })
 
@@ -213,7 +213,7 @@ export const updateBookingWithiLOQKey = createAsyncThunk('loggedInUser/updateBoo
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      authorization: `Bearer ${token.authentication.tokens}`
+      authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZWVkYTAwZS0wZWZjLTRkOTgtYmFhNy1jMTc2MDE5MDA5MzMiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjUzMDY2NzcyLCJleHAiOjE2NTMwNjc2NzJ9.zdV2DrFYz0sZOndohjBFF6SR9r9qjgan8S1bieWpDxo`
     },
     body: JSON.stringify({
       id: data.bookingId,

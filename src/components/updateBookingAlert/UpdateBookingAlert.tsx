@@ -61,7 +61,7 @@ export default function UpdateBookingAlert({ booking, isUpdateBookingOpen, onUpd
   } = methods
 
   const onSubmit: SubmitHandler<UpdateBookingProps> = async (data) => {
-    console.log('i submit')
+    console.log('i submit', data)
 
     const bookingData = { iLOQKey: data.iLOQKey, bookingId: booking?.id }
 
@@ -87,7 +87,7 @@ export default function UpdateBookingAlert({ booking, isUpdateBookingOpen, onUpd
               <form onSubmit={(e) => e.preventDefault()}>
                 <FormField
                   as={InputField}
-                  name="key"
+                  name="iLOQKey"
                   labeltitle="iLOQ Key"
                   defaultValue=""
                   rules={{
