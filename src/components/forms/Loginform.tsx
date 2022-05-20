@@ -1,7 +1,8 @@
-import { Button, Container } from '@chakra-ui/react'
-import { FC } from 'react'
+import { Box, Button, Container } from '@chakra-ui/react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
 import { LoginProps } from '../../context/AuthTypes'
+import { loginThunk } from '../../redux/authenticationActions'
 import { FormField } from './FormField'
 import { InputField } from './Input'
 
@@ -12,12 +13,17 @@ const Loginform = () => {
     formState: { errors, isValid, isDirty }
   } = methods
 
+  const dispatch = useDispatch<any>()
+
   const onSubmit: SubmitHandler<LoginProps> = async (data) => {
-    const body = { email: data.email, password: data.password }
+    dispatch(loginThunk(data))
   }
+
+  const userMessage = useSelector((state: any) => state.authentication.loginMessageForUser)
   return (
     <>
       <Container maxW={'container.sm'}>
+        {userMessage && <Box>{userMessage} </Box>}
         <FormProvider {...methods}>
           <form onSubmit={(e) => e.preventDefault()}>
             <FormField

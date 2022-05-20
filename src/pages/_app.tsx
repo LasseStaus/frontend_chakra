@@ -1,21 +1,15 @@
-import { ChakraProvider, extendTheme } from '@chakra-ui/react'
-import { NextApiResponse } from 'next'
+import { ChakraProvider } from '@chakra-ui/react'
 import { AppProps } from 'next/app'
+import { Provider } from 'react-redux'
 import { themeVaerkstedetCPH } from '../../styles/theme'
-import { AuthProvider } from '../context/AuthContext'
-import { BookingProvider } from '../context/bookingContext'
-import '../../styles/globals.css'
+import { store } from '../redux/store'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <ChakraProvider resetCSS theme={themeVaerkstedetCPH}>
-      <AuthProvider>
-        <BookingProvider>
-          <Component {...pageProps} />
-        </BookingProvider>
-      </AuthProvider>
-    </ChakraProvider>
-  )
-}
+const AppWrapper = ({ Component, pageProps }: AppProps) => (
+  <ChakraProvider resetCSS theme={themeVaerkstedetCPH}>
+    <Provider store={store}>
+      <Component {...pageProps} />
+    </Provider>
+  </ChakraProvider>
+)
 
-export default MyApp
+export default AppWrapper

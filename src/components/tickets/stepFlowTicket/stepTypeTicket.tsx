@@ -45,7 +45,7 @@ const ticketCardStyle = {
   bg: "brandGrey",
   margin: "1rem",
   p: "4",
-  borderRadius: "10px"
+  borderRadius: "10px",
 };
 
 const ticketCardSelect = {
@@ -61,7 +61,7 @@ const StepTypeTicket = ({ ticketType, setTicketType }: Props) => {
 
   return (
     <Flex flexDir={{ base: 'column', md: "row" }} justifySelf='stretch' alignItems={'center'} w={'100%'} h={'100%'}>
-      <Flex flexDir="column"
+      <Flex flexDir="column" pointerEvents="auto"
         {...ticketCardStyle} {...(ticketType === "3 days" && ticketCardSelect)}
         onClick={() => setTicketType("3 days")}>
         <Heading>{ticketType3days.ticketType}</Heading>

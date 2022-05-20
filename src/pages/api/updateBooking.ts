@@ -3,8 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 const API_URL = 'http://localhost:3333' // TO DO
 
-export default async function editUserPassword(req: NextApiRequest, res: NextApiResponse) {
-
+export default async function updateBooking(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === 'PATCH') {
     if (!req.headers.cookie) {
@@ -14,15 +13,21 @@ export default async function editUserPassword(req: NextApiRequest, res: NextApi
 
     const token = cookie.parse(req.headers.cookie)
 
-    const response = await fetch(`${API_URL}/user/edit/password`, {
+    console.log("NU NU", req.body);
+
+    const { bookingId, formData } = req.body
+    console.log("NU NU", formData, bookingId);
+
+    const response = await fetch(`${API_URL}/booking/updateBooking`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token.AT} `,
       },
-      body: JSON.stringify(
-        req.body
-      )
+      body: JSON.stringify({
+        id: bookingId,
+        iLOQKey: formData.key
+      })
 
     })
 
@@ -34,7 +39,7 @@ export default async function editUserPassword(req: NextApiRequest, res: NextApi
       res.status(data.statusCode).json({ message: data.message })
     }
   } else {
-    res.setHeader('Allow', ['PATCH'])
+    res.setHeader('Allow', ['POST'])
     res.status(405).json({ message: `Method ${req.method} not allowed` })
   }
 }

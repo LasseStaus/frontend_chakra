@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 const API_URL = 'http://localhost:3333' // TO DO
 
-export default async function getUserData(req: NextApiRequest, res: NextApiResponse) {
+export default async function getAllUserBookings(req: NextApiRequest, res: NextApiResponse) {
 
 
   if (req.method === 'GET') {
@@ -14,7 +14,7 @@ export default async function getUserData(req: NextApiRequest, res: NextApiRespo
 
     const token = cookie.parse(req.headers.cookie)
 
-    const response = await fetch(`${API_URL}/user/profile`, {
+    const response = await fetch(`${API_URL}/booking/allUserBookings`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token.AT} `,
@@ -22,7 +22,6 @@ export default async function getUserData(req: NextApiRequest, res: NextApiRespo
     })
 
     const data = await response.json()
-
     if (response.ok) {
       return res.status(200).json(data)
     } else {

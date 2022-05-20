@@ -16,6 +16,6 @@
     "incremental": true,
     
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/context/AuthContext.tsx", "src/components/cancelBookingAlert"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/context/AuthContext.tsx", "src/redux/authenticationSlice.js"],
   "exclude": ["node_modules"]
 }

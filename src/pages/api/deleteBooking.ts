@@ -11,9 +11,9 @@ export default async function deleteBooking(req: NextApiRequest, res: NextApiRes
         res.status(403).json({ message: 'Not Authorized' })
         return
       }
-    const test = JSON.stringify(req.body)
 
-    
+
+
       const token = cookie.parse(req.headers.cookie)
 
     const response = await fetch(`${API_URL}/booking/deleteBooking`, {

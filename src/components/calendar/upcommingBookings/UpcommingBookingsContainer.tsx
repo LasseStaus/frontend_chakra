@@ -17,26 +17,19 @@ import {
   Tbody,
   Td
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { useAuth } from '../../../context/AuthContext'
-import { bookingData, BookingProvider, useBooking } from '../../../context/bookingContext'
-import CancelBookingAlert from '../../cancelBookingAlert/CancelBookingAlert'
-import CalendarModal from '../calendarModal'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { Booking } from '../../../redux/userSlice'
 
 export const UpcommingBookings = () => {
   const { isOpen: isBookingOpen, onOpen: onBookingOpen, onClose: onBookingClose } = useDisclosure()
   const { isOpen: isPurchaseOpen, onOpen: onPurchaseOpen, onClose: onPurchaseClose } = useDisclosure()
   const { isOpen: isCancelBookingOpen, onOpen: onCancelBookingOpen, onClose: onCancelBookingClose } = useDisclosure()
 
-  const [cancelThisBooking, setCancelThisBooking] = useState<bookingData | undefined>(undefined)
+  const bookings = useSelector((state: any) => state.user.bookings)
 
-  const { userBookings, getBookings } = useBooking()
-  console.log('bookingson page', typeof userBookings, userBookings)
-
-  function formatDate(currentDate: string) {
-    const date = new Date(currentDate)
-
-    const formattedDate = date.toLocaleDateString('da-DA', {
+  function formatDate(currentDate: Date) {
+    const formattedDate = new Date(currentDate).toLocaleDateString('da-DA', {
       weekday: 'long',
       year: 'numeric',
       month: 'short',
@@ -45,15 +38,16 @@ export const UpcommingBookings = () => {
     return formattedDate
   }
 
-  function openBooking(booking: bookingData) {
+  const userBookings = ['asdasdsad', 'sadsadsad']
+  /*   function openBooking(booking: bookingData) {
     console.log('bookingscontainer', booking)
-    setCancelThisBooking(booking)
+   setCancelThisBooking(booking)
     onCancelBookingOpen()
-  }
+  } */
 
   return (
     <Container boxShadow={'lg'} maxW={'container.lg'} bg="white">
-      <Flex flexDir="column" p={4}>
+      {/*   <Flex flexDir="column" p={4}>
         <Flex alignItems="center">
           <Flex gap={4} alignItems="center">
             <TimeIcon width={30} height={30} />
@@ -99,7 +93,7 @@ export const UpcommingBookings = () => {
         isCancelBookingOpen={isCancelBookingOpen}
         onCancelBookingClose={onCancelBookingClose}
       />
-      <CalendarModal isOpen={isBookingOpen} onClose={onBookingClose} />
+      <CalendarModal isOpen={isBookingOpen} onClose={onBookingClose} /> */}
     </Container>
   )
 }

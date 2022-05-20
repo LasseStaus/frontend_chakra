@@ -1,9 +1,9 @@
-import { Button, Container } from '@chakra-ui/react'
-
-import React from 'react'
-import { FC, useRef } from 'react'
+import { Box, Button, Container } from '@chakra-ui/react'
+import React, { useRef } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
 import { SignupProps } from '../../context/AuthTypes'
+import { signupThunk } from '../../redux/authenticationActions'
 import { FormField } from './FormField'
 import { InputField } from './Input'
 
@@ -18,20 +18,16 @@ const SignupForm = () => {
 
   password.current = watch('password', '')
 
+  const dispatch = useDispatch<any>()
+  const messageForUser = useSelector((state: any) => state.authentication.signupMessageForUser)
   const onSubmit: SubmitHandler<SignupProps> = async (data) => {
-    const body = {
-      email: data.email,
-      password: data.password,
-      firstname: data.firstname,
-      lastname: data.lastname,
-      phonenumber: data.phonenumber,
-      passwordConfirm: data.passwordConfirm
-    }
+    dispatch(signupThunk(data))
   }
 
   return (
     <>
       <Container maxW={'container.sm'}>
+        {messageForUser && <Box>{messageForUser} </Box>}
         <FormProvider {...methods}>
           <form onSubmit={(e) => e.preventDefault()}>
             <FormField

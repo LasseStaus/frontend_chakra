@@ -1,28 +1,15 @@
-import { Alert, AlertIcon, Stack } from '@chakra-ui/react'
-import { useEffect } from 'react'
-import { useAuth } from '../../context/AuthContext'
+import { Alert, AlertIcon } from '@chakra-ui/react'
 
-export const AlertBox = () => {
-  const { alertActive, setAlertActive, authAlert, alertText } = useAuth()
-  const status = authAlert
-  const text = alertText
+type Props = {
+  alertMessage?: string | undefined
+  alertType?: 'success' | 'error' | 'warning' | 'info'
+}
 
-  useEffect(() => {
-    if (alertActive) {
-      const timeId = setTimeout(() => {
-        setAlertActive(false)
-      }, 7000)
-
-      return () => {
-        clearTimeout(timeId)
-      }
-    }
-  }, [])
-
+export const AlertBox = ({ alertMessage, alertType }: Props) => {
   return (
-    <Alert status={status}>
+    <Alert status={alertType}>
       <AlertIcon />
-      {text}
+      {alertMessage}
     </Alert>
   )
 }

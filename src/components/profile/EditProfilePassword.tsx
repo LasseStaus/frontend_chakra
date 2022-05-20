@@ -4,12 +4,17 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { FormField } from '../forms/FormField'
 import InputField from '../forms/Input'
 import { EditUserPasswordProps } from '../../context/AuthTypes'
+import { editUserPassword } from '../../redux/userActions'
+import { AppDispatch } from '../../redux/store'
+import { useDispatch } from 'react-redux'
 
 type Props = {
   onClose: () => void
 }
 
 export const EditProfilePassword = ({ onClose }: Props) => {
+  const dispatch: AppDispatch = useDispatch<AppDispatch>()
+
   const methods = useForm<EditUserPasswordProps>({ mode: 'onBlur' })
 
   const {
@@ -27,7 +32,7 @@ export const EditProfilePassword = ({ onClose }: Props) => {
       passwordNew: data.passwordNew,
       passwordNewConfirm: data.passwordNewConfirm
     }
-
+    dispatch(editUserPassword(body))
     onClose()
   }
 

@@ -1,20 +1,29 @@
-import { Box, Button, ButtonGroup, Flex, Spacer, Text, useDisclosure } from '@chakra-ui/react'
-import React, { FC, useState } from 'react'
-import { useAuth } from '../../context/AuthContext'
-import Logo from './Logo'
+import { Box, Button, ButtonGroup, Flex, Spacer } from "@chakra-ui/react"
+import React, { FC } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { logoutThunk } from "../../redux/authenticationActions"
+
+import Logo from "./Logo"
 
 const Header: FC = () => {
-  const { user, logout } = useAuth()
+  const authenticated = useSelector((state: any) => state.authentication.authenticated)
+
+  const dispatch = useDispatch<any>()
+  async function handleLogout() {
+    console.log("HANDLE LOGOUT")
+    //todo why does it need data (its rejectWithValue in error) how to fix?
+    dispatch(logoutThunk("smt"))
+  }
 
   return (
-    <Flex bg='white' minWidth='max-content' pr='5' alignItems='center' gap='2'>
-      <Box p='2'>
+    <Flex bg="white" minWidth="max-content" pr="5" alignItems="center" gap="2">
+      <Box p="2">
         <Logo />
       </Box>
       <Spacer />
-      <ButtonGroup gap='2'>
-        {user ? (
-          <Button colorScheme='teal' onClick={logout}>
+      <ButtonGroup gap="2">
+        {authenticated ? (
+          <Button colorScheme="teal" onClick={handleLogout}>
             Logout
           </Button>
         ) : null}
