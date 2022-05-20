@@ -21,3 +21,5 @@ const Dashboard = () => {
     </Skeleton>
   )
 }
+
+export default Dashboard
