@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction, SerializedError, ThunkAction } from "@reduxjs/toolkit"
 import getPurchases from "../pages/api/getPurchases"
 import { authenticationSliceState } from "./authenticationSlice"
-import { editUserInfo, editUserPassword, getUserInfo } from "./userActions"
+import { createBooking, editUserInfo, editUserPassword, getUserInfo } from "./userActions"
 
 interface User {
   firstname: string | undefined
@@ -64,7 +64,8 @@ export const userSlice = createSlice({
   reducers: {
     setAlertMessage: (state, action) => {
       state.alertMessage = action.payload
-    }
+    },
+    updateSelectedBookings: (state, action) => {state.bookings = action.payload}
   },
   extraReducers: (builder) => {
     //
@@ -130,11 +131,23 @@ export const userSlice = createSlice({
         state.alertMessage = action.payload
         state.alertType = "error"
         // state.user = state.user - WHAT TO DO HERE? // TO DO
+      }),
+      builder.addCase(createBooking.fulfilled, (state, action) => {
+        state.pending = false
+      }),
+      builder.addCase(createBooking.pending, (state, action) => {
+        state.pending = true
+        // state.user = undefined - WHAT TO DO HERE? // TO DO
+      }),
+      builder.addCase(createBooking.rejected, (state, action) => {
+        state.pending = false
+  
+        // state.user = state.user - WHAT TO DO HERE? // TO DO
       })
   }
 })
 // export const {} = userSlice.actions
 
-export const { setAlertMessage } = userSlice.actions
+export const { setAlertMessage, updateSelectedBookings } = userSlice.actions
 
 // export const selectUser = (state: any) => state.user.user

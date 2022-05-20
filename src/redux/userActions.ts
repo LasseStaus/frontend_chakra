@@ -78,3 +78,30 @@ export const editUserPassword = createAsyncThunk("loggedInUser/editUserPassword"
     return thunkAPI.rejectWithValue(resData.message)
   }
 })
+
+export const createBooking = createAsyncThunk("loggedInUser/createBooking", async (data: string[], thunkAPI) => {
+  const token = thunkAPI.getState() as { authentication: authenticationSliceState }
+
+  console.log("in creatbokiing api ", data);
+  
+  const response = await fetch(`${API_URL}/booking/createBooking`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token.authentication.tokens}`
+    },
+    body: JSON.stringify(data)
+  })
+
+  const resData = await response.json()
+console.log
+  if (response.status === 200) {
+    
+    return thunkAPI.fulfillWithValue(resData.message)
+  } else {
+    console.log(resData)
+
+    return thunkAPI.rejectWithValue(resData.message)
+  }
+})

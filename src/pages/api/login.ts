@@ -4,7 +4,6 @@ import setCookies from "../../components/apihelpers/setCookies";
 // const API_URL = process.env.BACKEND_URL
 const API_URL = 'http://localhost:3333';
 export default async function login(req: NextApiRequest, res: NextApiResponse) {
-  console.log("inside api login");
   
   if (req.method === 'POST') {
     const { email, password } = req.body
