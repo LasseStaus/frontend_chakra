@@ -187,7 +187,7 @@ export const getAllUserBookings = createAsyncThunk('loggedInUser/getAllUserBooki
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZWVkYTAwZS0wZWZjLTRkOTgtYmFhNy1jMTc2MDE5MDA5MzMiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjUzMDYzNDQ2LCJleHAiOjE2NTMwNjQzNDZ9.uqNqBuWoWltT092Ann-l_dDUXrQnGd3dXtUkfM_eNVk`
+      authorization: `Bearer ${token.authentication.tokens}`
     }
   })
 
