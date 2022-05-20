@@ -132,7 +132,7 @@ export const purchaseTicket = createAsyncThunk('loggedInUser/purchaseTicket', as
 // ==============================
 
 export const createBooking = createAsyncThunk('loggedInUser/createBooking', async (data: string[], thunkAPI) => {
-  const token = thunkAPI.getState() as { authentication: authenticationSliceState }  
+  const token = thunkAPI.getState() as { authentication: authenticationSliceState }
   const response = await fetch(`${API_URL}/booking/createBooking`, {
     method: 'POST',
     headers: {
@@ -173,6 +173,59 @@ export const deleteBooking = createAsyncThunk('loggedInUser/deleteBooking', asyn
   } else {
     console.log('NOT OK', resData)
 
+    return thunkAPI.rejectWithValue(resData.message)
+  }
+})
+
+// getAllUserBookings
+// ================================================
+export const getAllUserBookings = createAsyncThunk('loggedInUser/getAllUserBookings', async (_, thunkAPI) => {
+  const token = thunkAPI.getState() as { authentication: authenticationSliceState }
+  console.log(token)
+
+  const response = await fetch(`${API_URL}/booking/allUserBookings`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token.authentication.tokens}`
+    }
+  })
+
+  const resData = await response.json()
+
+  console.log('IN getAllUserBookings', resData)
+
+  if (response.status === 200) {
+    console.log('IN getAllUserBookings OK', resData)
+    return resData
+  } else {
+    return thunkAPI.rejectWithValue(resData.message)
+  }
+})
+
+export const updateBookingWithiLOQKey = createAsyncThunk('loggedInUser/updateBookingWithiLOQKey', async (data: any, thunkAPI) => {
+  const token = thunkAPI.getState() as { authentication: authenticationSliceState }
+
+  console.log(data, 'update booking with key')
+
+  const response = await fetch(`${API_URL}/booking/updateBooking`, {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token.authentication.tokens}`
+    },
+    body: JSON.stringify({
+      id: data.bookingId,
+      iLOQKey: data.iLOQKey
+    })
+  })
+
+  const resData = await response.json()
+
+  if (response.status === 200) {
+    return resData
+  } else {
     return thunkAPI.rejectWithValue(resData.message)
   }
 })

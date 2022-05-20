@@ -5,10 +5,15 @@ import {
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogOverlay, Button
+  AlertDialogOverlay,
+  Button
 } from '@chakra-ui/react'
 import React from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../redux/store'
+import { updateBookingWithiLOQKey } from '../../redux/userActions'
+import { Booking } from '../../redux/userSlice'
 import { allUserBookingsData } from '../admin/adminPanel'
 import { FormField } from '../forms/FormField'
 import InputField from '../forms/Input'
@@ -41,12 +46,13 @@ type UpdateBookingProps = {
 
 type Props = {
   param?: string
-  booking: allUserBookingsData | undefined
+  booking: Booking | undefined
   isUpdateBookingOpen: boolean
   onUpdateBookingClose: () => void
 }
 export default function UpdateBookingAlert({ booking, isUpdateBookingOpen, onUpdateBookingClose }: Props) {
   const cancelRef = React.useRef() as React.MutableRefObject<HTMLInputElement>
+  const dispatch = useDispatch<AppDispatch>()
 
   const methods = useForm<UpdateBookingProps>({ mode: 'onChange' })
   const {
@@ -57,7 +63,9 @@ export default function UpdateBookingAlert({ booking, isUpdateBookingOpen, onUpd
   const onSubmit: SubmitHandler<UpdateBookingProps> = async (data) => {
     console.log('i submit')
 
-    updateBooking(data, booking?.id)
+    const bookingData = { iLOQKey: data.iLOQKey, bookingId: booking?.id }
+
+    dispatch(updateBookingWithiLOQKey(bookingData))
   }
 
   return (

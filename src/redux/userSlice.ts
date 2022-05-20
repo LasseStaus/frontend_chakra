@@ -1,5 +1,15 @@
 import { createSlice, SerializedError } from '@reduxjs/toolkit'
-import { createBooking, deleteBooking, editUserInfo, editUserPassword, getTicketTypes, getUserInfo, purchaseTicket } from './userActions'
+import {
+  createBooking,
+  deleteBooking,
+  editUserInfo,
+  editUserPassword,
+  getAllUserBookings,
+  getTicketTypes,
+  getUserInfo,
+  purchaseTicket,
+  updateBookingWithiLOQKey
+} from './userActions'
 
 interface User {
   firstname: string | undefined
@@ -41,6 +51,7 @@ export interface userSliceState {
   tickets: Tickets
   ticketTypes: TicketType[]
   bookings: Booking[]
+  allUserBookings: Booking[]
   selectedBookings: Booking[]
   purchases: Purchase[]
   pending: boolean
@@ -56,6 +67,7 @@ const initialState: userSliceState = {
     phonenumber: undefined
   },
   bookings: [],
+  allUserBookings: [],
   selectedBookings: [],
   purchases: [],
   tickets: {
@@ -183,12 +195,12 @@ export const userSlice = createSlice({
       //createBooking
       builder.addCase(createBooking.fulfilled, (state, action) => {
         state.pending = false
-        console.log("payload hahaha", action.payload)
+        console.log('payload hahaha', action.payload)
         state.tickets = {
           activeTickets: action.payload.tickets.activeTickets,
-          usedTickets: action.payload.tickets.usedTickets,
+          usedTickets: action.payload.tickets.usedTickets
         }
-        state.bookings= action.payload.updatedBookings
+        state.bookings = action.payload.updatedBookings
       }),
       builder.addCase(createBooking.pending, (state, action) => {
         state.pending = true
@@ -217,6 +229,42 @@ export const userSlice = createSlice({
         state.pending = false
         state.alertMessage = action.payload
         state.alertType = 'error'
+      }),
+      //
+      //getAllUserBookings
+      builder.addCase(getAllUserBookings.fulfilled, (state, action) => {
+        console.log('getAllUserBookings success', action.payload)
+        state.allUserBookings = action.payload
+      }),
+      builder.addCase(getAllUserBookings.pending, (state, action) => {
+        state.pending = true
+        // state.user = undefined - WHAT TO DO HERE? // TO DO
+      }),
+      builder.addCase(getAllUserBookings.rejected, (state, action) => {
+        // state.pending = false
+        // state.alertMessage = action.payload
+        // state.alertType = 'error'
+        // state.user = state.user - WHAT TO DO HERE? // TO DO
+      })
+    //
+    //editUserInfo
+    builder.addCase(updateBookingWithiLOQKey.fulfilled, (state, action) => {
+      const booking = state.allUserBookings.find((booking) => booking.id === action.payload.id)
+      if (booking) {
+        booking.iLOQKey = action.payload.iLOQKey
+      }
+      state.alertMessage = 'User booking updated successfully'
+      state.alertType = 'success'
+    }),
+      builder.addCase(updateBookingWithiLOQKey.pending, (state, action) => {
+        state.pending = true
+        // state.user = undefined - WHAT TO DO HERE? // TO DO
+      }),
+      builder.addCase(updateBookingWithiLOQKey.rejected, (state, action) => {
+        state.pending = false
+        state.alertMessage = action.payload
+        state.alertType = 'error'
+        // state.user = state.user - WHAT TO DO HERE? // TO DO
       })
   }
 })
