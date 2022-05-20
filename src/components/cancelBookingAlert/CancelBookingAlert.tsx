@@ -48,7 +48,7 @@ export default function CancelBookingAlert({ booking, isCancelBookingOpen, onCan
           <AlertDialogHeader>Discard ?</AlertDialogHeader>
           <AlertDialogCloseButton />
           <AlertDialogBody>
-            You are about to cancel you booking <Text fontWeight="bold"> {formatDate(booking.bookedFor)} </Text> Are you sure you want to
+            You are about to cancel your booking <Text fontWeight="bold"> {formatDate(booking.bookedFor)} </Text> Are you sure you want to
             cancel you booking
           </AlertDialogBody>
 

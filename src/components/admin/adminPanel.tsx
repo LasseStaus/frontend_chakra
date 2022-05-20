@@ -1,33 +1,20 @@
 import { TimeIcon } from '@chakra-ui/icons'
 import { Button, Container, Flex, Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 // import { useAuth } from '../../../context/AuthContext'
 import { bookingData } from '../../context/bookingContext'
+import { AppDispatch } from '../../redux/store'
+import { Booking } from '../../redux/userSlice'
+import { getAllUserBookings } from '../../redux/userActions'
 import CalendarModal from '../calendar/calendarModal'
+import { formatDate } from '../helpers/formatSingleDate'
 import UpdateBookingAlert from '../updateBookingAlert/UpdateBookingAlert'
-
-const getAllUserBookings = async () => {
-  const res = await fetch(`api/getAllUserBookings`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-
-  const data = await res.json()
-  console.log(data)
-
-  if (res.ok && data) {
-    return data
-  } else {
-    console.log('wrong')
-  }
-}
 
 export interface allUserBookingsData {
   id: string
-  bookedFor: string
-  createdAt: string
+  bookedFor: Date
+  createdAt: Date
   userId: string
   iLOQKey?: string
   user?: {
@@ -36,36 +23,25 @@ export interface allUserBookingsData {
   }
 }
 
-export const AllBookings = () => {
+export const AllUserBookings = () => {
+  const dispatch: AppDispatch = useDispatch<AppDispatch>()
+
   const { isOpen: isBookingOpen, onOpen: onBookingOpen, onClose: onBookingClose } = useDisclosure()
-  const { isOpen: isPurchaseOpen, onOpen: onPurchaseOpen, onClose: onPurchaseClose } = useDisclosure()
+  // const { isOpen: isPurchaseOpen, onOpen: onPurchaseOpen, onClose: onPurchaseClose } = useDisclosure()
   const { isOpen: isUpdateBookingOpen, onOpen: onUpdateBookingOpen, onClose: onUpdateBookingClose } = useDisclosure()
 
-  const [booking, setBoooking] = useState<allUserBookingsData | undefined>(undefined)
-  const [bookings, setBookings] = useState<[allUserBookingsData] | undefined>(undefined)
+  const [cancelThisBooking, setCancelThisBooking] = useState<allUserBookingsData | undefined>(undefined)
+  const bookings = useSelector((state: any) => state.user.AllUserBookings)
 
-  function formatDate(currentDate: string) {
-    const date = new Date(currentDate)
-
-    const formattedDate = date.toLocaleDateString('da-DA', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'short',
-      day: '2-digit'
-    })
-    return formattedDate
+  function openModal(booking: allUserBookingsData) {
+    console.log('bookingscontainer', booking)
+    setCancelThisBooking(booking)
+    onUpdateBookingOpen()
   }
 
   useEffect(() => {
-    getAllUserBookings().then((data) => setBookings(data))
+    dispatch(getAllUserBookings())
   }, [])
-
-  console.log('ADMIN', bookings)
-  function openModal(booking: bookingData) {
-    console.log('bookingscontainer', booking)
-    setBoooking(booking)
-    onUpdateBookingOpen()
-  }
 
   return (
     <Container boxShadow={'lg'} maxW={'container.lg'} bg="white">
@@ -91,34 +67,38 @@ export const AllBookings = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {bookings?.map((booking) => (
-                <Tr key={booking.id}>
-                  <Td>{formatDate(booking.bookedFor)}</Td>
-                  <Td>Frederiksberg</Td>
+              {bookings &&
+                bookings.map((booking: allUserBookingsData) => (
+                  <Tr key={booking.id}>
+                    <Td>{formatDate(booking.bookedFor)}</Td>
+                    <Td>Frederiksberg</Td>
 
-                  <Td>
-                    {' '}
-                    {booking.iLOQKey ? (
-                      booking.iLOQKey
-                    ) : (
-                      <Button variant="linkButton" onClick={() => openModal(booking)}>
-                        Assign key
-                      </Button>
-                    )}
-                  </Td>
-                  <Td>{booking?.user?.phonenumber}</Td>
-                  <Td>{booking?.user?.email}</Td>
-                  <Td>{formatDate(booking.createdAt)}</Td>
-                </Tr>
-              ))}
+                    <Td>
+                      {booking.iLOQKey ? (
+                        booking.iLOQKey
+                      ) : (
+                        <Button variant="linkButton" onClick={() => openModal(booking)}>
+                          Assign key
+                        </Button>
+                      )}
+                    </Td>
+                    <Td>{booking?.user?.phonenumber}</Td>
+                    <Td>{booking?.user?.email}</Td>
+                    <Td>{formatDate(booking.createdAt)}</Td>
+                  </Tr>
+                ))}
             </Tbody>
           </Table>
         </TableContainer>
       </Flex>
-      <UpdateBookingAlert booking={booking} isUpdateBookingOpen={isUpdateBookingOpen} onUpdateBookingClose={onUpdateBookingClose} />
+      <UpdateBookingAlert
+        booking={cancelThisBooking}
+        isUpdateBookingOpen={isUpdateBookingOpen}
+        onUpdateBookingClose={onUpdateBookingClose}
+      />
       <CalendarModal isOpen={isBookingOpen} onClose={onBookingClose} />
     </Container>
   )
 }
 
-export default AllBookings
+export default AllUserBookings
