@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction, SerializedError, ThunkAction } from "@reduxjs/toolkit"
-import getPurchases from "../pages/api/getPurchases"
-import { authenticationSliceState } from "./authenticationSlice"
-import { editUserInfo, editUserPassword, getUserInfo } from "./userActions"
+import { createAsyncThunk, createSlice, PayloadAction, SerializedError, ThunkAction } from '@reduxjs/toolkit'
+import getPurchases from '../pages/api/getPurchases'
+import { authenticationSliceState } from './authenticationSlice'
+import { editUserInfo, editUserPassword, getTicketTypes, getUserInfo, purchaseTicket } from './userActions'
 
 interface User {
   firstname: string | undefined
@@ -30,14 +30,23 @@ interface Purchase {
   userId: string
 }
 
+export interface TicketType {
+  id: string | undefined
+  ticketType: string | undefined
+  nowPrice: number | undefined
+  normalPrice: number | undefined
+  ticketsAmount: number | undefined
+}
+
 export interface userSliceState {
   user: User | undefined
   tickets: Tickets
+  ticketTypes: TicketType[]
   bookings: Booking[]
   purchases: Purchase[]
   pending: boolean
   alertMessage: string | undefined | SerializedError | unknown
-  alertType: "success" | "error" | "warning" | "info" | undefined
+  alertType: 'success' | 'error' | 'warning' | 'info' | undefined
 }
 
 const initialState: userSliceState = {
@@ -53,13 +62,14 @@ const initialState: userSliceState = {
     activeTickets: undefined,
     usedTickets: undefined
   },
+  ticketTypes: [],
   pending: true,
   alertMessage: undefined,
   alertType: undefined
 }
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: initialState,
   reducers: {
     setAlertMessage: (state, action) => {
@@ -101,8 +111,8 @@ export const userSlice = createSlice({
           phonenumber: action.payload.phonenumber
         }
 
-        state.alertMessage = "User information updated successfully"
-        state.alertType = "success"
+        state.alertMessage = 'User information updated successfully'
+        state.alertType = 'success'
       }),
       builder.addCase(editUserInfo.pending, (state, action) => {
         state.pending = true
@@ -111,13 +121,13 @@ export const userSlice = createSlice({
       builder.addCase(editUserInfo.rejected, (state, action) => {
         state.pending = false
         state.alertMessage = action.payload
-        state.alertType = "error"
+        state.alertType = 'error'
         // state.user = state.user - WHAT TO DO HERE? // TO DO
       }),
       //
       //editUserPassword
       builder.addCase(editUserPassword.fulfilled, (state, action) => {
-        console.log("password success")
+        console.log('password success')
         state.alertMessage = action.payload
         state.alertType = 'success'
       }),
@@ -128,7 +138,42 @@ export const userSlice = createSlice({
       builder.addCase(editUserPassword.rejected, (state, action) => {
         state.pending = false
         state.alertMessage = action.payload
-        state.alertType = "error"
+        state.alertType = 'error'
+        // state.user = state.user - WHAT TO DO HERE? // TO DO
+      }),
+      //
+      //getTicketTypes
+      builder.addCase(getTicketTypes.fulfilled, (state, action) => {
+        console.log('getTicketTypes success', action.payload)
+        state.ticketTypes = action.payload
+      }),
+      builder.addCase(getTicketTypes.pending, (state, action) => {
+        state.pending = true
+        // state.user = undefined - WHAT TO DO HERE? // TO DO
+      }),
+      builder.addCase(getTicketTypes.rejected, (state, action) => {
+        // state.pending = false
+        // state.alertMessage = action.payload
+        // state.alertType = 'error'
+        // state.user = state.user - WHAT TO DO HERE? // TO DO
+      })
+    //
+    //purchaseTicket
+    builder.addCase(purchaseTicket.fulfilled, (state, action) => {
+      state.tickets = {
+        activeTickets: action.payload.ticket.activeTickets,
+        usedTickets: state.tickets.usedTickets
+      }
+      state.purchases.push(action.payload.purchase)
+    }),
+      builder.addCase(purchaseTicket.pending, (state, action) => {
+        state.pending = true
+        // state.user = undefined - WHAT TO DO HERE? // TO DO
+      }),
+      builder.addCase(purchaseTicket.rejected, (state, action) => {
+        state.pending = false
+        state.alertMessage = action.payload
+        state.alertType = 'error'
         // state.user = state.user - WHAT TO DO HERE? // TO DO
       })
   }

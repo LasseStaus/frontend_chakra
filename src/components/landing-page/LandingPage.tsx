@@ -2,7 +2,7 @@ import { Flex } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
-import { getUserInfo } from '../../redux/userActions'
+import { getTicketTypes, getUserInfo } from '../../redux/userActions'
 import { setAlertMessage } from '../../redux/userSlice'
 import AlertBox from '../alert/Alert'
 import Calender from '../calendar/calendarContainer'
@@ -18,11 +18,12 @@ function LandingPage() {
   const alertType = useSelector((state: any) => state.user.alertType)
   console.log(alertMessage)
 
-  // TO DO, maybe another solution to this?
   useEffect(() => {
     dispatch(getUserInfo())
+    dispatch(getTicketTypes())
   }, [])
 
+  // TO DO, maybe another solution to this?
   useEffect(() => {
     if (alertMessage != undefined) {
       const timeId = setTimeout(() => {
