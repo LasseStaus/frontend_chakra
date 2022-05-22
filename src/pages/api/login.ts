@@ -19,8 +19,8 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     })
     const data = await response.json()
 
-    if (response.ok) {
-      setCookies(res, data)
+    if (response.ok && data.tokens) {
+      setCookies(res, data.tokens)
       return res.status(200).json(data)
     } else {
      return res.status(data.statusCode).json({ message: data.message })
