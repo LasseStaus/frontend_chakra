@@ -12,14 +12,14 @@ interface Props {
 const StepPaymentTicket = ({ ticketType }: Props) => {
   const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
-  let amountOfTickets: number | null
+  let amountOfTickets: number
   if (ticketType == '3 days') {
     amountOfTickets = 3
   } else if (ticketType == '7 days') {
     amountOfTickets = 7
   } else if (ticketType == '30 days') {
     amountOfTickets = 30
-  } else amountOfTickets = null
+  }
 
   return (
     <Flex justifyContent={'center'} alignItems={'center'} w={'100%'} h={'100%'}>
