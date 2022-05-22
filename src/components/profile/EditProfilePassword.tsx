@@ -93,7 +93,7 @@ export const EditProfilePassword = ({ onClose }: Props) => {
         </FormProvider>
       </DrawerBody>
 
-      <DrawerFooter borderTopWidth="1px">
+      <DrawerFooter>
         <Button variant="outline" mr={3} onClick={onClose}>
           Cancel
         </Button>

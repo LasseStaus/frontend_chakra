@@ -1,11 +1,11 @@
-import { Box, Container, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react"
-import React, { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { setAlertMessage } from "../../redux/authenticationSlice"
-import { AppDispatch } from "../../redux/store"
-import AlertBox from "../alert/Alert"
-import Loginform from "../forms/Loginform"
-import SignupForm from "../forms/Signupform"
+import { Box, Container, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAlertMessage } from '../../redux/authenticationSlice'
+import { AppDispatch } from '../../redux/store'
+import AlertBox from '../alert/Alert'
+import Loginform from '../forms/Loginform'
+import SignupForm from '../forms/Signupform'
 
 export const AuthenticatedPage = () => {
   const [index, setTabIndex] = useState(0)
@@ -30,19 +30,19 @@ export const AuthenticatedPage = () => {
   return (
     <>
       {alertMessage != undefined ? <AlertBox alertMessage={alertMessage} alertType={alertType} /> : null}
-      <Container maxW={"container.sm"}>
-        <Box bg="white" boxShadow={"xl"}>
-          <Tabs defaultIndex={0} index={index} onChange={(index) => setTabIndex(index)} isFitted variant="enclosed" border={"sm"}>
-            <TabList p={0} boxShadow={"sm"}>
+      <Container maxW={'container.sm'}>
+        <Box bg="white" boxShadow={'xl'}>
+          <Tabs defaultIndex={0} index={index} onChange={(index) => setTabIndex(index)} isFitted variant="enclosed" border={'sm'}>
+            <TabList p={0} boxShadow={'sm'}>
               <Tab>Login</Tab>
               <Tab>Signup</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
-                <Loginform />
+                <Loginform setTabIndex={setTabIndex} />
               </TabPanel>
               <TabPanel>
-                <SignupForm />
+                <SignupForm setTabIndex={setTabIndex} />
                 {/* <SignupForm setTabIndex={setTabIndex} setStatus={setStatus} setStatusText={setStatusText} /> */}
               </TabPanel>
             </TabPanels>

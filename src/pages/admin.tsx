@@ -1,14 +1,10 @@
-import { Skeleton, Box, Center, Container, Heading, Button } from '@chakra-ui/react'
+import { Skeleton } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import AdminDasboard from '../components/adminPage/AdminDashboard'
-import Loginform from '../components/forms/Loginform'
-import LandingPage from '../components/landing-page/LandingPage'
 import Layout from '../components/layouts/layout/Layout'
 import { store } from '../redux/store'
-import { authenticateOnLoad } from '../redux/authenticationActions'
-import { useRouter } from 'next/router'
-import { updateAdmin } from '../redux/authenticationSlice'
 
 type AppDispatch = typeof store.dispatch
 const AdminPage = () => {

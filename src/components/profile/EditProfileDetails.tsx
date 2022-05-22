@@ -1,12 +1,12 @@
-import { Button, DrawerBody, DrawerFooter, Stack } from "@chakra-ui/react"
-import React from "react"
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
-import { useDispatch, useSelector } from "react-redux"
-import { EditUserProps } from "../../context/AuthTypes"
-import { AppDispatch } from "../../redux/store"
-import { editUserInfo } from "../../redux/userActions"
-import { FormField } from "../forms/FormField"
-import InputField from "../forms/Input"
+import { Button, DrawerBody, DrawerFooter, Stack } from '@chakra-ui/react'
+import React from 'react'
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import { EditUserProps } from '../../context/AuthTypes'
+import { AppDispatch } from '../../redux/store'
+import { editUserInfo } from '../../redux/userActions'
+import { FormField } from '../forms/FormField'
+import InputField from '../forms/Input'
 
 interface Props {
   onClose: () => void
@@ -18,7 +18,7 @@ export const EditProfileDetails = ({ onClose }: Props) => {
   const { firstname, lastname, email, phonenumber } = useSelector((state: any) => state.user.user)
 
   const methods = useForm<EditUserProps>({
-    mode: "onBlur",
+    mode: 'onBlur',
     defaultValues: { firstname: firstname, lastname: lastname, email: email, phonenumber: phonenumber }
   })
 
@@ -49,10 +49,10 @@ export const EditProfileDetails = ({ onClose }: Props) => {
                 name="firstname"
                 labeltitle="First Name"
                 rules={{
-                  required: "Required",
+                  required: 'Required',
                   minLength: {
                     value: 2,
-                    message: "First name must be a minimum of 2 characters"
+                    message: 'First name must be a minimum of 2 characters'
                   }
                 }}
                 errors={errors.firstname}
@@ -62,10 +62,10 @@ export const EditProfileDetails = ({ onClose }: Props) => {
                 name="lastname"
                 labeltitle="Last Name"
                 rules={{
-                  required: "Required",
+                  required: 'Required',
                   minLength: {
                     value: 2,
-                    message: "Last name must be a minimum of 2 characters"
+                    message: 'Last name must be a minimum of 2 characters'
                   }
                 }}
                 errors={errors.lastname}
@@ -75,10 +75,10 @@ export const EditProfileDetails = ({ onClose }: Props) => {
                 name="email"
                 labeltitle="Email"
                 rules={{
-                  required: "Required",
+                  required: 'Required',
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address"
+                    message: 'Invalid email address'
                   }
                 }}
                 errors={errors.email}
@@ -88,10 +88,10 @@ export const EditProfileDetails = ({ onClose }: Props) => {
                 name="phonenumber"
                 labeltitle="Phonenumber"
                 rules={{
-                  required: "Required",
+                  required: 'Required',
                   pattern: {
                     value: /^[1-9]\d{7}$/,
-                    message: "Phone number cannot start with a 0, and must be 8 digits"
+                    message: 'Phone number cannot start with a 0, and must be 8 digits'
                   }
                 }}
                 errors={errors.phonenumber}
@@ -101,7 +101,7 @@ export const EditProfileDetails = ({ onClose }: Props) => {
         </FormProvider>
       </DrawerBody>
 
-      <DrawerFooter borderTopWidth="1px">
+      <DrawerFooter>
         <Button variant="outline" mr={3} onClick={onClose}>
           Cancel
         </Button>
