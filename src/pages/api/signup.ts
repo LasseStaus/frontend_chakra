@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-// const API_URL = process.env.BACKEND_URL
+//TODO Put into .env file, goes for all API urls including createAsync
 const API_URL = 'http://localhost:3333';
 
 export default async function SignupOldApi(req: NextApiRequest, res: NextApiResponse) {

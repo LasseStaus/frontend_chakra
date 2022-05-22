@@ -25,7 +25,7 @@ export const AuthenticatedPage = () => {
         clearTimeout(timeId)
       }
     }
-  }, [])
+  })
 
   return (
     <>
@@ -39,11 +39,10 @@ export const AuthenticatedPage = () => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                <Loginform setTabIndex={setTabIndex} />
+                <Loginform />
               </TabPanel>
               <TabPanel>
                 <SignupForm setTabIndex={setTabIndex} />
-                {/* <SignupForm setTabIndex={setTabIndex} setStatus={setStatus} setStatusText={setStatusText} /> */}
               </TabPanel>
             </TabPanels>
           </Tabs>

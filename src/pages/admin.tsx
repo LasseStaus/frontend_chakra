@@ -2,30 +2,32 @@ import { Skeleton } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import AdminDasboard from '../components/adminPage/AdminDashboard'
+import AdminDasboard from '../components/admin/AdminDashboard'
 import Layout from '../components/layouts/layout/Layout'
-import { store } from '../redux/store'
+import { AppDispatch } from '../redux/store'
+import { getUserInfo } from '../redux/userActions'
 
-type AppDispatch = typeof store.dispatch
 const AdminPage = () => {
   const isAdmin = useSelector((state: any) => state.authentication.isAdmin)
-  const authenticated = useSelector((state: any) => state.authentication.authenticated)
   const authenticationLoad = useSelector((state: any) => state.authentication.authenticationLoad)
-
+  const admin = useSelector((state: any) => state.user.user.firstname)
   const pending = useSelector((state: any) => state.authentication.pending)
-  const user = useSelector((state: any) => state.user.firstname)
-  const dispatch: AppDispatch = useDispatch<AppDispatch>()
   const router = useRouter()
+
+  const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
     if (!isAdmin) {
       router.push('/')
     }
-  }, [isAdmin])
+    if (isAdmin) {
+      dispatch(getUserInfo())
+    }
+  }, [dispatch, isAdmin, router])
 
   return (
     <Skeleton isLoaded={!pending && !authenticationLoad && isAdmin}>
-      <Layout pageTitle="hej">
+      <Layout pageTitle={`Admin ${admin ? admin : 'hej'}`}>
         <AdminDasboard />
       </Layout>
     </Skeleton>

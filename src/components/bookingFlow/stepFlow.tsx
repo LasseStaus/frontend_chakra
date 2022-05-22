@@ -1,4 +1,4 @@
-import { Box, Button, Container, Flex, Heading } from '@chakra-ui/react'
+import { Box, Button, Container, Flex } from '@chakra-ui/react'
 import { Step, Steps, useSteps } from 'chakra-ui-steps'
 import React, { useState } from 'react'
 import { DateObject } from 'react-multi-date-picker'

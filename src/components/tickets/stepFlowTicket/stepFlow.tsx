@@ -1,13 +1,9 @@
-import { Box, Button, Flex, flexbox, Text, Wrap } from '@chakra-ui/react'
+import { Button, Flex, Wrap } from '@chakra-ui/react'
 import { Step, Steps, useSteps } from 'chakra-ui-steps'
-import React, { useRef } from 'react'
-import { FC, useEffect, useState } from 'react'
-import { DateObject } from 'react-multi-date-picker'
-import StepDates from './stepTypeTicket'
-import StepEnd from './stepPayment'
-import StepTypeTicket from './stepTypeTicket'
+import React from 'react'
 import StepConfirmTicket from './stepConfirm'
 import StepPaymentTicket from './stepPayment'
+import StepTypeTicket from './stepTypeTicket'
 
 const steps = [{ label: 'Choose ticket card' }, { label: 'Payment' }, { label: 'Confirmation' }]
 
@@ -16,14 +12,6 @@ const StepFlowTicket = () => {
     initialStep: 0
   })
   const [ticketType, setTicketType] = React.useState<'3 days' | '7 days' | '30 days'>('3 days')
-
-  console.log(ticketType, 'IN FLOW PARENT')
-
-  function handleNext() {
-    nextStep()
-
-    //  createBooking(selectedDates)
-  }
 
   return (
     <Flex flexDir="column" width="100%">
@@ -53,7 +41,7 @@ const StepFlowTicket = () => {
           <Button isDisabled={activeStep === 0} mr={4} onClick={prevStep} size="sm" variant="ghost">
             Tilbage
           </Button>
-          <Button size="sm" onClick={handleNext}>
+          <Button size="sm" onClick={nextStep}>
             {activeStep === steps.length - 1 ? 'Bekræft datoer' : 'Next'}
           </Button>
         </Flex>

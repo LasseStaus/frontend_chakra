@@ -2,14 +2,12 @@ import { TimeIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, Flex, Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Booking } from '../../../redux/userSlice'
-import CancelBookingAlert from '../../cancelBookingAlert/CancelBookingAlert'
-import { formatDate } from '../../helpers/formatSingleDate'
-import CalendarModal from '../calendarModal'
+import { Booking } from '../../redux/userSlice'
+import CancelBookingAlert from '../cancelBookingAlert/CancelBookingAlert'
+import { formatDate } from '../helpers/formatSingleDate'
+import CalendarModal from '../calendar/calendarModal'
 
 export const UpcommingBookings = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-
   const bookings = useSelector((state: any) => state.user.bookings)
 
   const { isOpen: isBookingOpen, onOpen: onBookingOpen, onClose: onBookingClose } = useDisclosure()
@@ -33,7 +31,7 @@ export const UpcommingBookings = () => {
             <Heading fontSize={'4xl'}>Upcomming Bookings</Heading>
           </Flex>
           <Flex ml={'auto'} gap={4} justifySelf="flex-end">
-            <Button onClick={onOpen}>Buy tickets</Button>
+            <Button>Buy tickets</Button>
           </Flex>
         </Flex>
         <TableContainer>

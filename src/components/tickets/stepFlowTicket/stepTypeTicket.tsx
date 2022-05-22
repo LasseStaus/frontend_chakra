@@ -1,7 +1,5 @@
-import { Box, Button, color, Flex, Heading, Text } from '@chakra-ui/react'
-import React, { Dispatch, ReactEventHandler, SetStateAction, useState } from 'react'
-import { Calendar, DateObject } from 'react-multi-date-picker'
-import DatePanel from 'react-multi-date-picker/plugins/date_panel'
+import { Flex, Heading, Text } from '@chakra-ui/react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { useSelector } from 'react-redux'
 import { TicketType } from '../../../redux/userSlice'
 

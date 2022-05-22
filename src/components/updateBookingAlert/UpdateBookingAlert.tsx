@@ -10,35 +10,13 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
 import { updateBookingWithiLOQKey } from '../../redux/userActions'
 import { Booking } from '../../redux/userSlice'
-import { allUserBookingsData } from '../admin/adminPanel'
 import { FormField } from '../forms/FormField'
 import InputField from '../forms/Input'
-
-const updateBooking = async (formData: UpdateBookingProps, bookingId: string | undefined) => {
-  const res = await fetch(`api/updateBooking`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      formData,
-      bookingId
-    })
-  })
-
-  const data = await res.json()
-  console.log(data)
-
-  if (res.ok && data) {
-    return data
-  } else {
-    console.log('wrong')
-  }
-}
 
 type UpdateBookingProps = {
   iLOQKey: string
@@ -55,8 +33,10 @@ export default function UpdateBookingAlert({ booking, isUpdateBookingOpen, onUpd
   const dispatch = useDispatch<AppDispatch>()
 
   const methods = useForm<UpdateBookingProps>({ mode: 'onChange' })
+  //TODO Isvalid & isdirty - do something
   const {
     handleSubmit,
+    reset,
     formState: { errors, isValid, isDirty }
   } = methods
 
@@ -66,6 +46,8 @@ export default function UpdateBookingAlert({ booking, isUpdateBookingOpen, onUpd
     const bookingData = { iLOQKey: data.iLOQKey, bookingId: booking?.id }
 
     dispatch(updateBookingWithiLOQKey(bookingData))
+    reset({ iLOQKey: '' })
+    onUpdateBookingClose()
   }
 
   return (
@@ -96,7 +78,7 @@ export default function UpdateBookingAlert({ booking, isUpdateBookingOpen, onUpd
                   errors={errors.iLOQKey}
                 />
               </form>
-            </FormProvider>{' '}
+            </FormProvider>
           </AlertDialogBody>
 
           <AlertDialogFooter>
