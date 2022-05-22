@@ -34,7 +34,7 @@ export const AdminBookingPanel = () => {
 
   useEffect(() => {
     dispatch(getAllUserBookings())
-  })
+  }, [dispatch])
 
   return (
     <Container boxShadow={'lg'} maxW={'container.lg'} bg="white">

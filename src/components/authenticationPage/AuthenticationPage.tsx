@@ -25,7 +25,7 @@ export const AuthenticatedPage = () => {
         clearTimeout(timeId)
       }
     }
-  })
+  }, [dispatch])
 
   return (
     <>
