@@ -14,7 +14,7 @@ function AdminDasboard() {
   const alertType = useSelector((state: any) => state.user.alertType)
 
   // TO DO, maybe another solution to this?
-  useEffect(() => {
+  /*   useEffect(() => {
     if (alertMessage != undefined) {
       const timeId = setTimeout(() => {
         dispatch(setAlertMessage(undefined))
@@ -24,7 +24,7 @@ function AdminDasboard() {
         clearTimeout(timeId)
       }
     }
-  }, [alertMessage, dispatch])
+  }, [alertMessage, dispatch]) */
 
   return (
     <>

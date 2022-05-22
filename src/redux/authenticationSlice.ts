@@ -1,17 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit"
 import { authenticateOnLoad, loginThunk, logoutThunk, signupThunk } from "./authenticationActions"
 
-interface User {
-  firstname: any
-  lastname: String
-  email: string
-}
+
 
 export interface authenticationSliceState {
-  user: User | undefined
+  isAdmin: boolean
   pending: boolean
-  tokens: any
-
+  tokens: any 
   authenticated: boolean
   authenticationLoad: boolean
   alertMessage: string | undefined | SerializedError | unknown
@@ -19,11 +14,7 @@ export interface authenticationSliceState {
 }
 
 const initialState: authenticationSliceState = {
-  user: {
-    firstname: "sad",
-    lastname: "",
-    email: ""
-  },
+  isAdmin: false,
   pending: true,
   tokens: undefined,
   authenticated: false,
@@ -38,6 +29,9 @@ export const authenticationSlice = createSlice({
   reducers: {
     setAlertMessage: (state, action) => {
       state.alertMessage = action.payload
+    },
+    updateAdmin : (state, action) => {
+      state.isAdmin = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -63,32 +57,35 @@ export const authenticationSlice = createSlice({
       //loginThunk
       builder.addCase(loginThunk.fulfilled, (state, action) => {
         state.pending = false
+        state.isAdmin = action.payload.isAdmin
         state.authenticated = true
-        state.user = undefined
-        state.tokens = action.payload.access_token
+        state.authenticationLoad= false
+        state.tokens = action.payload.tokens.access_token
         state.alertMessage = "You've successfully logged in!"
         state.alertType = "success"
       }),
       builder.addCase(loginThunk.pending, (state, action) => {
         state.pending = true
         state.authenticated = false
+        state.authenticationLoad = true
       }),
       builder.addCase(loginThunk.rejected, (state, action) => {
         state.pending = false
-        state.user = undefined
         state.authenticated = false
         state.alertMessage = action.payload
+        state.tokens = undefined
         state.alertType = "error"
+        state.authenticationLoad = false
       }),
       //
       //logoutThunk
       builder.addCase(logoutThunk.fulfilled, (state, action) => {
         state.pending = false
         state.authenticated = false
-        state.user = undefined
         state.tokens = undefined
         state.alertMessage = action.payload.message
         state.alertType = "success"
+        state.isAdmin = false
       }),
       builder.addCase(logoutThunk.pending, (state, action) => {
         state.pending = true
@@ -96,16 +93,15 @@ export const authenticationSlice = createSlice({
       }),
       builder.addCase(logoutThunk.rejected, (state, action) => {
         state.pending = false
-        state.user = undefined
         state.authenticated = false
       }),
       //
       //authenticateOnLoad
       builder.addCase(authenticateOnLoad.fulfilled, (state, action) => {
         state.pending = false
+        state.isAdmin = action.payload.isAdmin
         state.authenticated = true
-        state.user = undefined
-        state.tokens = action.payload.access_token
+        state.tokens = action.payload.tokens.access_token
         state.pending = false
         state.authenticationLoad = false
       }),
@@ -116,15 +112,16 @@ export const authenticationSlice = createSlice({
       }),
       builder.addCase(authenticateOnLoad.rejected, (state, action) => {
         state.pending = false
-        state.user = undefined
         state.authenticated = false
         state.alertMessage = "It's been a while! Please login again "
         state.alertType = "info"
         state.authenticationLoad = false
+        state.tokens = undefined
+        state.isAdmin = false
       })
   }
 })
 
-export const { setAlertMessage } = authenticationSlice.actions
+export const { setAlertMessage, updateAdmin } = authenticationSlice.actions
 
 export const selectAuthentication = (state: any) => state.authentication

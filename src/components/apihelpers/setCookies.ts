@@ -7,6 +7,10 @@ refresh_token: string
 }
 export default function setCookies(res:NextApiResponse, data:Tokens ) {
 
+
+
+    console.log("set cookies helpers", data);
+    
     res.setHeader("Set-Cookie",
     [
 
