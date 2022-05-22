@@ -10,14 +10,6 @@ import { authenticateOnLoad } from '../redux/authenticationActions'
 
 type AppDispatch = typeof store.dispatch
 
-const AdminLogin = () => {
-  return (
-    <Container bg="white" centerContent mt="10">
-      <Heading fontSize="xl">Admin Login</Heading>
-      <Loginform />
-    </Container>
-  )
-}
 const AdminPage = () => {
   const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
@@ -35,7 +27,9 @@ const AdminPage = () => {
   return (
     <Box>
       {/* <Skeleton startColor="white" endColor="white" isLoaded={!authenticationLoad}> */}
-      <Layout pageTitle="Home">{adminAuthenticated ? <AdminDasboard /> : <AdminLogin />}</Layout>
+      <Layout pageTitle="Home">
+        <AdminDasboard />
+      </Layout>
       {/* </Skeleton> */}
     </Box>
   )

@@ -1,5 +1,5 @@
 import { Box, Button, Container } from '@chakra-ui/react'
-import React, { useRef } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { SignupProps } from '../../context/AuthTypes'
@@ -7,12 +7,17 @@ import { signupThunk } from '../../redux/authenticationActions'
 import { FormField } from './FormField'
 import { InputField } from './Input'
 
-const SignupForm = () => {
+type Props = {
+  setTabIndex: Dispatch<SetStateAction<number>>
+}
+
+const SignupForm = ({ setTabIndex }: Props) => {
   const methods = useForm<SignupProps>({ mode: 'onChange' })
   const {
     handleSubmit,
     watch,
-    formState: { errors, isValid, isDirty }
+    reset,
+    formState: { errors, isValid, isDirty, isSubmitSuccessful }
   } = methods
   const password = useRef({})
 
@@ -21,7 +26,12 @@ const SignupForm = () => {
   const dispatch = useDispatch<any>()
   const messageForUser = useSelector((state: any) => state.authentication.signupMessageForUser)
   const onSubmit: SubmitHandler<SignupProps> = async (data) => {
-    dispatch(signupThunk(data))
+    dispatch(signupThunk(data)).then((responseData: any) => {
+      if (responseData.type === 'authentication/signup/fulfilled') {
+        setTabIndex(0)
+        reset({ firstname: '', lastname: '', email: '', phonenumber: '', password: '', passwordConfirm: '' })
+      }
+    })
   }
 
   return (
