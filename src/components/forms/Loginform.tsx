@@ -1,4 +1,5 @@
 import { Box, Button, Container } from '@chakra-ui/react'
+import { Dispatch, SetStateAction } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { LoginProps } from '../../context/AuthTypes'
@@ -6,17 +7,26 @@ import { loginThunk } from '../../redux/authenticationActions'
 import { FormField } from './FormField'
 import { InputField } from './Input'
 
-const Loginform = () => {
+type Props = {
+  setTabIndex: Dispatch<SetStateAction<number>>
+}
+
+const Loginform = ({ setTabIndex }: Props) => {
   const methods = useForm<LoginProps>({ mode: 'onChange' })
   const {
     handleSubmit,
+    reset,
     formState: { errors, isValid, isDirty }
   } = methods
 
   const dispatch = useDispatch<any>()
 
   const onSubmit: SubmitHandler<LoginProps> = async (data) => {
-    dispatch(loginThunk(data))
+    dispatch(loginThunk(data)).then((responseData: any) => {
+      if (responseData.type === 'authentication/signup/fulfilled') {
+        reset({ email: '', password: '' })
+      }
+    })
   }
 
   const userMessage = useSelector((state: any) => state.authentication.loginMessageForUser)
