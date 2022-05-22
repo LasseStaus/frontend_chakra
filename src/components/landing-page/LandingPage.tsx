@@ -1,4 +1,3 @@
-import { Flex } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
@@ -6,24 +5,23 @@ import { getTicketTypes, getUserInfo } from '../../redux/userActions'
 import { setAlertMessage } from '../../redux/userSlice'
 import AlertBox from '../alert/Alert'
 import Calender from '../calendar/calendarContainer'
-import UpcommingBookings from '../calendar/upcommingBookings/UpcommingBookingsContainer'
 import Footer from '../footer/Footer'
 import { ProfileBanner } from '../profile/ProfileBanner'
 import Ticket from '../tickets/TicketContainer'
+import UpcommingBookings from '../upcommingBookings/UpcommingBookingsContainer'
 
 function LandingPage() {
   const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
   const alertMessage = useSelector((state: any) => state.user.alertMessage)
   const alertType = useSelector((state: any) => state.user.alertType)
-  console.log(alertMessage)
 
   useEffect(() => {
     dispatch(getUserInfo())
     dispatch(getTicketTypes())
-  }, [])
+  })
 
-  // TO DO, maybe another solution to this?
+  //TODO move timers into alertmessages
   useEffect(() => {
     if (alertMessage != undefined) {
       const timeId = setTimeout(() => {
@@ -40,11 +38,8 @@ function LandingPage() {
     <>
       {alertMessage != undefined ? <AlertBox alertMessage={alertMessage} alertType={alertType} /> : null}
       <ProfileBanner />
-      <Flex pb={10} flexDir="column"></Flex>
       <Calender />
-      <Flex pb={10} flexDir="column"></Flex>
       <UpcommingBookings />
-      <Flex pb={10} flexDir="column"></Flex>
       <Ticket />
       <Footer />
     </>

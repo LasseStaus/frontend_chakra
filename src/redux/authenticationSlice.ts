@@ -57,12 +57,12 @@ export const authenticationSlice = createSlice({
       //loginThunk
       builder.addCase(loginThunk.fulfilled, (state, action) => {
         state.pending = false
-        state.isAdmin = action.payload.isAdmin
         state.authenticated = true
         state.authenticationLoad= false
         state.tokens = action.payload.tokens.access_token
         state.alertMessage = "You've successfully logged in!"
         state.alertType = "success"
+        state.isAdmin = action.payload.isAdmin
       }),
       builder.addCase(loginThunk.pending, (state, action) => {
         state.pending = true
@@ -99,11 +99,11 @@ export const authenticationSlice = createSlice({
       //authenticateOnLoad
       builder.addCase(authenticateOnLoad.fulfilled, (state, action) => {
         state.pending = false
-        state.isAdmin = action.payload.isAdmin
         state.authenticated = true
         state.tokens = action.payload.tokens.access_token
         state.pending = false
         state.authenticationLoad = false
+        state.isAdmin = action.payload.isAdmin
       }),
       builder.addCase(authenticateOnLoad.pending, (state, action) => {
         state.pending = true

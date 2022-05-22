@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Heading, Text } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import ListItem from '../generic/listItem'

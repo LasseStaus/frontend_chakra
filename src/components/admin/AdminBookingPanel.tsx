@@ -2,12 +2,8 @@ import { TimeIcon } from '@chakra-ui/icons'
 import { Button, Container, Flex, Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// import { useAuth } from '../../../context/AuthContext'
-import { bookingData } from '../../context/bookingContext'
 import { AppDispatch } from '../../redux/store'
-import { Booking } from '../../redux/userSlice'
 import { getAllUserBookings } from '../../redux/userActions'
-import CalendarModal from '../calendar/calendarModal'
 import { formatDate } from '../helpers/formatSingleDate'
 import UpdateBookingAlert from '../updateBookingAlert/UpdateBookingAlert'
 
@@ -23,25 +19,22 @@ export interface allUserBookingsData {
   }
 }
 
-export const AllUserBookings = () => {
+export const AdminBookingPanel = () => {
   const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
-  const { isOpen: isBookingOpen, onOpen: onBookingOpen, onClose: onBookingClose } = useDisclosure()
-  // const { isOpen: isPurchaseOpen, onOpen: onPurchaseOpen, onClose: onPurchaseClose } = useDisclosure()
   const { isOpen: isUpdateBookingOpen, onOpen: onUpdateBookingOpen, onClose: onUpdateBookingClose } = useDisclosure()
 
-  const [cancelThisBooking, setCancelThisBooking] = useState<allUserBookingsData | undefined>(undefined)
+  const [updateBooking, setUpdateBooking] = useState<allUserBookingsData | undefined>(undefined)
   const bookings = useSelector((state: any) => state.user.allUserBookings)
 
   function openModal(booking: allUserBookingsData) {
-    console.log('bookingscontainer', booking)
-    setCancelThisBooking(booking)
+    setUpdateBooking(booking)
     onUpdateBookingOpen()
   }
 
   useEffect(() => {
     dispatch(getAllUserBookings())
-  }, [])
+  }, [dispatch])
 
   return (
     <Container boxShadow={'lg'} maxW={'container.lg'} bg="white">
@@ -90,14 +83,9 @@ export const AllUserBookings = () => {
           </Table>
         </TableContainer>
       </Flex>
-      <UpdateBookingAlert
-        booking={cancelThisBooking}
-        isUpdateBookingOpen={isUpdateBookingOpen}
-        onUpdateBookingClose={onUpdateBookingClose}
-      />
-      <CalendarModal isOpen={isBookingOpen} onClose={onBookingClose} />
+      <UpdateBookingAlert booking={updateBooking} isUpdateBookingOpen={isUpdateBookingOpen} onUpdateBookingClose={onUpdateBookingClose} />
     </Container>
   )
 }
 
-export default AllUserBookings
+export default AdminBookingPanel

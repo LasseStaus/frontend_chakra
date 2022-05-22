@@ -1,10 +1,9 @@
 import { Box, Flex } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { Spinner } from '@chakra-ui/react'
-import { useBooking } from '../../context/bookingContext'
 import { useSelector } from 'react-redux'
 const StepConfirm = () => {
-  const { pending, bookings } = useSelector((state: any) => state.user.pending)
+  const { pending } = useSelector((state: any) => state.user.pending)
   return (
     <Box>
       {pending ? (

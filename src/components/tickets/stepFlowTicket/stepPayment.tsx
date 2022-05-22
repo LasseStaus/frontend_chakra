@@ -1,14 +1,14 @@
-import { Box, Button, Flex } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import { Button, Flex } from '@chakra-ui/react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../../redux/store'
 import { purchaseTicket } from '../../../redux/userActions'
-// import { useAuth } from '../../../context/AuthContext'
 
 interface Props {
   ticketType: '3 days' | '7 days' | '30 days'
 }
 
+//TODO chhange stuff
 const StepPaymentTicket = ({ ticketType }: Props) => {
   const dispatch: AppDispatch = useDispatch<AppDispatch>()
 

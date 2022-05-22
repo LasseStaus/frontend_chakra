@@ -22,7 +22,7 @@ const Dashboard = () => {
     if (isAdmin) {
       router.push('/admin')
     }
-  }, [isAdmin])
+  }, [dispatch, isAdmin, router])
 
   return (
     <Skeleton startColor="white" endColor="white" isLoaded={!authenticationLoad}>

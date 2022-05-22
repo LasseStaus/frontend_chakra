@@ -2,16 +2,12 @@ import { Box, Button, Container } from '@chakra-ui/react'
 import { Dispatch, SetStateAction } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { LoginProps } from '../../context/AuthTypes'
+import { LoginProps } from '../types/AuthTypes'
 import { loginThunk } from '../../redux/authenticationActions'
 import { FormField } from './FormField'
 import { InputField } from './Input'
 
-type Props = {
-  setTabIndex: Dispatch<SetStateAction<number>>
-}
-
-const Loginform = ({ setTabIndex }: Props) => {
+const Loginform = () => {
   const methods = useForm<LoginProps>({ mode: 'onChange' })
   const {
     handleSubmit,

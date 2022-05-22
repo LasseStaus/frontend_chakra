@@ -1,25 +1,12 @@
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-  Text
-} from '@chakra-ui/react'
-import { useSteps } from 'chakra-ui-steps'
+import { Modal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/react'
 import { FC } from 'react'
-import StepFlow from '../stepFlow/stepFlow'
+import StepFlow from '../bookingFlow/stepFlow'
 
 type Props = {
-  param?: string
   isOpen: boolean
   onClose: () => void
 }
-const CalendarModal: FC<Props> = ({ isOpen, onClose }, param) => {
+const CalendarModal: FC<Props> = ({ isOpen, onClose }) => {
   return (
     <>
       <Modal size={'5xl'} onClose={onClose} isOpen={isOpen} isCentered>

@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import setCookies from "../../components/apihelpers/setCookies";
 
-// const API_URL = process.env.BACKEND_URL
-const API_URL = 'http://localhost:3333';
+//TODO Put into .env file, goes for all API urls including createAsync
+const API_URL = 'http://localhost:3333'
 export default async function login(req: NextApiRequest, res: NextApiResponse) {
-  
+
   if (req.method === 'POST') {
     const { email, password } = req.body
     const response = await fetch(`${API_URL}/auth/local/signin`, {
@@ -23,7 +23,7 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
       setCookies(res, data.tokens)
       return res.status(200).json(data)
     } else {
-     return res.status(data.statusCode).json({ message: data.message })
+      return res.status(data.statusCode).json({ message: data.message })
     }
   } else {
     res.setHeader('Allow', ['POST'])

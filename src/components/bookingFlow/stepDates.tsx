@@ -1,8 +1,7 @@
-import { Flex, Heading, Text } from '@chakra-ui/react'
+import { Flex, Heading } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction } from 'react'
 import { Calendar, DateObject } from 'react-multi-date-picker'
 import DatePanel from 'react-multi-date-picker/plugins/date_panel'
-import { useSelector } from 'react-redux'
 type props = {
   calenderDates: DateObject | DateObject[] | null
   setCalendarDates: Dispatch<SetStateAction<DateObject | DateObject[] | null>>

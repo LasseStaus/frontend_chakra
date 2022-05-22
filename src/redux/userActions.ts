@@ -17,6 +17,8 @@ export const getUserInfo = createAsyncThunk('loggedInUser/getUserInfo', async (_
   })
   const resData = await response.json()
 
+  console.log("USER DATA RECIEVED IN FRONTEND ", resData);
+  
   console.log(resData, 'use info')
 
   if (response.status === 200) {
