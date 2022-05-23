@@ -22,19 +22,24 @@ export const UpcommingBookings = () => {
     onCancelBookingOpen()
   }
 
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
   return (
-    <Container boxShadow={'lg'} maxW={'container.lg'} bg="white">
-      <Flex flexDir="column" p={4}>
-        <Flex alignItems="center">
+    <Container maxW={'container.lg'} bg="white" variant={'even'} borderRadius={6} shadow={'base'}>
+      <Flex flexDir="column">
+        <Flex flexDirection={{ sm: 'column-reverse', lg: 'row' }}>
           <Flex gap={4} alignItems="center">
             <TimeIcon width={30} height={30} />
-            <Heading fontSize={'4xl'}>Upcomming Bookings</Heading>
+            <Heading variant={'componentHeader'}>Upcomming Bookings</Heading>
           </Flex>
-          <Flex ml={'auto'} gap={4} justifySelf="flex-end">
-            <Button>Buy tickets</Button>
+          <Flex ml={{ lg: 'auto' }} gap={4}>
+            <Button shadow={'base'} width={'auto'} onClick={onBookingOpen}>
+              New booking
+            </Button>
+            <Button shadow={'base'}>Buy tickets</Button>
           </Flex>
         </Flex>
-        <TableContainer>
+        <TableContainer mt={8}>
           <Table variant="striped" colorScheme="gray">
             <Thead>
               <Tr>
@@ -46,7 +51,7 @@ export const UpcommingBookings = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {bookings.length > 0 ? (
+              {bookings.length > 0 &&
                 bookings.map((booking: Booking) => (
                   <Tr key={booking.id}>
                     <Td>Frederiksberg</Td>
@@ -59,12 +64,14 @@ export const UpcommingBookings = () => {
                       </Button>
                     </Td>
                   </Tr>
-                ))
-              ) : (
-                <Box m="4">No upcomming bookings..</Box>
-              )}
+                ))}
             </Tbody>
           </Table>
+          {!bookings.length && (
+            <Flex justifyContent={'start'} m="4" pt={10}>
+              You have no upcoming bookings..
+            </Flex>
+          )}
         </TableContainer>
       </Flex>
       <CancelBookingAlert

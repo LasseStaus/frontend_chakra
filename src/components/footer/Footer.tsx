@@ -28,7 +28,7 @@ const SocialButton = ({ children, label, href }: { children: ReactNode; label: s
 
 export const Footer = () => {
   return (
-    <Container maxW={'container.xxl'}>
+    <Container maxW={'container.xxl'} marginBottom={0}>
       <Flex
         bg={useColorModeValue('gray.50', 'gray.900')}
         position="absolute"

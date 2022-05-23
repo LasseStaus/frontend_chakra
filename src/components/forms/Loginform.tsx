@@ -28,48 +28,50 @@ const Loginform = () => {
   const userMessage = useSelector((state: any) => state.authentication.loginMessageForUser)
   return (
     <>
-      <Container maxW={'container.sm'}>
+      <Container maxW={'container.sm'} variant={'halfPaddingY'}>
         {userMessage && <Box>{userMessage} </Box>}
-        <FormProvider {...methods}>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <FormField
-              as={InputField}
-              name="email"
-              labeltitle="Email"
-              defaultValue=""
-              rules={{
-                required: 'Required',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address'
-                }
-              }}
-              errors={errors.email}
-            />
-            <FormField
-              as={InputField}
-              name="password"
-              labeltitle="Password"
-              defaultValue=""
-              type="password"
-              rules={{
-                required: 'Required',
-                minLength: {
-                  value: 8,
-                  message: 'Password must be between 8 and 50 characters'
-                },
-                maxLength: {
-                  value: 50,
-                  message: 'Password must be between 8 and 50 characters'
-                }
-              }}
-              errors={errors.password}
-            />
-            <Button disabled={!isDirty || !isValid} mt={4} colorScheme="teal" type="submit" onClick={handleSubmit(onSubmit)}>
-              Submit
-            </Button>
-          </form>
-        </FormProvider>
+        <Box>
+          <FormProvider {...methods}>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <FormField
+                as={InputField}
+                name="email"
+                labeltitle="Email"
+                defaultValue=""
+                rules={{
+                  required: 'Required',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Invalid email address'
+                  }
+                }}
+                errors={errors.email}
+              />
+              <FormField
+                as={InputField}
+                name="password"
+                labeltitle="Password"
+                defaultValue=""
+                type="password"
+                rules={{
+                  required: 'Required',
+                  minLength: {
+                    value: 8,
+                    message: 'Password must be between 8 and 50 characters'
+                  },
+                  maxLength: {
+                    value: 50,
+                    message: 'Password must be between 8 and 50 characters'
+                  }
+                }}
+                errors={errors.password}
+              />
+              <Button disabled={!isDirty || !isValid} mt={4} colorScheme="teal" type="submit" onClick={handleSubmit(onSubmit)}>
+                Submit
+              </Button>
+            </form>
+          </FormProvider>
+        </Box>
       </Container>
     </>
   )

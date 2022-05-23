@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Flex, Spacer } from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Container, Flex, Spacer } from '@chakra-ui/react'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutThunk } from '../../redux/authenticationActions'
@@ -14,14 +14,14 @@ const Header: FC = () => {
   }
 
   return (
-    <Flex bg="white" minWidth="max-content" pr="5" alignItems="center" gap="2">
+    <Flex bg="white" minWidth="max-content" px={8} alignItems="center" gap="2" boxShadow={'lg'}>
       <Box p="2">
         <Logo />
       </Box>
       <Spacer />
       <ButtonGroup gap="2">
         {authenticated ? (
-          <Button colorScheme="teal" onClick={handleLogout}>
+          <Button px={8} variant="primary" onClick={handleLogout}>
             Logout
           </Button>
         ) : null}

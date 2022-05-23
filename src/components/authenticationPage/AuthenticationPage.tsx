@@ -1,4 +1,4 @@
-import { Box, Container, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import { Box, Container, Tab, TabList, TabPanel, TabPanels, Tabs, useColorModeValue } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAlertMessage } from '../../redux/authenticationSlice'
@@ -30,8 +30,8 @@ export const AuthenticatedPage = () => {
   return (
     <>
       {alertMessage != undefined ? <AlertBox alertMessage={alertMessage} alertType={alertType} /> : null}
-      <Container maxW={'container.sm'}>
-        <Box bg="white" boxShadow={'xl'}>
+      <Container maxW={'container.sm'} marginTop={0}>
+        <Box bg="white" boxShadow={'base'} mt={12} borderRadius={6}>
           <Tabs defaultIndex={0} index={index} onChange={(index) => setTabIndex(index)} isFitted variant="enclosed" border={'sm'}>
             <TabList p={0} boxShadow={'sm'}>
               <Tab>Login</Tab>

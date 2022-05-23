@@ -38,10 +38,9 @@ function LandingPage() {
     <>
       {alertMessage != undefined ? <AlertBox alertMessage={alertMessage} alertType={alertType} /> : null}
       <ProfileBanner />
-      <Calender />
+
       <UpcommingBookings />
       <Ticket />
-      <Footer />
     </>
   )
 }
