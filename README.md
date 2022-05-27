@@ -79,7 +79,7 @@ If you do not have yarn installed, we recommend installing yarn through NPM
 
 1. Clone the repository through the terminal
      ```sh
-     git clone https://github.com/your_username_/Project-Name.git
+     git clone https://github.com/LasseStaus/frontend_chakra.git
      ```
    Alternatively you can download the zip file, and open it in your IDE. 
    
