@@ -52,7 +52,7 @@ To get a local copy of the project up and running, follow these steps
 
 This project requires [Node.js](https://nodejs.org/en/) to run
 
-If you do not have Node.js installed, install it from their [website.](https://nodejs.org/en/)
+> If you do not have Node.js installed, install it from their [website.](https://nodejs.org/en/)
 
 
 
@@ -60,14 +60,17 @@ This project uses Yarn as a package manage. To run the project smoothly, we reco
 
 If you do not have yarn installed, we recommend installing yarn through NPM
 
+> If you do not have npm installed, we recommend following [this guide.](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+
 * Install yarn globally through npm
-```sh
-npm install -g yarn
-```
+    ```sh
+    npm install -g yarn
+    ```
 * Check the version of yarn after installation
-```sh
-yarn --version
-```
+    ```sh
+    yarn --version
+    ```
 
 
 
@@ -75,32 +78,29 @@ yarn --version
 ### Installation
 
 1. Clone the repository through the terminal
- ```sh
- git clone https://github.com/your_username_/Project-Name.git
- ```
+     ```sh
+     git clone https://github.com/your_username_/Project-Name.git
+     ```
    Alternatively you can download the zip file, and open it in your IDE. 
    
 2. Install packages used in the project
- ```sh
- yarn install
- ``` 
+     ```sh
+     yarn install
+     ``` 
 3. Copy the contents of `.env.example` into a `.env` file and either specify details or use the default settings
    
 4. Run the application in production
-   Create a build
- ```sh
- yarn run build
- ```
-
-   Start production environment
-  ```sh
- yarn start
- ```
+     ```sh
+     yarn run build
+     ```
+      ```sh
+     yarn start
+     ```
 
 5. Alternatively, run the application in development mode
- ```sh
- yarn start:dev
- ```
+     ```sh
+     yarn start:dev
+     ```
    
 <p align="right"><a href="#top">back to top</a></p>
 
