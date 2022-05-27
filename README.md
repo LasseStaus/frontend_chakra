@@ -1,34 +1,114 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<a id="top"></a>
 
+# Exam-project - VærkstedetCPH Frontend 
+
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#project-description">Project Description</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#connect-to-backend">Connect to our backend repo</a></li>
+  </ol>
+</details>
+
+
+## Project Description
+This repo is the frontend part of an exam project at KEA, developed for CPH-Værkstedet. 
+
+It is a prototype of a system where users can create an account and purchase tickets that can be spend in a booking system. 
+
+
+## Built with
+
+The technologies used to built this prototype are
+
+* [React.js](https://reactjs.org/)
+* [Next.js](https://nextjs.org/)
+* [TypeScript](https://www.typescriptlang.org/)
+* [Redux Toolkit](https://redux-toolkit.js.org/)
+* [Chakra UI](https://chakra-ui.com/)
+
+
+<!-- GETTING STARTED -->
 ## Getting Started
 
-First, run the development server:
+To get a local copy of the project up and running, follow these steps
 
-```bash
-npm run dev
-# or
-yarn dev
+
+### Prerequisites
+
+This project requires [Node.js](https://nodejs.org/en/) to run
+
+If you do not have Node.js installed, install it from their [website.](https://nodejs.org/en/)
+
+
+
+This project uses Yarn as a package manage. To run the project smoothly, we recommend using yarn instead of npm. 
+
+If you do not have yarn installed, we recommend installing yarn through NPM
+
+* Install yarn globally through npm
+```sh
+npm install -g yarn
+```
+* Check the version of yarn after installation
+```sh
+yarn --version
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Installation
 
-## Learn More
+1. Clone the repository through the terminal
+ ```sh
+ git clone https://github.com/your_username_/Project-Name.git
+ ```
+   Alternatively you can download the zip file, and open it in your IDE. 
+   
+2. Install packages used in the project
+ ```sh
+ yarn install
+ ``` 
+3. Copy the contents of `.env.example` into a `.env` file and either specify details or use the default settings
+   
+4. Run the application in production
+   Create a build
+ ```sh
+ yarn run build
+ ```
 
-To learn more about Next.js, take a look at the following resources:
+   Start production environment
+  ```sh
+ yarn start
+ ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Alternatively, run the application in development mode
+ ```sh
+ yarn start:dev
+ ```
+   
+<p align="right"><a href="#top">back to top</a></p>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Connecting to our backend
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+To create and connect with an instance of our backend, please go to the [backend repository](https://github.com/LasseStaus/CPHworkshop_backend) and follow the steps in the Readme
+
+
+
