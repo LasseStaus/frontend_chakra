@@ -9,7 +9,7 @@ export const themeVaerkstedetCPH = extendTheme({
     brandBlack: '#514C4C',
     brandWhite: '#FFFFFF',
     brandGrey: '#F6F6F6',
-    
+
   },
   breakpoints: {
     sm: '220px',
@@ -19,8 +19,8 @@ export const themeVaerkstedetCPH = extendTheme({
     xxl: '1536px'
   },
   fonts: {
-    heading: 'Inter', // kan vi ændre
-    body: 'Inter'
+    heading: `'Dosis', sans-serif`,
+    body: `'Dosis', sans-serif`,
   },
   sizes: {
     container: {
@@ -31,13 +31,50 @@ export const themeVaerkstedetCPH = extendTheme({
 
   // --- components
   components: {
+    Calendar: {
+      parts: ['calendar'],
+
+      baseStyle: {
+        calendar: {
+          borderWidth: '6px',
+          borderColor: 'pink.400',
+          rounded: 'none',
+          shadow: 'none',
+          boxShadow: '32px 16px 0 6px #3B4DCC'
+        },
+      },
+    },
+
+    CalendarControl: {
+      parts: ['button'],
+
+      baseStyle: {
+        button: {
+          h: 6,
+          px: 2,
+          rounded: 'none',
+          fontSize: 'sm',
+          color: 'white',
+          bgColor: 'pink.400',
+
+          _hover: {
+            bgColor: 'pink.200',
+          },
+
+          _focus: {
+            outline: 'none',
+          },
+        },
+      },
+    },
+  
     Steps,
 
     Tabs: {
 
-colors: {
-  bg: 'red'
-},
+      colors: {
+        bg: 'red'
+      },
 
     },
     Button,
@@ -62,7 +99,7 @@ colors: {
         small: {
           fontSize: { sm: 'lg', lg: 'xl' }
         },
-        componentHeader:{
+        componentHeader: {
           fontSize: { sm: '2xl', lg: '4xl' }
 
         }

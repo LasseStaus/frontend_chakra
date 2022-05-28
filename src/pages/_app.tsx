@@ -2,6 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
 import { themeVaerkstedetCPH } from '../../styles/theme'
+import '../../styles/styles.css'
 import { store } from '../redux/store'
 
 const AppWrapper = ({ Component, pageProps }: AppProps) => (
