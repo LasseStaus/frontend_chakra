@@ -1,10 +1,10 @@
 import { Flex, Heading, Text } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction } from 'react'
 import { useSelector } from 'react-redux'
-import { TicketType } from '../../../redux/userSlice'
+import { typeOfTicket } from '../../../redux/userSlice'
 
 type Props = {
-  ticketType: '3 days' | '7 days' | '30 days'
+  typeOfTicket: '3 days' | '7 days' | '30 days'
   setTicketType: Dispatch<SetStateAction<'3 days' | '7 days' | '30 days'>>
 }
 
@@ -23,12 +23,12 @@ const ticketCardSelect = {
   borderColor: 'primary'
 }
 
-const StepTypeTicket = ({ ticketType, setTicketType }: Props) => {
+const StepTypeTicket = ({ typeOfTicket, setTicketType }: Props) => {
   const ticketTypeData = useSelector((state: any) => state.user.ticketTypes)
 
-  const ticketType3days = ticketTypeData.filter((ticket: TicketType) => ticket.ticketType === '3 days')[0]
-  const ticketType7days = ticketTypeData.filter((ticket: TicketType) => ticket.ticketType === '7 days')[0]
-  const ticketType30days = ticketTypeData.filter((ticket: TicketType) => ticket.ticketType === '30 days')[0]
+  const ticketType3days = ticketTypeData.filter((ticket: typeOfTicket) => ticket.typeOfTicket === '3 days')[0]
+  const ticketType7days = ticketTypeData.filter((ticket: typeOfTicket) => ticket.typeOfTicket === '7 days')[0]
+  const ticketType30days = ticketTypeData.filter((ticket: typeOfTicket) => ticket.typeOfTicket === '30 days')[0]
 
   return (
     <Flex flexDir={{ base: 'column', md: 'row' }} justifySelf="stretch" alignItems={'center'} w={'100%'} h={'100%'}>
@@ -36,30 +36,30 @@ const StepTypeTicket = ({ ticketType, setTicketType }: Props) => {
         flexDir="column"
         pointerEvents="auto"
         {...ticketCardStyle}
-        {...(ticketType === '3 days' && ticketCardSelect)}
+        {...(typeOfTicket === '3 days' && ticketCardSelect)}
         onClick={() => setTicketType('3 days')}
       >
-        <Heading>{ticketType3days.ticketType}</Heading>
+        <Heading>{ticketType3days.typeOfTicket}</Heading>
         <Text>{ticketType3days.nowPrice},-</Text>
         <Text>NORMALPRIS {ticketType3days.normalPrice},-</Text>
       </Flex>
       <Flex
         flexDir="column"
         {...ticketCardStyle}
-        {...(ticketType === '7 days' && ticketCardSelect)}
+        {...(typeOfTicket === '7 days' && ticketCardSelect)}
         onClick={() => setTicketType('7 days')}
       >
-        <Heading>{ticketType7days.ticketType}</Heading>
+        <Heading>{ticketType7days.typeOfTicket}</Heading>
         <Text>{ticketType7days.nowPrice},-</Text>
         <Text>NORMALPRIS {ticketType7days.normalPrice},-</Text>
       </Flex>
       <Flex
         flexDir="column"
         {...ticketCardStyle}
-        {...(ticketType === '30 days' && ticketCardSelect)}
+        {...(typeOfTicket === '30 days' && ticketCardSelect)}
         onClick={() => setTicketType('30 days')}
       >
-        <Heading>{ticketType30days.ticketType}</Heading>
+        <Heading>{ticketType30days.typeOfTicket}</Heading>
         <Text>{ticketType30days.nowPrice},-</Text>
         <Text>NORMALPRIS {ticketType30days.normalPrice},-</Text>
       </Flex>

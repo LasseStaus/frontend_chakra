@@ -40,7 +40,7 @@ interface Purchase {
 
 export interface TicketType {
   id: string | undefined
-  ticketType: string | undefined
+  typeOfTicket: string | undefined
   nowPrice: number | undefined
   normalPrice: number | undefined
   ticketsAmount: number | undefined
