@@ -40,7 +40,7 @@ interface Purchase {
 
 export interface TicketType {
   id: string | undefined
-  typeOfTicket: string | undefined
+  typeOfTicket: string
   nowPrice: number | undefined
   normalPrice: number | undefined
   ticketsAmount: number | undefined
@@ -96,10 +96,10 @@ export const userSlice = createSlice({
     //getUserInfo
     builder.addCase(getUserInfo.fulfilled, (state, action) => {
       state.user = {
-        firstname: action.payload.firstname,
-        lastname: action.payload.lastname,
-        email: action.payload.email,
-        phonenumber: action.payload.phonenumber
+        firstname: action.payload?.firstname,
+        lastname: action.payload?.lastname,
+        email: action.payload?.email,
+        phonenumber: action.payload?.phonenumber
       }
       state.bookings = action.payload.bookings
       state.purchases = action.payload.purchase

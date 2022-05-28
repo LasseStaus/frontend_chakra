@@ -10,16 +10,29 @@ const StepConfirm = () => {
   const activeTickets = useSelector((state: any) => state.user.tickets.activeTickets)
 
   return (
-    <Flex flexDir={'column'} w={'100%'} h={'100%'}>
-      <Box>
+    <Flex flexDir={'column'} w={'100%'} h={'100%'} justify="center" align="center">
+      <Box textAlign="center">
         <Heading mb={4} fontSize={'2xl'}>
           The {bookingsFormatted.length === 1 ? 'date' : 'dates'} you have selected {bookingsFormatted.length === 1 ? 'is' : 'are'}
         </Heading>
         {bookingsFormatted.map((date: string) => (
           <ListItem key={date} element={date} />
         ))}
-        <Text>Confirming this transaction, will use {bookingsFormatted.length} tickets</Text>
-        <Text>Leaving you with {activeTickets - bookingsFormatted.length} tickets to spare </Text>
+        <Box my={4}>
+          <Text>
+            Confirming this transaction, will use &nbsp;
+            <Text color="primary" fontWeight="bold" as="span">
+              {bookingsFormatted.length} tickets
+            </Text>
+          </Text>
+          <Text>
+            Leaving you with &nbsp;
+            <Text color="#38A169" fontWeight="bold" as="span">
+              {activeTickets - bookingsFormatted.length} active tickets
+            </Text>
+            &nbsp; to spare
+          </Text>
+        </Box>
       </Box>
     </Flex>
   )

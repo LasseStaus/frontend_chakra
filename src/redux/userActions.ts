@@ -105,7 +105,7 @@ export const getTicketTypes = createAsyncThunk('loggedInUser/getTicketTypes', as
   }
 })
 
-export const purchaseTicket = createAsyncThunk('loggedInUser/purchaseTicket', async (typeOfTicket: string, thunkAPI) => {
+export const purchaseTicket = createAsyncThunk('loggedInUser/purchaseTicket', async (typeOfTicket: string | undefined, thunkAPI) => {
   const token = thunkAPI.getState() as { authentication: authenticationSliceState }
 
   const response = await fetch(`${API_URL}/ticket/purchase`, {
