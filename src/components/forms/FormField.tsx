@@ -13,8 +13,10 @@ type FormFieldBase = {
 type FieldErrorContainerProps = {
   fieldState: ControllerFieldState
 }
+
+//error for the specific formfield
 const FieldError: React.FC<FieldErrorContainerProps> = ({ fieldState }) => {
-  if (!fieldState?.invalid && !fieldState?.error?.message) return null
+  if (!fieldState?.error && !fieldState?.error?.message) return null
   return (
     <>
       <Box>
@@ -31,14 +33,23 @@ type RenderFormFieldProps = FormFieldBase & {
   disabled?: boolean
 }
 
+// returns react elements as: Component to simplify integration with Chakra UI input comp
 const RenderFormField: React.FC<RenderFormFieldProps> = ({ as: Component, id, field, labeltitle, type, disabled }) => {
-  switch (Component) {
+  switch (
+    Component // for scalability if more cases of components where added like checkbox or textfield
+  ) {
     case InputField:
       return (
         <Box>
           <InputField {...field} id={id} labeltitle={labeltitle} type={type} disabled={disabled} />
         </Box>
       )
+    // case TextField: // example
+    //   return (
+    //     <Box>
+    //       <TextField {...field} id={id} labeltitle={labeltitle} type={type} disabled={disabled} />
+    //     </Box>
+    //   )
   }
 
   return null
@@ -64,28 +75,31 @@ export type FormFieldProps<
     }) => React.ReactElement
   }
 
+//streamline the integration process of Chakra UI controlled components with react-hook-form
 const FormField: React.FC<FormFieldProps> = ({ as: Component, render, labeltitle, id, errors, type, disabled, ...otherProps }) => {
-  const { control } = useFormContext()
+  const { control } = useFormContext() // control contains methods for registering the field into the Hook
 
   return (
-    <Controller
+    <Controller // wrapper for integration
       {...otherProps}
       control={control}
       render={(data) =>
-        render ? ( // If render is defined then render and show FieldError
+        render ? ( // If render prop is defined then render react component and FieldError comp
           <>
             {render(data)}
             <FieldError fieldState={data.fieldState} />
           </>
-        ) : Component ? ( // If Component is defined then use RenderFormField and show Error
+        ) : Component ? ( // If Component prop is defined then use RenderFormField comp and FieldError comp
           <Box mb="5">
             <FormControl isInvalid={errors ? true : false}>
               <RenderFormField
                 id={id}
                 as={Component}
+                // {...field} provides onChange, onBlur, name, ref and value to the inputField component
                 field={data.field}
-                labeltitle={labeltitle}
+                // {...fieldState} contains specific the state of the input: invalid, isTouched, isDirty, error
                 fieldState={data.fieldState}
+                labeltitle={labeltitle}
                 type={type}
                 disabled={disabled}
               />
