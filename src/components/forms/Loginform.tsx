@@ -66,7 +66,7 @@ const Loginform = () => {
               }}
               errors={errors.password}
             />
-            {/* "handleSubmit" will validate your inputs before invoking "onSubmit"  */}
+            {/* "handleSubmit" will validate inputs before invoking "onSubmit"  */}
             <Button disabled={!isDirty || !isValid} mt={4} colorScheme="teal" type="submit" onClick={handleSubmit(onSubmit)}>
               Submit
             </Button>
