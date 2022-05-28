@@ -14,7 +14,7 @@ type FieldErrorContainerProps = {
   fieldState: ControllerFieldState
 }
 
-//error for the specific formfield
+//Error comp for formfield
 const FieldError: React.FC<FieldErrorContainerProps> = ({ fieldState }) => {
   if (!fieldState?.error && !fieldState?.error?.message) return null
   return (
@@ -33,7 +33,7 @@ type RenderFormFieldProps = FormFieldBase & {
   disabled?: boolean
 }
 
-// returns react elements as: Component to simplify integration with Chakra UI input comp
+// Component to be rendered containg Chakra UI Input for preperation of the integration with react-hook-form
 const RenderFormField: React.FC<RenderFormFieldProps> = ({ as: Component, id, field, labeltitle, type, disabled }) => {
   switch (
     Component // for scalability if more cases of components where added like checkbox or textfield
@@ -75,7 +75,7 @@ export type FormFieldProps<
     }) => React.ReactElement
   }
 
-//streamline the integration process of Chakra UI controlled components with react-hook-form
+//Streamline the integration process of Chakra UI RenderFormField with react-hook-form
 const FormField: React.FC<FormFieldProps> = ({ as: Component, render, labeltitle, id, errors, type, disabled, ...otherProps }) => {
   const { control } = useFormContext() // control contains methods for registering the field into the Hook
 
