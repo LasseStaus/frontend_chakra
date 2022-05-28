@@ -1,4 +1,4 @@
-import { Modal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/react'
+import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react'
 import { FC } from 'react'
 import StepFlow from '../bookingFlow/stepFlow'
 
@@ -9,14 +9,15 @@ type Props = {
 const CalendarModal: FC<Props> = ({ isOpen, onClose }) => {
   return (
     <>
-      <Modal size={'5xl'} onClose={onClose} isOpen={isOpen} isCentered>
+      <Modal size={'5xl'} onClose={onClose} isOpen={isOpen}>
         <ModalOverlay />
-        <ModalContent pt={0}>
-          {/*           <ModalCloseButton />
-           */}
-          <ModalBody p={0}>
+        <ModalContent>
+          <ModalHeader>Book dates</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
             <StepFlow />
           </ModalBody>
+          <ModalFooter />
         </ModalContent>
       </Modal>
     </>

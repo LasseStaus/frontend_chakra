@@ -14,7 +14,7 @@ import StepEnd from './stepEnd'
 const steps = [
   { label: 'Choose Dates', key: 0 },
   { label: 'Confirm Dates', key: 1 },
-  { label: 'Receipt', key: 2 }
+  { label: 'Booking Confirmation', key: 2 }
 ]
 
 const StepFlow = () => {
@@ -24,6 +24,7 @@ const StepFlow = () => {
     initialStep: 0
   })
   const [calenderDates, setCalendarDates] = useState<DateObject | DateObject[] | null>(null)
+  console.log(calenderDates)
 
   const bookingsState = useSelector((state: any) => state.user.selectedBookings)
   function handleNext() {
@@ -35,19 +36,18 @@ const StepFlow = () => {
     if (activeStep === 1) {
       dispatch(createBooking(bookingsState))
       nextStep()
+      setStep(3)
     }
   }
   return (
     <Flex flexDir="column" width="100%">
-      <Box p={6} pt={12} boxShadow={'md'}>
-        <Steps color={'red'} activeStep={activeStep}>
-          {steps.map(({ label }) => (
-            <Step label={label} key={label}></Step>
-          ))}
-        </Steps>
-      </Box>
+      <Steps color={'red'} activeStep={activeStep}>
+        {steps.map(({ label }) => (
+          <Step label={label} key={label}></Step>
+        ))}
+      </Steps>
 
-      <Container maxW={'container.md'} minHeight={'60vh'} maxHeight={'60vh'}>
+      <Flex justify="center" align="center" minHeight={80} w="full">
         {activeStep === 0 ? (
           <StepDates calenderDates={calenderDates} setCalendarDates={setCalendarDates} />
         ) : activeStep === 1 ? (
@@ -55,21 +55,22 @@ const StepFlow = () => {
         ) : (
           <StepEnd />
         )}
-      </Container>
-      {activeStep === steps.length ? (
-        <Flex p={4} mt={4}>
-          <Button mx="auto" size="sm" onClick={reset}>
-            Reset
-          </Button>
-        </Flex>
-      ) : (
-        <Flex mt={4} width="100%" justify="flex-end">
+      </Flex>
+      {activeStep === steps.length ? null : (
+        <Flex width="100%" justify="flex-end">
           <Button isDisabled={activeStep === 0 || activeStep === 2} mr={4} onClick={prevStep} size="sm" variant="ghost">
             Tilbage
           </Button>
-          <Button size="sm" onClick={handleNext}>
-            {activeStep === steps.length - 1 ? 'Close window' : activeStep === 1 ? 'Confirm & book' : 'Next'}
+
+          <Button onClick={handleNext} size="sm" disabled={calenderDates == null || Object.keys(calenderDates).length == 0 ? true : false}>
+            {activeStep === 0 ? 'Next' : 'Confirm booking dates'}
           </Button>
+
+          {/* // <Button size="sm" onClick={() => handleBooking()}>
+            <Button disabled={calenderDates == null || Object.keys(calenderDates).length == 0 ? true : false} size="sm">
+              Confirm booking dates
+            </Button>
+  */}
         </Flex>
       )}
     </Flex>

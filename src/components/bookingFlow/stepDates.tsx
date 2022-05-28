@@ -11,30 +11,33 @@ const StepDates = ({ calenderDates, setCalendarDates }: props) => {
   const currentDate = new Date()
 
   return (
-    <Flex justifyContent={'center'} flexDir="column" alignItems={'center'} w={'100%'} h={'100%'}>
+    <Flex my={8} flexDir="column" justify="center" align="center" w={'100%'} h={'100%'}>
       <Heading mb={4} fontSize={'2xl'}>
         Select the dates you want a spot in the workspace.
       </Heading>
-      <Calendar
-        mapDays={({ date }) => {
-          let props: any = {}
-          let isWeekend = [0, 6].includes(date.weekDay.index)
 
-          if (isWeekend) props.className = 'highlight highlight-weekend'
+      <Flex w={'100%'} h={'100%'} flexDir="column" justifySelf="stretch" alignItems={'center'} py={{ base: '8', md: '4' }}>
+        <Calendar
+          mapDays={({ date }) => {
+            let props: any = {}
+            let isWeekend = [0, 6].includes(date.weekDay.index)
 
-          return props
-        }}
-        minDate={currentDate}
-        className="test-class"
-        value={calenderDates}
-        onChange={setCalendarDates}
-        format={format}
-        sort
-        multiple
-        buttons={true}
-        weekStartDayIndex={1}
-        plugins={[<DatePanel header="Selected Dates" key={null} />]}
-      />
+            if (isWeekend) props.className = 'highlight highlight-weekend'
+
+            return props
+          }}
+          minDate={currentDate}
+          className="test-class"
+          value={calenderDates}
+          onChange={setCalendarDates}
+          format={format}
+          sort
+          multiple
+          buttons={true}
+          weekStartDayIndex={1}
+          plugins={[<DatePanel header="Selected Dates" key={null} />]}
+        />
+      </Flex>
     </Flex>
   )
 }
