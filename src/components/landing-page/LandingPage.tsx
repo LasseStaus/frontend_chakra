@@ -4,8 +4,7 @@ import { AppDispatch } from '../../redux/store'
 import { getTicketTypes, getUserInfo } from '../../redux/userActions'
 import { setAlertMessage } from '../../redux/userSlice'
 import AlertBox from '../alert/Alert'
-import Calender from '../calendar/calendarContainer'
-import Footer from '../footer/Footer'
+import CurrentCalendar from '../calendar/currentCalendar'
 import { ProfileBanner } from '../profile/ProfileBanner'
 import Ticket from '../tickets/TicketContainer'
 import UpcommingBookings from '../upcommingBookings/UpcommingBookingsContainer'
@@ -38,7 +37,7 @@ function LandingPage() {
     <>
       {alertMessage != undefined ? <AlertBox alertMessage={alertMessage} alertType={alertType} /> : null}
       <ProfileBanner />
-
+      <CurrentCalendar />
       <UpcommingBookings />
       <Ticket />
     </>
