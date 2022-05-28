@@ -28,7 +28,7 @@ const Loginform = () => {
   const userMessage = useSelector((state: any) => state.authentication.loginMessageForUser)
   return (
     <>
-      <Container maxW={'container.sm'}>
+      <Container maxW={'container.sm'} variant={'halfPaddingY'}>
         {userMessage && <Box>{userMessage} </Box>}
         {/* Pass all methods into context */}
         <FormProvider {...methods}>

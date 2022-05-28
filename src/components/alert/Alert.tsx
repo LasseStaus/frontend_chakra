@@ -7,7 +7,7 @@ type Props = {
 
 export const AlertBox = ({ alertMessage, alertType }: Props) => {
   return (
-    <Alert status={alertType}>
+    <Alert position={'absolute'} status={alertType}>
       <AlertIcon />
       {alertMessage}
     </Alert>

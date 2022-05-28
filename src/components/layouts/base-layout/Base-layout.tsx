@@ -17,7 +17,9 @@ const BaseLayout: FC<BaseLayoutProps> = (p: BaseLayoutProps) => {
       </Head>
       <Box minH={'100vh'} bg="brandGrey" flexDir={'column'}>
         <Header />
-        <main>{p.children}</main>
+        <main>
+          <Box position={'relative'}>{p.children}</Box>
+        </main>
         <Footer />
       </Box>
     </>
