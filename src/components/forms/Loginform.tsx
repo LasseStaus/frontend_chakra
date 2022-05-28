@@ -13,7 +13,7 @@ const Loginform = () => {
     handleSubmit,
     reset,
     formState: { errors, isValid, isDirty }
-  } = methods
+  } = methods // destructer methods to use in return
 
   const dispatch = useDispatch<any>()
 
@@ -30,6 +30,7 @@ const Loginform = () => {
     <>
       <Container maxW={'container.sm'}>
         {userMessage && <Box>{userMessage} </Box>}
+        {/* Pass all methods into context */}
         <FormProvider {...methods}>
           <form onSubmit={(e) => e.preventDefault()}>
             <FormField
@@ -65,6 +66,7 @@ const Loginform = () => {
               }}
               errors={errors.password}
             />
+            {/* "handleSubmit" will validate inputs before invoking "onSubmit"  */}
             <Button disabled={!isDirty || !isValid} mt={4} colorScheme="teal" type="submit" onClick={handleSubmit(onSubmit)}>
               Submit
             </Button>

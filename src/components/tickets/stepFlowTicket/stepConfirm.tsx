@@ -2,10 +2,10 @@ import { Box, Divider, Flex, Heading, Text, Center } from '@chakra-ui/react'
 import React from 'react'
 
 interface Props {
-  ticketType: '3 days' | '7 days' | '30 days'
+  typeOfTicket: '3 days' | '7 days' | '30 days'
 }
 
-const StepConfirmTicket = ({ ticketType }: Props) => {
+const StepConfirmTicket = ({ typeOfTicket }: Props) => {
   //TODO needs real data instead of new date
   const date = new Date().toDateString()
 
@@ -13,12 +13,12 @@ const StepConfirmTicket = ({ ticketType }: Props) => {
     <Box py={12} px={8} w="70%" h="100%">
       <Box>
         <Heading>Purchase of Ticket card</Heading>
-        <Text>Ticket type: {ticketType}</Text>
+        <Text>Ticket type: {typeOfTicket}</Text>
       </Box>
       <Divider m={4} />
       <Box>
         <Heading>Payment</Heading>
-        <Text>Sum: {ticketType}</Text>
+        <Text>Sum: {typeOfTicket}</Text>
         <Text>Payment method: Mobilepay</Text>
         <Text>{date}</Text>
       </Box>

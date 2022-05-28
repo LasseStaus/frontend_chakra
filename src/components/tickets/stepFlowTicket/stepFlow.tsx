@@ -11,7 +11,7 @@ const StepFlowTicket = () => {
   const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
     initialStep: 0
   })
-  const [ticketType, setTicketType] = React.useState<'3 days' | '7 days' | '30 days'>('3 days')
+  const [typeOfTicket, setTicketType] = React.useState<'3 days' | '7 days' | '30 days'>('3 days')
 
   return (
     <Flex flexDir="column" width="100%">
@@ -23,11 +23,11 @@ const StepFlowTicket = () => {
 
       <Wrap minHeight={80}>
         {activeStep === 0 ? (
-          <StepTypeTicket ticketType={ticketType} setTicketType={setTicketType} />
+          <StepTypeTicket typeOfTicket={typeOfTicket} setTicketType={setTicketType} />
         ) : activeStep === 1 ? (
-          <StepPaymentTicket ticketType={ticketType} />
+          <StepPaymentTicket typeOfTicket={typeOfTicket} />
         ) : (
-          <StepConfirmTicket ticketType={ticketType} />
+          <StepConfirmTicket typeOfTicket={typeOfTicket} />
         )}
       </Wrap>
       {activeStep === steps.length ? (
