@@ -5,11 +5,10 @@ import DatePanel from 'react-multi-date-picker/plugins/date_panel'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
 import { getAllUserBookings } from '../../redux/userActions'
-
-/* import Responsive from "react-responsive";
-export const Mobile = props => <Responsive {...props} maxWidth={767} />;
-export const Default = props => <Responsive {...props} minWidth={768} />; */
-const CurrentCalendar = () => {
+interface calendarProps {
+  numberOfMonths: number
+}
+const CurrentCalendar = ({ numberOfMonths }: calendarProps) => {
   const format = 'YYYY-MM-DD'
   const currentDate = new Date()
 
@@ -62,7 +61,7 @@ const CurrentCalendar = () => {
           className="test-class"
           value={calenderDates}
           disabled={true}
-          numberOfMonths={2}
+          numberOfMonths={numberOfMonths}
           buttons={true}
           weekStartDayIndex={1}
           readOnly={false}
