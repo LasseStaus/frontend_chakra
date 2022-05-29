@@ -5,6 +5,7 @@ import { getTicketTypes, getUserInfo } from '../../redux/userActions'
 import { setAlertMessage } from '../../redux/userSlice'
 import AlertBox from '../alert/Alert'
 import CurrentCalendar from '../calendar/currentCalendar'
+import useWindowSize from '../hooks/getWindowSize'
 import { ProfileBanner } from '../profile/ProfileBanner'
 import Ticket from '../tickets/TicketContainer'
 import UpcommingBookings from '../upcommingBookings/UpcommingBookingsContainer'
@@ -19,6 +20,12 @@ function LandingPage() {
     dispatch(getUserInfo())
     dispatch(getTicketTypes())
   })
+
+  let numberOfMonths: number = 1
+  const windowSize = useWindowSize()
+  if (windowSize) {
+    numberOfMonths = 2
+  }
 
   //TODO move timers into alertmessages
   useEffect(() => {
@@ -37,7 +44,7 @@ function LandingPage() {
     <>
       {alertMessage != undefined ? <AlertBox alertMessage={alertMessage} alertType={alertType} /> : null}
       <ProfileBanner />
-      <CurrentCalendar />
+      <CurrentCalendar numberOfMonths={numberOfMonths} />
       <UpcommingBookings />
       <Ticket />
     </>
