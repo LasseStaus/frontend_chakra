@@ -5,7 +5,7 @@ import Image from 'next/image'
 export default function Logo(props: any) {
   return (
     <Flex alignItems="center" {...props}>
-      <Image src="/stortLogo.png" alt="me" height={'80'} width={'160'} />
+      <Image src="/lillelogo.png" alt="me" height={'50'} width={'50'} />
     </Flex>
   )
 }

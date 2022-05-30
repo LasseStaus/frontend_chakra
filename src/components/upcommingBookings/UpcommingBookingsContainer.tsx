@@ -1,16 +1,18 @@
-import { TimeIcon } from '@chakra-ui/icons'
-import { Box, Button, Container, Flex, Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
+import { Button, Container, Flex, Heading, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { AiOutlineCalendar } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { Booking } from '../../redux/userSlice'
 import CancelBookingAlert from '../cancelBookingAlert/CancelBookingAlert'
 import { formatDate } from '../helpers/formatSingleDate'
-import CalendarModal from '../calendar/calendarModal'
 
-export const UpcommingBookings = () => {
+type Props = {
+  onBookingOpen: () => void
+}
+
+export const UpcommingBookings = ({ onBookingOpen }: Props) => {
   const bookings = useSelector((state: any) => state.user.bookings)
 
-  const { isOpen: isBookingOpen, onOpen: onBookingOpen, onClose: onBookingClose } = useDisclosure()
   // const { isOpen: isPurchaseOpen, onOpen: onPurchaseOpen, onClose: onPurchaseClose } = useDisclosure()
   const { isOpen: isCancelBookingOpen, onOpen: onCancelBookingOpen, onClose: onCancelBookingClose } = useDisclosure()
 
@@ -22,21 +24,18 @@ export const UpcommingBookings = () => {
     onCancelBookingOpen()
   }
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
-
   return (
     <Container maxW={'container.lg'} bg="white" variant={'even'} borderRadius={6} shadow={'base'}>
       <Flex flexDir="column">
-        <Flex flexDirection={{ sm: 'column-reverse', lg: 'row' }}>
-          <Flex gap={4} alignItems="center">
-            <TimeIcon width={30} height={30} />
+        <Flex flexDirection={{ sm: 'column', lg: 'row' }} alignItems={{ base: 'flex-start', md: 'center' }}>
+          <Flex gap={4} alignItems="center" w="full">
+            <AiOutlineCalendar style={{ width: '40px', height: 'auto' }} />
             <Heading variant={'componentHeader'}>Upcomming Bookings</Heading>
           </Flex>
-          <Flex ml={{ lg: 'auto' }} gap={4}>
+          <Flex ml={{ lg: 'auto' }} gap={4} w={{ base: 'full', md: 'auto' }} mt={{ base: '4', md: '0' }}>
             <Button shadow={'base'} width={'auto'} onClick={onBookingOpen}>
               New booking
             </Button>
-            <Button shadow={'base'}>Buy tickets</Button>
           </Flex>
         </Flex>
         <TableContainer mt={8}>
@@ -56,10 +55,18 @@ export const UpcommingBookings = () => {
                   <Tr key={booking.id}>
                     <Td>Frederiksberg</Td>
                     <Td>{formatDate(booking.bookedFor)}</Td>
-                    <Td>{booking.iLOQKey ? booking.iLOQKey : 'On its way..'}</Td>
+                    <Td>
+                      {booking.iLOQKey ? (
+                        booking.iLOQKey
+                      ) : (
+                        <Text fontSize="md" as="span" color="#A9A9A9">
+                          On its way..
+                        </Text>
+                      )}
+                    </Td>
                     <Td>{formatDate(booking.createdAt)}</Td>
                     <Td>
-                      <Button variant="linkButton" onClick={() => openBooking(booking)}>
+                      <Button color="brandRed" variant="linkButton" onClick={() => openBooking(booking)}>
                         Cancel Booking
                       </Button>
                     </Td>
@@ -79,7 +86,6 @@ export const UpcommingBookings = () => {
         isCancelBookingOpen={isCancelBookingOpen}
         onCancelBookingClose={onCancelBookingClose}
       />
-      <CalendarModal isOpen={isBookingOpen} onClose={onBookingClose} />
     </Container>
   )
 }

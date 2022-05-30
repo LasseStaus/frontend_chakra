@@ -9,7 +9,9 @@ export const themeVaerkstedetCPH = extendTheme({
     brandBlack: '#514C4C',
     brandWhite: '#FFFFFF',
     brandGrey: '#F6F6F6',
-
+    brandRed: '#C31111',
+    brandBlue: '#1D5A8F',
+    brandGreen: '#649B2C'
   },
   breakpoints: {
     sm: '220px',
@@ -20,7 +22,7 @@ export const themeVaerkstedetCPH = extendTheme({
   },
   fonts: {
     heading: `'Dosis', sans-serif`,
-    body: `'Dosis', sans-serif`,
+    body: `'Dosis', sans-serif`
   },
   sizes: {
     container: {
@@ -41,8 +43,8 @@ export const themeVaerkstedetCPH = extendTheme({
           rounded: 'none',
           shadow: 'none',
           boxShadow: '32px 16px 0 6px #3B4DCC'
-        },
-      },
+        }
+      }
     },
 
     CalendarControl: {
@@ -58,24 +60,22 @@ export const themeVaerkstedetCPH = extendTheme({
           bgColor: 'pink.400',
 
           _hover: {
-            bgColor: 'pink.200',
+            bgColor: 'pink.200'
           },
 
           _focus: {
-            outline: 'none',
-          },
-        },
-      },
+            outline: 'none'
+          }
+        }
+      }
     },
-  
+
     Steps,
 
     Tabs: {
-
       colors: {
         bg: 'red'
-      },
-
+      }
     },
     Button,
     Heading: {
@@ -101,15 +101,14 @@ export const themeVaerkstedetCPH = extendTheme({
         },
         componentHeader: {
           fontSize: { sm: '2xl', lg: '4xl' }
-
         }
       }
     },
     Text: {
       baseStyle: {
-        color: 'gray.500',
+        color: 'brandBlack',
         lineHeight: '1.5',
-        fontSize: '0.9rem'
+        fontSize: 'sm'
       },
       variants: {
         subheader: {
@@ -125,7 +124,7 @@ export const themeVaerkstedetCPH = extendTheme({
         paddingTop: { sm: 10, xl: 12, xxl: 20 },
         paddingBottom: { sm: 10, xl: 12, xxl: 20 },
         marginTop: { sm: 6, xl: 8, xxl: 12 },
-        marginBottom: { sm: 6, xl: 8, xxl: 12 },
+        marginBottom: { sm: 6, xl: 8, xxl: 12 }
       },
       variants: {
         onlyPaddingX: {
@@ -134,7 +133,7 @@ export const themeVaerkstedetCPH = extendTheme({
         },
         even: {
           paddingTop: { sm: 4, xl: 4, xxl: 9 },
-          paddingBottom: { sm: 4, xl: 4, xxl: 9 },
+          paddingBottom: { sm: 4, xl: 4, xxl: 9 }
         },
         halfPaddingBot: {
           paddingBottom: { sm: 5, xl: 6, xxl: 10 }
@@ -147,4 +146,3 @@ export const themeVaerkstedetCPH = extendTheme({
     }
   }
 })
-
