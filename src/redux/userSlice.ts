@@ -203,7 +203,8 @@ export const userSlice = createSlice({
           activeTickets: action.payload.tickets.activeTickets,
           usedTickets: action.payload.tickets.usedTickets
         }
-        state.bookings = action.payload.updatedBookings
+        state.bookings = action.payload.userBookings
+        state.allUserBookings = action.payload.allUserBookings
       }),
       builder.addCase(createBooking.pending, (state, action) => {
         state.pending = true
@@ -222,6 +223,7 @@ export const userSlice = createSlice({
           activeTickets: action.payload.updatedTickets.activeTickets,
           usedTickets: action.payload.updatedTickets.usedTickets
         }
+        state.allUserBookings = action.payload.allUserBookings
         state.alertMessage = 'You have now canceled you booking'
         state.alertType = 'success'
       }),

@@ -18,21 +18,24 @@ const steps = [
 ]
 
 const StepFlow = () => {
-  const dispatch: AppDispatch = useDispatch<any>()
+  const dispatch: AppDispatch = useDispatch()
 
   const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
     initialStep: 0
   })
+
   const [calenderDates, setCalendarDates] = useState<DateObject | DateObject[] | null>(null)
   console.log(calenderDates)
 
   const userState = useSelector(selectUser)
 
   function handleNext() {
-    if (activeStep === 0) {
-      const formattedDates = FormatDatesforState(calenderDates)
-      dispatch(updateSelectedBookings(formattedDates))
-      return nextStep()
+    if (activeStep === 0 && userState.tickets.activeTickets) {
+      if (userState.tickets.activeTickets > 0) {
+        const formattedDates = FormatDatesforState(calenderDates)
+        dispatch(updateSelectedBookings(formattedDates))
+        return nextStep()
+      } else alert('Not enough tickets')
     }
     if (activeStep === 1) {
       dispatch(createBooking(userState.selectedBookings))
@@ -66,12 +69,6 @@ const StepFlow = () => {
           <Button onClick={handleNext} size="sm" disabled={calenderDates == null || Object.keys(calenderDates).length == 0 ? true : false}>
             {activeStep === 0 ? 'Next' : 'Confirm booking dates'}
           </Button>
-
-          {/* // <Button size="sm" onClick={() => handleBooking()}>
-            <Button disabled={calenderDates == null || Object.keys(calenderDates).length == 0 ? true : false} size="sm">
-              Confirm booking dates
-            </Button>
-  */}
         </Flex>
       )}
     </Flex>

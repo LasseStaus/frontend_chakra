@@ -22,7 +22,7 @@ export const Ticket = ({ onOpenTicket }: Props) => {
         <Flex alignItems="center">
           <Flex gap={4} alignItems="center">
             <IoTicketOutline style={{ width: '40px', height: 'auto' }} />
-            <Heading fontSize={'4xl'}>Tickets</Heading>
+            <Heading fontSize={'componentHeader'}>Tickets</Heading>
           </Flex>
           <Flex ml={'auto'} gap={4} justifySelf="flex-end">
             <Button onClick={onOpenTicket}>Buy tickets</Button>
