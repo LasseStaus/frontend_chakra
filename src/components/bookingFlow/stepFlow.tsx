@@ -23,9 +23,11 @@ const StepFlow = () => {
   const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
     initialStep: 0
   })
+
   const [calenderDates, setCalendarDates] = useState<DateObject | DateObject[] | null>(null)
 
   const bookingsState = useSelector((state: any) => state.user.selectedBookings)
+
   function handleNext() {
     if (activeStep === 0) {
       const formattedDates = FormatDatesforState(calenderDates)

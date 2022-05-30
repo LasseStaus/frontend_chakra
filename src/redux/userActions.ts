@@ -171,7 +171,7 @@ export const deleteBooking = createAsyncThunk('loggedInUser/deleteBooking', asyn
 
   if (response.status === 201) {
     console.log('OK', resData)
-    return { deletedBooking: resData[0], updatedTickets: resData[1] }
+    return resData
   } else {
     console.log('NOT OK', resData)
 
