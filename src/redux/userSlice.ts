@@ -144,7 +144,7 @@ export const userSlice = createSlice({
       }),
       //
       //editUserPassword
-      builder.addCase(editUserPassword.fulfilled, (state, action) => {
+      builder.addCase(editUserPassword.fulfilled, (state, action:AnyAction) => {
         console.log('password success')
         state.alertMessage = action.payload
         state.alertType = 'success'
@@ -153,7 +153,7 @@ export const userSlice = createSlice({
         state.pending = true
         // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
-      builder.addCase(editUserPassword.rejected, (state, action) => {
+      builder.addCase(editUserPassword.rejected, (state, action:AnyAction) => {
         state.pending = false
         state.alertMessage = action.payload
         state.alertType = 'error'
@@ -188,7 +188,7 @@ export const userSlice = createSlice({
         state.pending = true
         // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
-      builder.addCase(purchaseTicket.rejected, (state, action) => {
+      builder.addCase(purchaseTicket.rejected, (state, action:AnyAction) => {
         state.pending = false
         state.alertMessage = action.payload
         state.alertType = 'error'
@@ -228,7 +228,7 @@ export const userSlice = createSlice({
       builder.addCase(deleteBooking.pending, (state, action) => {
         state.pending = true
       }),
-      builder.addCase(deleteBooking.rejected, (state, action) => {
+      builder.addCase(deleteBooking.rejected, (state, action:AnyAction) => {
         state.pending = false
         state.alertMessage = action.payload
         state.alertType = 'error'
@@ -263,7 +263,7 @@ export const userSlice = createSlice({
         state.pending = true
         // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
-      builder.addCase(updateBookingWithiLOQKey.rejected, (state, action) => {
+      builder.addCase(updateBookingWithiLOQKey.rejected, (state, action:AnyAction) => {
         state.pending = false
         state.alertMessage = action.payload
         state.alertType = 'error'
