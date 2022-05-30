@@ -33,6 +33,7 @@ const StepTypeTicket = ({ typeOfTicket, setTicketType }: Props) => {
       <Flex w={'100%'} h={'100%'} flexDir={{ base: 'column', md: 'row' }} justifySelf="stretch" alignItems={'center'}>
         {ticketTypeData.map((ticketType: TicketType) => (
           <Flex
+            key={ticketType.id}
             flexDir="column"
             pointerEvents="auto"
             {...ticketCardStyle}
