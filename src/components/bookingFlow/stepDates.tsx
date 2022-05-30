@@ -1,4 +1,4 @@
-import { Button, Flex, Heading } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading } from '@chakra-ui/react'
 import { isDisabled } from '@chakra-ui/utils'
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Calendar, DateObject } from 'react-multi-date-picker'
@@ -38,28 +38,30 @@ const StepDates = ({ calenderDates, setCalendarDates }: props) => {
         Select the dates you want a spot in the workspace.
       </Heading>
 
-      <Calendar
-        mapDays={({ date }) => {
-          let isBookedDates = dateArray.includes(date.format('DD-MM-YYYY'))
+      <Flex flexDir="column" w={{ base: 'full', md: '80%' }}>
+        <Calendar
+          mapDays={({ date }) => {
+            let isBookedDates = dateArray.includes(date.format('DD-MM-YYYY'))
 
-          if (isBookedDates) {
-            return {
-              disabled: true,
-              style: { color: 'white', backgroundColor: 'rgb(223, 90, 90)' },
-              onClick: () => alert('There are no avaliable bookings left for this date')
+            if (isBookedDates) {
+              return {
+                disabled: true,
+                style: { color: 'white', backgroundColor: 'rgb(223, 90, 90)' },
+                onClick: () => alert('There are no avaliable bookings left for this date')
+              }
             }
-          }
-        }}
-        minDate={currentDate}
-        value={calenderDates}
-        onChange={setCalendarDates}
-        format={format}
-        multiple
-        sort
-        buttons={true}
-        plugins={[<DatePanel header="Selected Dates" key={null} />]}
-      />
-      <CalendarColorDescription />
+          }}
+          minDate={currentDate}
+          value={calenderDates}
+          onChange={setCalendarDates}
+          format={format}
+          multiple
+          sort
+          buttons={true}
+          plugins={[<DatePanel header="Selected Dates" key={null} />]}
+        />
+        <CalendarColorDescription />
+      </Flex>
     </Flex>
   )
 }
