@@ -9,7 +9,7 @@ export const themeVaerkstedetCPH = extendTheme({
     brandBlack: '#514C4C',
     brandWhite: '#FFFFFF',
     brandGrey: '#F6F6F6',
-    brandRed: '#C31111',
+    brandRed: 'rgb(223, 90, 90)',
     brandBlue: '#1D5A8F',
     brandGreen: '#649B2C'
   },
