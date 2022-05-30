@@ -38,7 +38,7 @@ export const UpcommingBookings = ({ onBookingOpen }: Props) => {
           </Flex>
         </Flex>
         <TableContainer mt={8}>
-          <Table variant="striped" colorScheme="gray">
+          <Table variant="striped" size={'md'} colorScheme="gray">
             <Thead>
               <Tr>
                 <Th>VærkstedetCPH</Th>

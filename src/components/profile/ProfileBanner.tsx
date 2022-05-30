@@ -1,11 +1,10 @@
+import { SettingsIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, Flex, Grid, GridItem, Heading, Text, useDisclosure, Wrap } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useSelector } from 'react-redux'
-import { EditProfileDrawer } from './EditProfileDrawer'
-
-import { SettingsIcon } from '@chakra-ui/icons'
+import { selectUser } from '../../redux/userSlice'
 import { formatDate } from '../helpers/formatSingleDate'
-import { selectUser, selectUserInfo } from '../../redux/userSlice'
+import { EditProfileDrawer } from './EditProfileDrawer'
 
 type Props = {
   onOpenTicket: () => void
@@ -32,9 +31,18 @@ const ListItem = ({ heading, body }: ListItemProps) => {
 
 export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
   const { isOpen, onOpen: onOpenProfile, onClose } = useDisclosure()
-
+  /*   let amountOfBookings: number */
   const userState = useSelector(selectUser)
+
   const amountOfBookings = userState.bookings.length
+
+  console.log('HEJSAAAA', amountOfBookings)
+
+  /*  if (userState.bookings) {
+    amountOfBookings = userState.bookings.length
+  } else {
+    amountOfBookings = 0
+  } */
 
   return (
     <>
@@ -97,7 +105,7 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
                 <Flex justifyContent={{ base: 'space-around', md: 'space-between' }} w="full">
                   <ListItem
                     heading="Upcomming Bookings"
-                    body={amountOfBookings > 0 ? amountOfBookings + ' ' + 'bookings' : 'No bookings ahead'}
+                    body={amountOfBookings > 0 ? amountOfBookings + ' bookings' : 'No bookings ahead'}
                   />
                   <ListItem heading="Tickets" body={userState.tickets.activeTickets + 'tickets'} />
                   <ListItem

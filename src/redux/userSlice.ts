@@ -198,7 +198,6 @@ export const userSlice = createSlice({
       //createBooking
       builder.addCase(createBooking.fulfilled, (state, action) => {
         state.pending = false
-        console.log('payload hahaha', action.payload)
         state.tickets = {
           activeTickets: action.payload.tickets.activeTickets,
           usedTickets: action.payload.tickets.usedTickets
@@ -216,14 +215,23 @@ export const userSlice = createSlice({
         // state.user = state.user - WHAT TO DO HERE? // TO DO
       }),
       builder.addCase(deleteBooking.fulfilled, (state, action) => {
-        console.log('In delete Booking', action.payload)
+
+
+        console.log("delete booking case", action.payload);
+
+        
+        console.log("full state", state)
+        console.log("the state before", state.bookings)
+
+ /*        const exists = state.bookings.find((booking) => ) */
         const newBookings = state.bookings.filter((booking) => booking.id !== action.payload.deletedBooking.id)
         state.bookings = newBookings
+        console.log("the state after", state.bookings )
         state.tickets = {
           activeTickets: action.payload.updatedTickets.activeTickets,
           usedTickets: action.payload.updatedTickets.usedTickets
         }
-        state.allUserBookings = action.payload.allUserBookings
+  /*       state.allUserBookings = action.payload.allUserBookings */
         state.alertMessage = 'You have now canceled you booking'
         state.alertType = 'success'
       }),

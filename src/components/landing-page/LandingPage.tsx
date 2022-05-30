@@ -1,4 +1,4 @@
-import { Box, useDisclosure } from '@chakra-ui/react'
+import { useDisclosure } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateRefreshToken } from '../../redux/authenticationActions'
@@ -9,7 +9,7 @@ import { selectUser, setAlertMessage } from '../../redux/userSlice'
 import AlertBox from '../alert/Alert'
 import CalendarModal from '../calendar/calendarModal'
 import CurrentCalendar from '../calendar/currentCalendar'
-import useWindowSize from '../hooks/getWindowSize'
+import IsWindowSizeLargerThan from '../hooks/getWindowSize'
 import { ProfileBanner } from '../profile/ProfileBanner'
 import Ticket from '../tickets/TicketContainer'
 import TicketModal from '../tickets/TicketModal'
@@ -34,12 +34,7 @@ function LandingPage() {
     dispatch(getUserInfo())
     dispatch(getTicketTypes())
   }, [])
-
-  let numberOfMonths: number = 1
-  const windowSize = useWindowSize()
-  if (windowSize) {
-    numberOfMonths = 2
-  }
+  const windowSize = IsWindowSizeLargerThan(700)
 
   //TODO move timers into alertmessages
   useEffect(() => {
@@ -60,7 +55,7 @@ function LandingPage() {
     <>
       {userState.alertMessage != undefined && <AlertBox alertMessage={userState.alertMessage} alertType={userState.alertType} />}
       <ProfileBanner onOpenTicket={onOpenTicket} onBookingOpen={onBookingOpen} />
-      <CurrentCalendar numberOfMonths={2} />
+      <CurrentCalendar numberOfMonths={windowSize ? 2 : 1} />
       <UpcommingBookings onBookingOpen={onBookingOpen} />
       <Ticket onOpenTicket={onOpenTicket} />
       <TicketModal isOpen={isOpenTicket} onClose={onCloseTicket} />
