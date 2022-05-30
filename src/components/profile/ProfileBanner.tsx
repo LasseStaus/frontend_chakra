@@ -11,6 +11,24 @@ type Props = {
   onBookingOpen: () => void
 }
 
+type ListItemProps = {
+  heading: string
+  body: string
+}
+
+const ListItem = ({ heading, body }: ListItemProps) => {
+  return (
+    <Wrap direction="column" maxW={{ base: '20', md: '40' }}>
+      <Heading fontWeight="bold" color="white" fontSize="md" textTransform="uppercase">
+        {heading}
+      </Heading>
+      <Text color="white" textTransform="uppercase" fontSize="xs">
+        {body}
+      </Text>
+    </Wrap>
+  )
+}
+
 export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
   const { isOpen, onOpen: onOpenProfile, onClose } = useDisclosure()
 
@@ -79,32 +97,12 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
 
               <GridItem colSpan={{ base: 5, md: 4 }} rowSpan={1}>
                 <Flex justifyContent={{ base: 'space-around', md: 'space-between' }} w="full">
-                  {/* // TO DO - mapping */}
-                  <Wrap direction="column" maxW={{ base: '20', md: '40' }}>
-                    <Heading fontWeight="bold" color="white" fontSize="md" textTransform="uppercase">
-                      Upcomming Bookings
-                    </Heading>
-
-                    <Text color="white" textTransform="uppercase" fontSize="xs">
-                      {amountOfBookings > 0 ? amountOfBookings + ' ' + 'bookings' : 'No bookings ahead'}
-                    </Text>
-                  </Wrap>
-                  <Wrap direction="column" maxW={{ base: '20', md: '40' }}>
-                    <Heading fontWeight="bold" color="white" fontSize="md" textTransform="uppercase">
-                      Tickets
-                    </Heading>
-                    <Text color="white" textTransform="uppercase" fontSize="xs">
-                      {activeTickets} tickets
-                    </Text>
-                  </Wrap>
-                  <Wrap direction="column" maxW={{ base: '20', md: '40' }}>
-                    <Heading fontWeight="bold" color="white" fontSize="md" textTransform="uppercase">
-                      Latest Purchase
-                    </Heading>
-                    <Text color="white" textTransform="uppercase" fontSize="xs">
-                      {purchaseData[0] ? formatDate(purchaseData[0]?.purchasedAt) : 'No purchases'}
-                    </Text>
-                  </Wrap>
+                  <ListItem
+                    heading="Upcomming Bookings"
+                    body={amountOfBookings > 0 ? amountOfBookings + ' ' + 'bookings' : 'No bookings ahead'}
+                  />
+                  <ListItem heading="Tickets" body={activeTickets + 'tickets'} />
+                  <ListItem heading="Latest Purchase" body={purchaseData[0] ? formatDate(purchaseData[0]?.purchasedAt) : 'No purchases'} />
                 </Flex>
               </GridItem>
 
