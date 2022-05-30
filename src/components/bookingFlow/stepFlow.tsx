@@ -28,12 +28,15 @@ const StepFlow = () => {
   console.log(calenderDates)
 
   const bookingsState = useSelector((state: any) => state.user.selectedBookings)
+  const ticketState = useSelector((state: any) => state.user.tickets)
 
   function handleNext() {
     if (activeStep === 0) {
-      const formattedDates = FormatDatesforState(calenderDates)
-      dispatch(updateSelectedBookings(formattedDates))
-      return nextStep()
+      if (ticketState.activeTickets > 0) {
+        const formattedDates = FormatDatesforState(calenderDates)
+        dispatch(updateSelectedBookings(formattedDates))
+        return nextStep()
+      } else alert('Not enough tickets')
     }
     if (activeStep === 1) {
       dispatch(createBooking(bookingsState))
