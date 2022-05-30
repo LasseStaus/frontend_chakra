@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
 import { isDisabled } from '@chakra-ui/utils'
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Calendar, DateObject } from 'react-multi-date-picker'
@@ -15,6 +15,7 @@ const StepDates = ({ calenderDates, setCalendarDates }: props) => {
   const format = 'YYYY-MM-DD'
   const currentDate = new Date()
   const allCurrentBookings = useSelector((state: any) => state.user.allUserBookings)
+  const ticketState = useSelector((state: any) => state.user.tickets)
 
   let dateArray: string[] = []
 
@@ -37,6 +38,7 @@ const StepDates = ({ calenderDates, setCalendarDates }: props) => {
       <Heading mb={4} fontSize={'2xl'}>
         Select the dates you want a spot in the workspace.
       </Heading>
+      <Text mb={4}>Amount of active tickets availble: {ticketState.activeTickets} </Text>
 
       <Flex flexDir="column" w={{ base: 'full', md: '80%' }}>
         <Calendar
