@@ -4,13 +4,13 @@ import ListItem from '../generic/listItem'
 import { Spinner } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
 import formatDatesForScreen from '../helpers/formatDatesForScreen'
+import { selectUser } from '../../redux/userSlice'
 const StepConfirm = () => {
-  const { pending } = useSelector((state: any) => state.user.pending)
-  const bookingsState = useSelector((state: any) => state.user.selectedBookings)
-  const bookingsFormatted = formatDatesForScreen(bookingsState)
+  const userState = useSelector(selectUser)
+  const bookingsFormatted = formatDatesForScreen(userState.selectedBookings)
   return (
     <Box>
-      {pending ? (
+      {userState.pending ? (
         <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
       ) : (
         <Flex py={12} px={{ base: 4, md: 8 }} flexDir="column" justify="center" align="center">

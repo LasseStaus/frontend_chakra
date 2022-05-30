@@ -1,7 +1,7 @@
 import { Flex, Heading, Text } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction } from 'react'
 import { useSelector } from 'react-redux'
-import { TicketType } from '../../../redux/userSlice'
+import { selectUser, TicketType } from '../../../redux/userSlice'
 
 type Props = {
   typeOfTicket: string
@@ -24,14 +24,15 @@ const ticketCardSelect = {
 }
 
 const StepTypeTicket = ({ typeOfTicket, setTicketType }: Props) => {
-  const ticketTypeData = useSelector((state: any) => state.user.ticketTypes)
+  const userState = useSelector(selectUser)
+
   return (
     <Flex my={{ base: 8, md: 2 }} flexDir="column" justify="center" align="center" w={'100%'} h={'100%'}>
       <Heading mb={4} fontSize={'2xl'}>
         Select the ticket type you want to purchase
       </Heading>
       <Flex w={'100%'} h={'100%'} flexDir={{ base: 'column', md: 'row' }} justifySelf="stretch" alignItems={'center'}>
-        {ticketTypeData.map((ticketType: TicketType) => (
+        {userState.ticketTypes.map((ticketType: TicketType) => (
           <Flex
             key={ticketType.id}
             flexDir="column"

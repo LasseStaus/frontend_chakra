@@ -1,9 +1,8 @@
-import { Box, Button, Container } from '@chakra-ui/react'
-import { Dispatch, SetStateAction } from 'react'
+import { Button, Container } from '@chakra-ui/react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
-import { LoginProps } from '../types/AuthTypes'
+import { useDispatch } from 'react-redux'
 import { loginThunk } from '../../redux/authenticationActions'
+import { LoginProps } from '../types/AuthTypes'
 import { FormField } from './FormField'
 import { InputField } from './Input'
 
@@ -24,12 +23,9 @@ const Loginform = () => {
       }
     })
   }
-
-  const userMessage = useSelector((state: any) => state.authentication.loginMessageForUser)
   return (
     <>
       <Container maxW={'container.sm'} variant={'halfPaddingY'}>
-        {userMessage && <Box>{userMessage} </Box>}
         {/* Pass all methods into context */}
         <FormProvider {...methods}>
           <form onSubmit={(e) => e.preventDefault()}>

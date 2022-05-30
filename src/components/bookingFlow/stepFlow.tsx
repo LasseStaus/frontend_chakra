@@ -5,7 +5,7 @@ import { DateObject } from 'react-multi-date-picker'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
 import { createBooking } from '../../redux/userActions'
-import { updateSelectedBookings } from '../../redux/userSlice'
+import { selectUser, updateSelectedBookings } from '../../redux/userSlice'
 import { FormatDatesforState } from '../helpers/formatDatesForState'
 import StepConfirm from './stepConfirm'
 import StepDates from './stepDates'
@@ -26,7 +26,8 @@ const StepFlow = () => {
   const [calenderDates, setCalendarDates] = useState<DateObject | DateObject[] | null>(null)
   console.log(calenderDates)
 
-  const bookingsState = useSelector((state: any) => state.user.selectedBookings)
+  const userState = useSelector(selectUser)
+
   function handleNext() {
     if (activeStep === 0) {
       const formattedDates = FormatDatesforState(calenderDates)
@@ -34,7 +35,7 @@ const StepFlow = () => {
       return nextStep()
     }
     if (activeStep === 1) {
-      dispatch(createBooking(bookingsState))
+      dispatch(createBooking(userState.selectedBookings))
       nextStep()
       setStep(3)
     }

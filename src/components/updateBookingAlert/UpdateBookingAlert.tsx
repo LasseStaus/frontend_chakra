@@ -41,8 +41,6 @@ export default function UpdateBookingAlert({ booking, isUpdateBookingOpen, onUpd
   } = methods
 
   const onSubmit: SubmitHandler<UpdateBookingProps> = async (data) => {
-    console.log('i submit', data)
-
     const bookingData = { iLOQKey: data.iLOQKey, bookingId: booking?.id }
 
     dispatch(updateBookingWithiLOQKey(bookingData))

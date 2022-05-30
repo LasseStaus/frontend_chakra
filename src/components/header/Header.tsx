@@ -1,12 +1,11 @@
-import { Box, Button, ButtonGroup, Container, Flex, Heading, Spacer } from '@chakra-ui/react'
+import { Button, ButtonGroup, Flex, Heading, Spacer } from '@chakra-ui/react'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutThunk } from '../../redux/authenticationActions'
-
-import Logo from './Logo'
+import { selectAuthentication } from '../../redux/authenticationSlice'
 
 const Header: FC = () => {
-  const authenticated = useSelector((state: any) => state.authentication.authenticated)
+  const authState = useSelector(selectAuthentication)
 
   const dispatch = useDispatch<any>()
   async function handleLogout() {
@@ -23,7 +22,7 @@ const Header: FC = () => {
       </Flex>
       <Spacer />
       <ButtonGroup gap="2">
-        {authenticated ? (
+        {authState.authenticated ? (
           <Button px={8} variant="primary" onClick={handleLogout}>
             Logout
           </Button>

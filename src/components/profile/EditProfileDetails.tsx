@@ -7,6 +7,7 @@ import { AppDispatch } from '../../redux/store'
 import { editUserInfo } from '../../redux/userActions'
 import { FormField } from '../forms/FormField'
 import InputField from '../forms/Input'
+import { selectUser } from '../../redux/userSlice'
 
 interface Props {
   onClose: () => void
@@ -15,11 +16,16 @@ interface Props {
 export const EditProfileDetails = ({ onClose }: Props) => {
   const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
-  const { firstname, lastname, email, phonenumber } = useSelector((state: any) => state.user.user)
+  const userState = useSelector(selectUser)
 
   const methods = useForm<EditUserProps>({
     mode: 'onBlur',
-    defaultValues: { firstname: firstname, lastname: lastname, email: email, phonenumber: phonenumber }
+    defaultValues: {
+      firstname: userState.user?.firstname,
+      lastname: userState.user?.lastname,
+      email: userState.user?.email,
+      phonenumber: userState.user?.phonenumber
+    }
   })
 
   const {

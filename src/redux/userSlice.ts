@@ -1,4 +1,5 @@
-import { createSlice, SerializedError } from '@reduxjs/toolkit'
+import { AnyAction, createSelector, createSlice, SerializedError } from '@reduxjs/toolkit'
+import { RootState } from './store'
 import {
   createBooking,
   deleteBooking,
@@ -15,12 +16,12 @@ interface User {
   firstname: string | undefined
   lastname: string | undefined
   email: string | undefined
-  phonenumber: string | number | undefined
+  phonenumber: number | undefined
 }
 
 export interface Tickets {
-  activeTickets: string | number | undefined
-  usedTickets: string | number | undefined
+  activeTickets:  number | undefined
+  usedTickets:  number | undefined
 }
 
 export interface Booking {
@@ -52,10 +53,10 @@ export interface userSliceState {
   ticketTypes: TicketType[]
   bookings: Booking[]
   allUserBookings: Booking[]
-  selectedBookings: Booking[]
+  selectedBookings: string[]
   purchases: Purchase[]
   pending: boolean
-  alertMessage: string | undefined | SerializedError | unknown
+  alertMessage: string | undefined
   alertType: 'success' | 'error' | 'warning' | 'info' | undefined
 }
 
@@ -133,8 +134,10 @@ export const userSlice = createSlice({
         state.pending = true
         // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
-      builder.addCase(editUserInfo.rejected, (state, action) => {
+      builder.addCase(editUserInfo.rejected, (state, action:AnyAction) => {
         state.pending = false
+ 
+        
         state.alertMessage = action.payload
         state.alertType = 'error'
         // state.user = state.user - WHAT TO DO HERE? // TO DO
@@ -271,5 +274,8 @@ export const userSlice = createSlice({
 // export const {} = userSlice.actions
 
 export const { setAlertMessage, updateSelectedBookings } = userSlice.actions
+
+export const selectUser  = createSelector((state: RootState) => state.user, user => user)
+export const selectUserInfo  = createSelector((state: RootState) => state.user.user, user => user)
 
 // export const selectUser = (state: any) => state.user.user

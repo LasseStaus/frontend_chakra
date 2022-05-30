@@ -25,7 +25,7 @@ const SignupForm = ({ setTabIndex }: Props) => {
   password.current = watch('password', '')
 
   const dispatch: AppDispatch = useDispatch<AppDispatch>()
-  const messageForUser = useSelector((state: any) => state.authentication.signupMessageForUser)
+
   const onSubmit: SubmitHandler<SignupProps> = async (data) => {
     dispatch(signupThunk(data)).then((responseData: any) => {
       if (responseData.type === 'authentication/signup/fulfilled') {
@@ -38,7 +38,6 @@ const SignupForm = ({ setTabIndex }: Props) => {
   return (
     <>
       <Container maxW={'container.sm'} variant={'halfPaddingY'}>
-        {messageForUser && <Box>{messageForUser} </Box>}
         <FormProvider {...methods}>
           <form onSubmit={(e) => e.preventDefault()}>
             <FormField
