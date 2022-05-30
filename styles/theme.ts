@@ -1,6 +1,7 @@
 import { extendTheme } from '@chakra-ui/react'
 import { StepsStyleConfig as Steps } from 'chakra-ui-steps'
 import { ButtonStyles as Button } from '../styles/components/ButtonStyles'
+import { whiten, mode, darken } from '@chakra-ui/theme-tools'
 
 export const themeVaerkstedetCPH = extendTheme({
   colors: {
@@ -78,9 +79,17 @@ export const themeVaerkstedetCPH = extendTheme({
       }
     },
     Button,
-    Heading: {
+    Box: (props: { colorMode: string }) => ({
       baseStyle: {
-        color: 'blue.900',
+        bg: props.colorMode === 'light' ? 'brandGrey' : 'brandBlack'
+      },
+      default: {
+        bg: props.colorMode === 'light' ? 'brandGrey' : 'brandBlack'
+      }
+    }),
+    Heading: (props: { colorMode: string }) => ({
+      baseStyle: {
+        color: props.colorMode === 'light' ? 'brandBlack' : 'white',
         fontWeight: 'medium'
       },
       sizes: {
@@ -103,10 +112,10 @@ export const themeVaerkstedetCPH = extendTheme({
           fontSize: { sm: '2xl', lg: '4xl' }
         }
       }
-    },
-    Text: {
+    }),
+    Text: (props: { colorMode: string }) => ({
       baseStyle: {
-        color: 'brandBlack',
+        color: props.colorMode === 'light' ? 'brandBlack' : 'white',
         lineHeight: '1.5',
         fontSize: 'sm'
       },
@@ -118,8 +127,7 @@ export const themeVaerkstedetCPH = extendTheme({
           mb: 2
         }
       }
-    },
-
+    }),
     Container: {
       baseStyle: {
         paddingTop: { sm: 10, xl: 12, xxl: 20 },

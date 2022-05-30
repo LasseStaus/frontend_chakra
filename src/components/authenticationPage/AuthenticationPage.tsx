@@ -31,7 +31,7 @@ export const AuthenticatedPage = () => {
     <>
       {alertMessage != undefined ? <AlertBox alertMessage={alertMessage} alertType={alertType} /> : null}
       <Container maxW={'container.sm'} marginTop={0}>
-        <Box bg="white" boxShadow={'base'} mt={12} borderRadius={6}>
+        <Box boxShadow={'base'} mt={12} borderRadius={6}>
           <Tabs defaultIndex={0} index={index} onChange={(index) => setTabIndex(index)} isFitted variant="enclosed" border={'sm'}>
             <TabList p={0} boxShadow={'sm'}>
               <Tab>Login</Tab>

@@ -72,6 +72,8 @@ export const editUserPassword = createAsyncThunk('loggedInUser/editUserPassword'
   if (response.status === 200) {
     return thunkAPI.fulfillWithValue(resData.message)
   } else {
+    console.log('We are here')
+
     return thunkAPI.rejectWithValue(resData.message)
   }
 })
