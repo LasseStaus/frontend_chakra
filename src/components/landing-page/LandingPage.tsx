@@ -1,6 +1,8 @@
 import { useDisclosure } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import refreshTokens from '../../pages/api/authenticateOnLoad'
+import { updateRefreshToken } from '../../redux/authenticationActions'
 import { AppDispatch } from '../../redux/store'
 import { getTicketTypes, getUserInfo } from '../../redux/userActions'
 import { setAlertMessage } from '../../redux/userSlice'
@@ -16,8 +18,19 @@ function LandingPage() {
   const { isOpen: isOpenTicket, onOpen: onOpenTicket, onClose: onCloseTicket } = useDisclosure()
   const { isOpen: isBookingOpen, onOpen: onBookingOpen, onClose: onBookingClose } = useDisclosure()
 
+  const userRefreshToken = useSelector((state: any) => state.authentication.tokens)
+
   const alertMessage = useSelector((state: any) => state.user.alertMessage)
   const alertType = useSelector((state: any) => state.user.alertType)
+
+  if (userRefreshToken) {
+    console.log(userRefreshToken)
+
+    setTimeout(() => {
+      dispatch(updateRefreshToken())
+      //set to 15000 for testing, otherwise it might bug
+    }, 600000)
+  }
 
   useEffect(() => {
     dispatch(getUserInfo())

@@ -70,3 +70,20 @@ export const authenticateOnLoad = createAsyncThunk("authentication/authenticateO
     return thunkAPI.rejectWithValue(resData)
   }
 })
+
+
+export const updateRefreshToken = createAsyncThunk("authentication/updateRefreshToken", async (_, thunkAPI) => {
+  const response = await fetch(`${API_URL}/api/updateRefreshToken`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  
+  const resData = await response.json()
+  if (response.status === 200) {
+    return resData
+  } else {
+    return thunkAPI.rejectWithValue(resData)
+  }
+})

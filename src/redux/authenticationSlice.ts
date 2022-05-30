@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit"
-import { authenticateOnLoad, loginThunk, logoutThunk, signupThunk } from "./authenticationActions"
+import { authenticateOnLoad, loginThunk, logoutThunk, signupThunk, updateRefreshToken } from "./authenticationActions"
 
 
 
@@ -114,6 +114,22 @@ export const authenticationSlice = createSlice({
         state.pending = false
         state.authenticated = false
         state.alertMessage = "It's been a while! Please login again "
+        state.alertType = "info"
+        state.authenticationLoad = false
+        state.tokens = undefined
+        state.isAdmin = false
+      }),
+      builder.addCase(updateRefreshToken.fulfilled, (state, action) => {
+        state.tokens = action.payload.tokens.access_token
+        state.isAdmin = action.payload.isAdmin
+      }),
+      builder.addCase(updateRefreshToken.pending, (state, action) => {
+  
+      }),
+      builder.addCase(updateRefreshToken.rejected, (state, action) => {
+        state.pending = false
+        state.authenticated = false
+        state.alertMessage = "It's been a while! Please login again"
         state.alertType = "info"
         state.authenticationLoad = false
         state.tokens = undefined
