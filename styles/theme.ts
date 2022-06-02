@@ -2,17 +2,22 @@ import { extendTheme } from '@chakra-ui/react'
 import { StepsStyleConfig as Steps } from 'chakra-ui-steps'
 import { ButtonStyles as Button } from '../styles/components/ButtonStyles'
 import { whiten, mode, darken } from '@chakra-ui/theme-tools'
+import { Dict } from '@chakra-ui/utils'
 
 export const themeVaerkstedetCPH = extendTheme({
   colors: {
     primary: '#DD9933',
     primaryLight: '#E8C289',
-    brandBlack: '#514C4C',
+    brandBlack: '#323232',
     brandWhite: '#FFFFFF',
     brandGrey: '#F6F6F6',
     brandRed: 'rgb(223, 90, 90)',
-    brandBlue: '#1D5A8F',
-    brandGreen: '#649B2C'
+    brandBlue: '#2D79BC',
+    brandGreen: '#649B2C',
+    brandDark: {
+      100: '#323232',
+      200: '#424242'
+    }
   },
   breakpoints: {
     sm: '220px',
@@ -79,17 +84,8 @@ export const themeVaerkstedetCPH = extendTheme({
       }
     },
     Button,
-    Box: (props: { colorMode: string }) => ({
+    Heading: {
       baseStyle: {
-        bg: props.colorMode === 'light' ? 'brandGrey' : 'brandBlack'
-      },
-      default: {
-        bg: props.colorMode === 'light' ? 'brandGrey' : 'brandBlack'
-      }
-    }),
-    Heading: (props: { colorMode: string }) => ({
-      baseStyle: {
-        color: props.colorMode === 'light' ? 'brandBlack' : 'white',
         fontWeight: 'medium'
       },
       sizes: {
@@ -112,10 +108,9 @@ export const themeVaerkstedetCPH = extendTheme({
           fontSize: { sm: '2xl', lg: '4xl' }
         }
       }
-    }),
-    Text: (props: { colorMode: string }) => ({
+    },
+    Text: {
       baseStyle: {
-        color: props.colorMode === 'light' ? 'brandBlack' : 'white',
         lineHeight: '1.5',
         fontSize: 'sm'
       },
@@ -127,7 +122,7 @@ export const themeVaerkstedetCPH = extendTheme({
           mb: 2
         }
       }
-    }),
+    },
     Container: {
       baseStyle: {
         paddingTop: { sm: 10, xl: 12, xxl: 20 },
@@ -136,6 +131,16 @@ export const themeVaerkstedetCPH = extendTheme({
         marginBottom: { sm: 6, xl: 8, xxl: 12 }
       },
       variants: {
+        darkMode: (props: any) => ({
+          bg: mode('green', 'red')(props),
+          color: mode('green', 'red')(props)
+        }),
+        lighterDarkMode: (props: any) => ({
+          bg: mode('brandWhite', 'brandDark.200')(props),
+          color: mode('brandBlack', 'white')(props),
+          paddingTop: { sm: 4, xl: 4, xxl: 9 },
+          paddingBottom: { sm: 4, xl: 4, xxl: 9 }
+        }),
         onlyPaddingX: {
           paddingTop: 'none',
           paddingBottom: 'none'

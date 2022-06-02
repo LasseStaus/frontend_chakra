@@ -6,6 +6,7 @@ import { AppDispatch } from '../../redux/store'
 import AlertBox from '../alert/Alert'
 import Loginform from '../forms/Loginform'
 import SignupForm from '../forms/Signupform'
+import { whiten, mode, darken } from '@chakra-ui/theme-tools'
 
 export const AuthenticatedPage = () => {
   const [index, setTabIndex] = useState(0)
@@ -31,11 +32,15 @@ export const AuthenticatedPage = () => {
     <>
       {alertMessage != undefined ? <AlertBox alertMessage={alertMessage} alertType={alertType} /> : null}
       <Container maxW={'container.sm'} marginTop={0}>
-        <Box boxShadow={'base'} mt={12} borderRadius={6}>
+        <Box bg={useColorModeValue('brandGrey', 'brandDark.200')} boxShadow={'base'} mt={12} borderRadius={6}>
           <Tabs defaultIndex={0} index={index} onChange={(index) => setTabIndex(index)} isFitted variant="enclosed" border={'sm'}>
             <TabList p={0} boxShadow={'sm'}>
-              <Tab>Login</Tab>
-              <Tab>Signup</Tab>
+              <Tab textTransform="uppercase" _selected={{ color: useColorModeValue('brandDark.200', 'primary'), fontWeight: 'bold' }}>
+                Login
+              </Tab>
+              <Tab textTransform="uppercase" _selected={{ color: useColorModeValue('brandDark.200', 'primary'), fontWeight: 'bold' }}>
+                Signup
+              </Tab>
             </TabList>
             <TabPanels>
               <TabPanel>

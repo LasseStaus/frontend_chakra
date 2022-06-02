@@ -39,7 +39,7 @@ export const AdminBookingPanel = () => {
   }, [dispatch])
 
   return (
-    <Container boxShadow={'lg'} maxW={'container.lg'} bg="white">
+    <>
       <Flex flexDir="column" p={4}>
         <Flex alignItems="center">
           <Flex gap={4} alignItems="center" w="full">
@@ -86,7 +86,7 @@ export const AdminBookingPanel = () => {
         </TableContainer>
       </Flex>
       <UpdateBookingAlert booking={updateBooking} isUpdateBookingOpen={isUpdateBookingOpen} onUpdateBookingClose={onUpdateBookingClose} />
-    </Container>
+    </>
   )
 }
 

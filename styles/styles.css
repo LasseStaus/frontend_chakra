@@ -1,7 +1,15 @@
 /*COSTUM OVERWRITE*/
+.darkMode {
+  background-color: #424242 !important;
+}
+
+.rmdp-wrapper.darkMode .rmdp-day span {
+  color: white !important;
+}
 
 .rmdp-wrapper .rmdp-calendar {
   height: 100%;
+  background-color: '#424242';
 }
 
 .rmdp-wrapper {

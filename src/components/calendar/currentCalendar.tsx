@@ -1,4 +1,4 @@
-import { Box, Button, Container, Flex, Heading, Text } from '@chakra-ui/react'
+import { background, Box, Button, Container, Flex, Heading, Text, useColorMode, useColorModeValue } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Calendar, DateObject } from 'react-multi-date-picker'
 import DatePanel from 'react-multi-date-picker/plugins/date_panel'
@@ -36,8 +36,11 @@ const CurrentCalendar = ({ numberOfMonths }: calendarProps) => {
 
     dateArray.push(date)
   })
+
+  const { colorMode, toggleColorMode } = useColorMode()
+
   return (
-    <Container maxW={'container.lg'} bg="white" variant={'even'} borderRadius={6} shadow={'base'}>
+    <Container maxW={'container.lg'} borderRadius={6} shadow={'base'} variant="lighterDarkMode">
       <Flex gap={4} alignItems="center">
         <IoMdTime style={{ width: '40px', height: 'auto' }} />
         <Heading variant={'componentHeader'}>Current Availability</Heading>
@@ -54,6 +57,7 @@ const CurrentCalendar = ({ numberOfMonths }: calendarProps) => {
               }
             }
           }}
+          className={colorMode === 'light' ? '' : 'darkMode'}
           disabled={true}
           minDate={currentDate}
           numberOfMonths={numberOfMonths}
