@@ -83,8 +83,8 @@ export const EditProfilePassword = ({ onClose }: Props) => {
                 defaultValue=""
                 type="password"
                 rules={{
-                  required: 'Required'
-                  // validate: (value) => value === password.current || 'The passwords do not match'
+                  required: 'Required',
+                  validate: (value) => value === password.current || 'The passwords do not match'
                 }}
                 errors={errors.passwordNewConfirm}
               />
