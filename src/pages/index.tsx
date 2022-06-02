@@ -6,32 +6,32 @@ import AuthenticatedPage from '../components/authenticationPage/AuthenticationPa
 import LandingPage from '../components/landing-page/LandingPage'
 import Layout from '../components/layouts/layout/Layout'
 import { authenticateOnLoad } from '../redux/authenticationActions'
-import { authenticationSliceState } from '../redux/authenticationSlice'
+import { authenticationSliceState, selectAuthentication } from '../redux/authenticationSlice'
 import { store } from '../redux/store'
 
 type AppDispatch = typeof store.dispatch
 const Dashboard = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const authenticated = useSelector((state: any) => state.authentication.authenticated)
-  const authenticationLoad = useSelector((state: any) => state.authentication.authenticationLoad)
-  const isAdmin: boolean = useSelector((state: any) => state.authentication.isAdmin)
+
   const router = useRouter()
+
+  const authState = useSelector(selectAuthentication)
 
   useEffect(() => {
     dispatch(authenticateOnLoad())
-    if (isAdmin) {
+    if (authState.isAdmin) {
       router.push('/admin')
     }
-  }, [dispatch, isAdmin, router])
+  }, [dispatch, authState.isAdmin, router])
 
   return (
-    <Skeleton startColor="white" endColor="white" isLoaded={!authenticationLoad}>
-      {authenticated && !isAdmin ? (
+    <Skeleton startColor="white" endColor="white" isLoaded={!authState.authenticationLoad}>
+      {authState.authenticated && !authState.isAdmin ? (
         <Layout pageTitle="Home">
           <LandingPage />
         </Layout>
       ) : (
-        !authenticated && (
+        !authState.authenticated && (
           <Layout pageTitle="Welcome to CPH workspace">
             <AuthenticatedPage />
           </Layout>

@@ -1,4 +1,4 @@
-export function formatDate(currentDate: Date) {
+export function formatDate(currentDate: Date |  string) {
   const formattedDate = new Date(currentDate).toLocaleDateString('da-DA', {
     weekday: 'long',
     year: 'numeric',

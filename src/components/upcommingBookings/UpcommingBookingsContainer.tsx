@@ -2,7 +2,7 @@ import { Button, Container, Flex, Heading, Table, TableContainer, Tbody, Td, Tex
 import React, { useState } from 'react'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
-import { Booking } from '../../redux/userSlice'
+import { Booking, selectUser } from '../../redux/userSlice'
 import CancelBookingAlert from '../cancelBookingAlert/CancelBookingAlert'
 import { formatDate } from '../helpers/formatSingleDate'
 
@@ -11,7 +11,7 @@ type Props = {
 }
 
 export const UpcommingBookings = ({ onBookingOpen }: Props) => {
-  const bookings = useSelector((state: any) => state.user.bookings)
+  const userState = useSelector(selectUser)
 
   // const { isOpen: isPurchaseOpen, onOpen: onPurchaseOpen, onClose: onPurchaseClose } = useDisclosure()
   const { isOpen: isCancelBookingOpen, onOpen: onCancelBookingOpen, onClose: onCancelBookingClose } = useDisclosure()
@@ -19,7 +19,6 @@ export const UpcommingBookings = ({ onBookingOpen }: Props) => {
   const [cancelThisBooking, setCancelThisBooking] = useState<Booking | undefined>(undefined)
 
   function openBooking(booking: Booking) {
-    console.log('bookingscontainer', booking)
     setCancelThisBooking(booking)
     onCancelBookingOpen()
   }
@@ -39,7 +38,7 @@ export const UpcommingBookings = ({ onBookingOpen }: Props) => {
           </Flex>
         </Flex>
         <TableContainer mt={8}>
-          <Table variant="striped" colorScheme="gray">
+          <Table variant="striped" size={'md'} colorScheme="gray">
             <Thead>
               <Tr>
                 <Th>VærkstedetCPH</Th>
@@ -50,8 +49,8 @@ export const UpcommingBookings = ({ onBookingOpen }: Props) => {
               </Tr>
             </Thead>
             <Tbody>
-              {bookings.length > 0 &&
-                bookings.map((booking: Booking) => (
+              {userState.bookings.length > 0 &&
+                userState.bookings.map((booking: Booking) => (
                   <Tr key={booking.id}>
                     <Td>Frederiksberg</Td>
                     <Td>{formatDate(booking.bookedFor)}</Td>
@@ -74,7 +73,7 @@ export const UpcommingBookings = ({ onBookingOpen }: Props) => {
                 ))}
             </Tbody>
           </Table>
-          {!bookings.length && (
+          {!userState.bookings.length && (
             <Flex justifyContent={'start'} m="4" pt={10}>
               You have no upcoming bookings..
             </Flex>

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
 import { getAllUserBookings } from '../../redux/userActions'
+import { selectUser } from '../../redux/userSlice'
 import { formatDate } from '../helpers/formatSingleDate'
 import UpdateBookingAlert from '../updateBookingAlert/UpdateBookingAlert'
 
@@ -25,7 +26,7 @@ export const AdminBookingPanel = () => {
   const { isOpen: isUpdateBookingOpen, onOpen: onUpdateBookingOpen, onClose: onUpdateBookingClose } = useDisclosure()
 
   const [updateBooking, setUpdateBooking] = useState<allUserBookingsData | undefined>(undefined)
-  const bookings = useSelector((state: any) => state.user.allUserBookings)
+  const userState = useSelector(selectUser)
 
   function openModal(booking: allUserBookingsData) {
     setUpdateBooking(booking)
@@ -60,7 +61,7 @@ export const AdminBookingPanel = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {bookings?.map((booking: allUserBookingsData) => (
+              {userState.allUserBookings?.map((booking: allUserBookingsData) => (
                 <Tr key={booking.id}>
                   <Td>{formatDate(booking.bookedFor)}</Td>
                   <Td>Frederiksberg</Td>

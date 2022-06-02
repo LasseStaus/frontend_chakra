@@ -3,6 +3,7 @@ import React from 'react'
 import { AiOutlineCreditCard } from 'react-icons/ai'
 import { IoTicketOutline } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
+import { selectUser } from '../../redux/userSlice'
 
 export interface TicketsProps {
   activeTickets: number
@@ -14,11 +15,7 @@ type Props = {
 }
 
 export const Ticket = ({ onOpenTicket }: Props) => {
-  const { activeTickets, usedTickets } = useSelector((state: any) => state.user.tickets)
-  const purchaseData = useSelector((state: any) => state.user.purchases)
-
-  const amountOfPurchases = purchaseData.length
-
+  const userState = useSelector(selectUser)
   return (
     <Container maxW={'container.lg'} bg="white" variant={'even'} borderRadius={6} shadow={'base'}>
       <Flex flexDir="column">
@@ -42,7 +39,7 @@ export const Ticket = ({ onOpenTicket }: Props) => {
             bg="#F2F2F2"
           >
             <IoTicketOutline style={{ width: '30px', height: 'auto' }} />
-            <Text fontSize="4xl">{activeTickets}</Text>
+            <Text fontSize="4xl">{userState.tickets.activeTickets}</Text>
             <Text fontWeight="bold" color="brandGreen" fontSize="md">
               Active Tickets
             </Text>
@@ -57,7 +54,7 @@ export const Ticket = ({ onOpenTicket }: Props) => {
             bg="#F2F2F2"
           >
             <IoTicketOutline style={{ width: '30px', height: 'auto' }} />
-            <Text fontSize="4xl">{usedTickets}</Text>
+            <Text fontSize="4xl">{userState.tickets.usedTickets}</Text>
             <Text fontWeight="bold" color="primary" fontSize="md">
               Used Tickets
             </Text>
@@ -72,7 +69,7 @@ export const Ticket = ({ onOpenTicket }: Props) => {
             bg="#F2F2F2"
           >
             <AiOutlineCreditCard style={{ width: '25px', height: 'auto' }} />
-            <Text fontSize="4xl">{amountOfPurchases}</Text>
+            <Text fontSize="4xl">{userState.purchases.length}</Text>
             <Text fontWeight="bold" color="brandBlue" fontSize="md">
               Purchase of tickets
             </Text>

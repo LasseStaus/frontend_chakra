@@ -1,4 +1,5 @@
-import { createSlice, SerializedError } from '@reduxjs/toolkit'
+import { AnyAction, createSelector, createSlice, SerializedError } from '@reduxjs/toolkit'
+import { RootState } from './store'
 import {
   createBooking,
   deleteBooking,
@@ -15,12 +16,12 @@ interface User {
   firstname: string | undefined
   lastname: string | undefined
   email: string | undefined
-  phonenumber: string | number | undefined
+  phonenumber: number | undefined
 }
 
 export interface Tickets {
-  activeTickets: string | number | undefined
-  usedTickets: string | number | undefined
+  activeTickets:  number | undefined
+  usedTickets:  number | undefined
 }
 
 export interface Booking {
@@ -52,10 +53,10 @@ export interface userSliceState {
   ticketTypes: TicketType[]
   bookings: Booking[]
   allUserBookings: Booking[]
-  selectedBookings: Booking[]
+  selectedBookings: string[]
   purchases: Purchase[]
   pending: boolean
-  alertMessage: string | undefined | SerializedError | unknown
+  alertMessage: string | undefined
   alertType: 'success' | 'error' | 'warning' | 'info' | undefined
 }
 
@@ -133,15 +134,17 @@ export const userSlice = createSlice({
         state.pending = true
         // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
-      builder.addCase(editUserInfo.rejected, (state, action) => {
+      builder.addCase(editUserInfo.rejected, (state, action:AnyAction) => {
         state.pending = false
+ 
+        
         state.alertMessage = action.payload
         state.alertType = 'error'
         // state.user = state.user - WHAT TO DO HERE? // TO DO
       }),
       //
       //editUserPassword
-      builder.addCase(editUserPassword.fulfilled, (state, action) => {
+      builder.addCase(editUserPassword.fulfilled, (state, action:AnyAction) => {
         console.log('password success')
         state.alertMessage = action.payload
         state.alertType = 'success'
@@ -150,7 +153,7 @@ export const userSlice = createSlice({
         state.pending = true
         // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
-      builder.addCase(editUserPassword.rejected, (state, action) => {
+      builder.addCase(editUserPassword.rejected, (state, action:AnyAction) => {
         state.pending = false
         state.alertMessage = action.payload
         state.alertType = 'error'
@@ -185,7 +188,7 @@ export const userSlice = createSlice({
         state.pending = true
         // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
-      builder.addCase(purchaseTicket.rejected, (state, action) => {
+      builder.addCase(purchaseTicket.rejected, (state, action:AnyAction) => {
         state.pending = false
         state.alertMessage = action.payload
         state.alertType = 'error'
@@ -195,7 +198,6 @@ export const userSlice = createSlice({
       //createBooking
       builder.addCase(createBooking.fulfilled, (state, action) => {
         state.pending = false
-        console.log('payload hahaha', action.payload)
         state.tickets = {
           activeTickets: action.payload.tickets.activeTickets,
           usedTickets: action.payload.tickets.usedTickets
@@ -213,21 +215,30 @@ export const userSlice = createSlice({
         // state.user = state.user - WHAT TO DO HERE? // TO DO
       }),
       builder.addCase(deleteBooking.fulfilled, (state, action) => {
-        console.log('In delete Booking', action.payload)
+
+
+        console.log("delete booking case", action.payload);
+
+        
+        console.log("full state", state)
+        console.log("the state before", state.bookings)
+
+ /*        const exists = state.bookings.find((booking) => ) */
         const newBookings = state.bookings.filter((booking) => booking.id !== action.payload.deletedBooking.id)
         state.bookings = newBookings
+        console.log("the state after", state.bookings )
         state.tickets = {
           activeTickets: action.payload.updatedTickets.activeTickets,
           usedTickets: action.payload.updatedTickets.usedTickets
         }
-        state.allUserBookings = action.payload.allUserBookings
+  /*       state.allUserBookings = action.payload.allUserBookings */
         state.alertMessage = 'You have now canceled you booking'
         state.alertType = 'success'
       }),
       builder.addCase(deleteBooking.pending, (state, action) => {
         state.pending = true
       }),
-      builder.addCase(deleteBooking.rejected, (state, action) => {
+      builder.addCase(deleteBooking.rejected, (state, action:AnyAction) => {
         state.pending = false
         state.alertMessage = action.payload
         state.alertType = 'error'
@@ -262,7 +273,7 @@ export const userSlice = createSlice({
         state.pending = true
         // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
-      builder.addCase(updateBookingWithiLOQKey.rejected, (state, action) => {
+      builder.addCase(updateBookingWithiLOQKey.rejected, (state, action:AnyAction) => {
         state.pending = false
         state.alertMessage = action.payload
         state.alertType = 'error'
@@ -273,5 +284,8 @@ export const userSlice = createSlice({
 // export const {} = userSlice.actions
 
 export const { setAlertMessage, updateSelectedBookings } = userSlice.actions
+
+export const selectUser  = createSelector((state: RootState) => state.user, user => user)
+export const selectUserInfo  = createSelector((state: RootState) => state.user.user, user => user)
 
 // export const selectUser = (state: any) => state.user.user

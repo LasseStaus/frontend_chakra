@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-
 const API_URL = "http://localhost:3000"
 export const loginThunk = createAsyncThunk("authentication/login", async (data: any, thunkAPI) => {
   const response = await fetch(`${API_URL}/api/login`, {
@@ -13,11 +12,12 @@ export const loginThunk = createAsyncThunk("authentication/login", async (data: 
   const resData = await response.json()
 
   if (response.status === 200) {
-    console.log("loginData", resData)
 
     return resData
   } else {
-    return thunkAPI.rejectWithValue(resData.message)
+
+    console.log("HALLO", resData); 
+    return thunkAPI.rejectWithValue(resData)
   }
 })
 
@@ -34,14 +34,12 @@ export const signupThunk = createAsyncThunk("authentication/signup", async (data
   if (response.status === 200) {
     return resData
   } else {
-    console.log(resData)
 
-    return thunkAPI.rejectWithValue(resData.message)
+    return thunkAPI.rejectWithValue('sdasdasd')
   }
 })
 
 export const logoutThunk = createAsyncThunk("authentication/logout", async (_, thunkAPI) => {
-  console.log("lougt createasync")
   const response = await fetch(`${API_URL}/api/logout`, {
     method: "POST",
     headers: {
@@ -52,6 +50,8 @@ export const logoutThunk = createAsyncThunk("authentication/logout", async (_, t
   if (response.status === 200) {
     return resData
   } else {
+
+   
     return thunkAPI.rejectWithValue(resData.message)
   }
 })
@@ -67,7 +67,8 @@ export const authenticateOnLoad = createAsyncThunk("authentication/authenticateO
   if (response.status === 200) {
     return resData
   } else {
-    return thunkAPI.rejectWithValue(resData)
+    const errorMessage: string = resData.message
+    return thunkAPI.rejectWithValue(errorMessage)
   }
 })
 

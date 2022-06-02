@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 
-export default function useWindowSize() {
-  const [isWindowSizeLargeThan900, setWindowSize] = useState(false)
+export default function IsWindowSizeLargerThan(pixels: number) {
+  const [windowIsLarger, setwindowIsLarger] = useState(false)
   useEffect(() => {
     function handleResize() {
       const { innerWidth: windowWidth } = window
-      if (windowWidth >= 900) return setWindowSize(true)
-      return setWindowSize(false)
+      if (windowWidth >= pixels) return setwindowIsLarger(true)
+      return setwindowIsLarger(false)
     }
 
     window.addEventListener('resize', handleResize)
@@ -14,5 +14,5 @@ export default function useWindowSize() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  return isWindowSizeLargeThan900
+  return windowIsLarger
 }

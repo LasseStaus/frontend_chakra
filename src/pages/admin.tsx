@@ -4,30 +4,31 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import AdminDasboard from '../components/admin/AdminDashboard'
 import Layout from '../components/layouts/layout/Layout'
+import { selectAuthentication } from '../redux/authenticationSlice'
 import { AppDispatch } from '../redux/store'
 import { getUserInfo } from '../redux/userActions'
+import { selectUser } from '../redux/userSlice'
 
 const AdminPage = () => {
-  const isAdmin = useSelector((state: any) => state.authentication.isAdmin)
-  const authenticationLoad = useSelector((state: any) => state.authentication.authenticationLoad)
-  const admin = useSelector((state: any) => state.user.user.firstname)
-  const pending = useSelector((state: any) => state.authentication.pending)
+  const userState = useSelector(selectUser)
+  const authState = useSelector(selectAuthentication)
+
   const router = useRouter()
 
   const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    if (!isAdmin) {
+    if (!authState.isAdmin) {
       router.push('/')
     }
-    if (isAdmin) {
+    if (authState.isAdmin) {
       dispatch(getUserInfo())
     }
-  }, [dispatch, isAdmin, router])
+  }, [dispatch, authState.isAdmin, router])
 
   return (
-    <Skeleton isLoaded={!pending && !authenticationLoad && isAdmin}>
-      <Layout pageTitle={`Admin ${admin ? admin : 'hej'}`}>
+    <Skeleton isLoaded={!authState.pending && !authState.authenticationLoad && authState.isAdmin}>
+      <Layout pageTitle={`Admin ${userState.user?.firstname ? userState.user.lastname : ''}`}>
         <AdminDasboard />
       </Layout>
     </Skeleton>

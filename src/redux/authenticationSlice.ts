@@ -1,15 +1,16 @@
-import { createAsyncThunk, createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit"
+import { AnyAction, createAsyncThunk, createSelector, createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit"
 import { authenticateOnLoad, loginThunk, logoutThunk, signupThunk, updateRefreshToken } from "./authenticationActions"
+import { RootState } from "./store"
 
 
 
 export interface authenticationSliceState {
   isAdmin: boolean
   pending: boolean
-  tokens: any 
+  tokens: string | undefined 
   authenticated: boolean
   authenticationLoad: boolean
-  alertMessage: string | undefined | SerializedError | unknown
+  alertMessage: string | undefined
   alertType: "success" | "error" | "warning" | "info" | undefined
 }
 
@@ -50,7 +51,10 @@ export const authenticationSlice = createSlice({
       builder.addCase(signupThunk.rejected, (state, action) => {
         state.pending = false
         state.authenticated = false
-        state.alertMessage = action.payload
+        if(action.error) {
+
+          state.alertMessage = action.error.message
+        } 
         state.alertType = "error"
       }),
       //
@@ -69,10 +73,11 @@ export const authenticationSlice = createSlice({
         state.authenticated = false
         state.authenticationLoad = true
       }),
-      builder.addCase(loginThunk.rejected, (state, action) => {
+      builder.addCase(loginThunk.rejected, (state, action:AnyAction) => {
         state.pending = false
         state.authenticated = false
-        state.alertMessage = action.payload
+        state.alertMessage = action.payload.message  
+       // state.alertMessage = action.payload.message
         state.tokens = undefined
         state.alertType = "error"
         state.authenticationLoad = false
@@ -129,7 +134,7 @@ export const authenticationSlice = createSlice({
       builder.addCase(updateRefreshToken.rejected, (state, action) => {
         state.pending = false
         state.authenticated = false
-        state.alertMessage = "It's been a while! Please login again"
+        state.alertMessage = "It's been a while! Please login again "
         state.alertType = "info"
         state.authenticationLoad = false
         state.tokens = undefined
@@ -140,4 +145,14 @@ export const authenticationSlice = createSlice({
 
 export const { setAlertMessage, updateAdmin } = authenticationSlice.actions
 
-export const selectAuthentication = (state: any) => state.authentication
+/* export const selectAuthentication = (state: authenticationSliceState) => state.authentication
+
+
+
+ */
+
+export const selectAuthentication  = createSelector((state: RootState) => state.authentication, authentication => authentication)
+
+
+
+

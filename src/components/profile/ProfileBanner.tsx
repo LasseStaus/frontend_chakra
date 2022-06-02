@@ -1,10 +1,10 @@
+import { SettingsIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, Flex, Grid, GridItem, Heading, Text, useDisclosure, Wrap } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useSelector } from 'react-redux'
-import { EditProfileDrawer } from './EditProfileDrawer'
-
-import { SettingsIcon } from '@chakra-ui/icons'
+import { selectUser } from '../../redux/userSlice'
 import { formatDate } from '../helpers/formatSingleDate'
+import { EditProfileDrawer } from './EditProfileDrawer'
 
 type Props = {
   onOpenTicket: () => void
@@ -31,12 +31,18 @@ const ListItem = ({ heading, body }: ListItemProps) => {
 
 export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
   const { isOpen, onOpen: onOpenProfile, onClose } = useDisclosure()
+  /*   let amountOfBookings: number */
+  const userState = useSelector(selectUser)
 
-  const { firstname, lastname } = useSelector((state: any) => state.user.user)
-  const bookingData = useSelector((state: any) => state.user.bookings)
-  const { activeTickets } = useSelector((state: any) => state.user.tickets)
-  const purchaseData = useSelector((state: any) => state.user.purchases)
-  const amountOfBookings = bookingData.length
+  const amountOfBookings = userState.bookings.length
+
+  console.log('HEJSAAAA', amountOfBookings)
+
+  /*  if (userState.bookings) {
+    amountOfBookings = userState.bookings.length
+  } else {
+    amountOfBookings = 0
+  } */
 
   return (
     <>
@@ -86,7 +92,7 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
               <GridItem colSpan={{ base: 4, md: 4 }} alignSelf="center">
                 <Flex justifyContent="start" direction={{ base: 'column', md: 'row' }} alignItems="center" gap={{ base: '2', md: '8' }}>
                   <Heading fontWeight="bold" color="white" fontSize={{ base: 'xl', lg: '3xl' }} textTransform="uppercase">
-                    {firstname} {lastname}
+                    {userState.user?.firstname} {userState.user?.lastname}
                   </Heading>
                   <Button w="40" ml={'auto'} variant="secondary" size="sm" onClick={onOpenProfile}>
                     Edit profile
@@ -99,10 +105,13 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
                 <Flex justifyContent={{ base: 'space-around', md: 'space-between' }} w="full">
                   <ListItem
                     heading="Upcomming Bookings"
-                    body={amountOfBookings > 0 ? amountOfBookings + ' ' + 'bookings' : 'No bookings ahead'}
+                    body={amountOfBookings > 0 ? amountOfBookings + ' bookings' : 'No bookings ahead'}
                   />
-                  <ListItem heading="Tickets" body={activeTickets + 'tickets'} />
-                  <ListItem heading="Latest Purchase" body={purchaseData[0] ? formatDate(purchaseData[0]?.purchasedAt) : 'No purchases'} />
+                  <ListItem heading="Tickets" body={userState.tickets.activeTickets + 'tickets'} />
+                  <ListItem
+                    heading="Latest Purchase"
+                    body={userState.purchases[0] ? formatDate(userState.purchases[0]?.purchasedAt) : 'No purchases'}
+                  />
                 </Flex>
               </GridItem>
 

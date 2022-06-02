@@ -5,7 +5,7 @@ import { DateObject } from 'react-multi-date-picker'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
 import { createBooking } from '../../redux/userActions'
-import { updateSelectedBookings } from '../../redux/userSlice'
+import { selectUser, updateSelectedBookings } from '../../redux/userSlice'
 import { FormatDatesforState } from '../helpers/formatDatesForState'
 import StepConfirm from './stepConfirm'
 import StepDates from './stepDates'
@@ -18,7 +18,7 @@ const steps = [
 ]
 
 const StepFlow = () => {
-  const dispatch: AppDispatch = useDispatch<any>()
+  const dispatch: AppDispatch = useDispatch()
 
   const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
     initialStep: 0
@@ -27,19 +27,18 @@ const StepFlow = () => {
   const [calenderDates, setCalendarDates] = useState<DateObject | DateObject[] | null>(null)
   console.log(calenderDates)
 
-  const bookingsState = useSelector((state: any) => state.user.selectedBookings)
-  const ticketState = useSelector((state: any) => state.user.tickets)
+  const userState = useSelector(selectUser)
 
   function handleNext() {
-    if (activeStep === 0) {
-      if (ticketState.activeTickets > 0) {
+    if (activeStep === 0 && userState.tickets.activeTickets) {
+      if (userState.tickets.activeTickets > 0) {
         const formattedDates = FormatDatesforState(calenderDates)
         dispatch(updateSelectedBookings(formattedDates))
         return nextStep()
       } else alert('Not enough tickets')
     }
     if (activeStep === 1) {
-      dispatch(createBooking(bookingsState))
+      dispatch(createBooking(userState.selectedBookings))
       nextStep()
       setStep(3)
     }
@@ -70,12 +69,6 @@ const StepFlow = () => {
           <Button onClick={handleNext} size="sm" disabled={calenderDates == null || Object.keys(calenderDates).length == 0 ? true : false}>
             {activeStep === 0 ? 'Next' : 'Confirm booking dates'}
           </Button>
-
-          {/* // <Button size="sm" onClick={() => handleBooking()}>
-            <Button disabled={calenderDates == null || Object.keys(calenderDates).length == 0 ? true : false} size="sm">
-              Confirm booking dates
-            </Button>
-  */}
         </Flex>
       )}
     </Flex>
