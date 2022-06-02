@@ -5,17 +5,12 @@ import { IoTicketOutline } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/userSlice'
 
-export interface TicketsProps {
-  activeTickets: number
-  usedTickets: number
-}
-
 type Props = {
   onOpenTicket: () => void
 }
 
 interface TicketItemProps {
-  amountOfTickets: number
+  amountOfTickets: number | undefined
   text: string
   textColor: string
 }
@@ -55,9 +50,9 @@ export const Ticket = ({ onOpenTicket }: Props) => {
           </Flex>
         </Flex>
         <Flex flexDir={{ base: 'column', md: 'row' }} my={4} gap={8} align="center">
-          <TicketItem amountOfTickets={activeTickets} text="Active Tickets" textColor="brandGreen" />
-          <TicketItem amountOfTickets={usedTickets} text="Used Tickets" textColor="primary" />
-          <TicketItem amountOfTickets={amountOfPurchases} text="Purchase of tickets" textColor="brandBlue" />
+          <TicketItem amountOfTickets={userState.tickets.activeTickets} text="Active Tickets" textColor="brandGreen" />
+          <TicketItem amountOfTickets={userState.tickets.usedTickets} text="Used Tickets" textColor="primary" />
+          <TicketItem amountOfTickets={userState.purchases.length} text="Purchase of tickets" textColor="brandBlue" />
         </Flex>
       </Flex>
     </Container>
