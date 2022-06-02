@@ -1,6 +1,7 @@
 import { TimeIcon } from '@chakra-ui/icons'
 import { Button, Container, Flex, Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
+import { AiOutlineCalendar } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
 import { getAllUserBookings } from '../../redux/userActions'
@@ -38,12 +39,12 @@ export const AdminBookingPanel = () => {
   }, [dispatch])
 
   return (
-    <Container boxShadow={'lg'} maxW={'container.lg'} bg="white">
+    <>
       <Flex flexDir="column" p={4}>
         <Flex alignItems="center">
-          <Flex gap={4} alignItems="center">
-            <TimeIcon width={30} height={30} />
-            <Heading fontSize={'4xl'}>All Bookings</Heading>
+          <Flex gap={4} alignItems="center" w="full">
+            <AiOutlineCalendar style={{ width: '40px', height: 'auto' }} />
+            <Heading variant={'componentHeader'}>All Bookings</Heading>
           </Flex>
         </Flex>
 
@@ -85,7 +86,7 @@ export const AdminBookingPanel = () => {
         </TableContainer>
       </Flex>
       <UpdateBookingAlert booking={updateBooking} isUpdateBookingOpen={isUpdateBookingOpen} onUpdateBookingClose={onUpdateBookingClose} />
-    </Container>
+    </>
   )
 }
 

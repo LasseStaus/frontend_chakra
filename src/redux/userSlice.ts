@@ -20,8 +20,8 @@ interface User {
 }
 
 export interface Tickets {
-  activeTickets:  number | undefined
-  usedTickets:  number | undefined
+  activeTickets: number | undefined
+  usedTickets: number | undefined
 }
 
 export interface Booking {
@@ -111,11 +111,9 @@ export const userSlice = createSlice({
     }),
       builder.addCase(getUserInfo.pending, (state, action) => {
         state.pending = true
-        // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
       builder.addCase(getUserInfo.rejected, (state, action) => {
         state.pending = false
-        // state.user = state.user - WHAT TO DO HERE? // TO DO
       }),
       //
       //editUserInfo
@@ -132,32 +130,27 @@ export const userSlice = createSlice({
       }),
       builder.addCase(editUserInfo.pending, (state, action) => {
         state.pending = true
-        // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
-      builder.addCase(editUserInfo.rejected, (state, action:AnyAction) => {
+      builder.addCase(editUserInfo.rejected, (state, action: AnyAction) => {
         state.pending = false
- 
-        
+
         state.alertMessage = action.payload
         state.alertType = 'error'
-        // state.user = state.user - WHAT TO DO HERE? // TO DO
       }),
       //
       //editUserPassword
-      builder.addCase(editUserPassword.fulfilled, (state, action:AnyAction) => {
+      builder.addCase(editUserPassword.fulfilled, (state, action: AnyAction) => {
         console.log('password success')
         state.alertMessage = action.payload
         state.alertType = 'success'
       }),
       builder.addCase(editUserPassword.pending, (state, action) => {
         state.pending = true
-        // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
-      builder.addCase(editUserPassword.rejected, (state, action:AnyAction) => {
+      builder.addCase(editUserPassword.rejected, (state, action: AnyAction) => {
         state.pending = false
         state.alertMessage = action.payload
         state.alertType = 'error'
-        // state.user = state.user - WHAT TO DO HERE? // TO DO
       }),
       //
       //getTicketTypes
@@ -167,13 +160,11 @@ export const userSlice = createSlice({
       }),
       builder.addCase(getTicketTypes.pending, (state, action) => {
         state.pending = true
-        // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
       builder.addCase(getTicketTypes.rejected, (state, action) => {
         // state.pending = false
         // state.alertMessage = action.payload
         // state.alertType = 'error'
-        // state.user = state.user - WHAT TO DO HERE? // TO DO
       })
     //
     //purchaseTicket
@@ -186,13 +177,11 @@ export const userSlice = createSlice({
     }),
       builder.addCase(purchaseTicket.pending, (state, action) => {
         state.pending = true
-        // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
-      builder.addCase(purchaseTicket.rejected, (state, action:AnyAction) => {
+      builder.addCase(purchaseTicket.rejected, (state, action: AnyAction) => {
         state.pending = false
         state.alertMessage = action.payload
         state.alertType = 'error'
-        // state.user = state.user - WHAT TO DO HERE? // TO DO
       }),
       //
       //createBooking
@@ -207,38 +196,24 @@ export const userSlice = createSlice({
       }),
       builder.addCase(createBooking.pending, (state, action) => {
         state.pending = true
-        // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
       builder.addCase(createBooking.rejected, (state, action) => {
         state.pending = false
-
-        // state.user = state.user - WHAT TO DO HERE? // TO DO
       }),
       builder.addCase(deleteBooking.fulfilled, (state, action) => {
-
-
-        console.log("delete booking case", action.payload);
-
-        
-        console.log("full state", state)
-        console.log("the state before", state.bookings)
-
- /*        const exists = state.bookings.find((booking) => ) */
         const newBookings = state.bookings.filter((booking) => booking.id !== action.payload.deletedBooking.id)
         state.bookings = newBookings
-        console.log("the state after", state.bookings )
         state.tickets = {
           activeTickets: action.payload.updatedTickets.activeTickets,
           usedTickets: action.payload.updatedTickets.usedTickets
         }
-  /*       state.allUserBookings = action.payload.allUserBookings */
         state.alertMessage = 'You have now canceled you booking'
         state.alertType = 'success'
       }),
       builder.addCase(deleteBooking.pending, (state, action) => {
         state.pending = true
       }),
-      builder.addCase(deleteBooking.rejected, (state, action:AnyAction) => {
+      builder.addCase(deleteBooking.rejected, (state, action: AnyAction) => {
         state.pending = false
         state.alertMessage = action.payload
         state.alertType = 'error'
@@ -251,13 +226,11 @@ export const userSlice = createSlice({
       }),
       builder.addCase(getAllUserBookings.pending, (state, action) => {
         state.pending = true
-        // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
       builder.addCase(getAllUserBookings.rejected, (state, action) => {
         // state.pending = false
         // state.alertMessage = action.payload
         // state.alertType = 'error'
-        // state.user = state.user - WHAT TO DO HERE? // TO DO
       })
     //
     //editUserInfo
@@ -271,21 +244,22 @@ export const userSlice = createSlice({
     }),
       builder.addCase(updateBookingWithiLOQKey.pending, (state, action) => {
         state.pending = true
-        // state.user = undefined - WHAT TO DO HERE? // TO DO
       }),
-      builder.addCase(updateBookingWithiLOQKey.rejected, (state, action:AnyAction) => {
+      builder.addCase(updateBookingWithiLOQKey.rejected, (state, action: AnyAction) => {
         state.pending = false
         state.alertMessage = action.payload
         state.alertType = 'error'
-        // state.user = state.user - WHAT TO DO HERE? // TO DO
       })
   }
 })
-// export const {} = userSlice.actions
 
 export const { setAlertMessage, updateSelectedBookings } = userSlice.actions
 
-export const selectUser  = createSelector((state: RootState) => state.user, user => user)
-export const selectUserInfo  = createSelector((state: RootState) => state.user.user, user => user)
-
-// export const selectUser = (state: any) => state.user.user
+export const selectUser = createSelector(
+  (state: RootState) => state.user,
+  (user) => user
+)
+export const selectUserInfo = createSelector(
+  (state: RootState) => state.user.user,
+  (user) => user
+)

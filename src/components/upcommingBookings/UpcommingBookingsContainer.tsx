@@ -24,7 +24,7 @@ export const UpcommingBookings = ({ onBookingOpen }: Props) => {
   }
 
   return (
-    <Container maxW={'container.lg'} bg="white" variant={'even'} borderRadius={6} shadow={'base'}>
+    <Container maxW={'container.lg'} borderRadius={6} shadow={'base'} variant="lighterDarkMode">
       <Flex flexDir="column">
         <Flex flexDirection={{ sm: 'column', lg: 'row' }} alignItems={{ base: 'flex-start', md: 'center' }}>
           <Flex gap={4} alignItems="center" w="full">

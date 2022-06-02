@@ -1,3 +1,4 @@
+import { Container } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
 import { selectAuthentication } from '../../redux/authenticationSlice'
 import AlertBox from '../alert/Alert'
@@ -9,7 +10,9 @@ function AdminDasboard() {
   return (
     <>
       {authState.alertMessage != undefined ? <AlertBox alertMessage={authState.alertMessage} alertType={authState.alertType} /> : null}
-      <AdminBookingPanel />
+      <Container boxShadow={'lg'} maxW={'container.lg'} variant="lighterDarkMode">
+        <AdminBookingPanel />
+      </Container>
     </>
   )
 }

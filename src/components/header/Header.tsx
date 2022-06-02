@@ -1,5 +1,6 @@
-import { Button, ButtonGroup, Flex, Heading, Spacer } from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Container, Flex, Heading, IconButton, Spacer, useColorMode, useColorModeValue } from '@chakra-ui/react'
 import React, { FC } from 'react'
+import { FaMoon, FaSun } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutThunk } from '../../redux/authenticationActions'
 import { selectAuthentication } from '../../redux/authenticationSlice'
@@ -12,6 +13,8 @@ const Header: FC = () => {
   async function handleLogout() {
     dispatch(logoutThunk())
   }
+
+  const { colorMode, toggleColorMode } = useColorMode()
 
   return (
     <Flex
@@ -32,6 +35,13 @@ const Header: FC = () => {
       </Flex>
       <Spacer />
       <ButtonGroup gap="2">
+        <IconButton
+          onClick={toggleColorMode}
+          isRound={true}
+          size="lg"
+          icon={colorMode === 'light' ? <FaSun /> : <FaMoon />}
+          aria-label={''}
+        />
         {authState.authenticated ? (
           <Button px={{ sm: 4, lg: 8 }} fontSize={{ base: 'xs', lg: 'lg' }} variant="primary" onClick={handleLogout}>
             Logout
