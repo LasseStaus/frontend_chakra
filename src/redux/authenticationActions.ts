@@ -64,7 +64,10 @@ export const authenticateOnLoad = createAsyncThunk("authentication/authenticateO
     }
   })
   const resData = await response.json()
+  console.log("HELLO SLICE 1");
+  
   if (response.status === 200) {
+    console.log("HELLO SLICE 2");
     return resData
   } else {
     const errorMessage: string = resData.message

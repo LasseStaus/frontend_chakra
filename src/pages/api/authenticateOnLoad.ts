@@ -1,11 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import GetHeaderTokens from '../../components/apihelpers/getHeaderTokens';
-import setCookies from '../../components/apihelpers/setCookies';
+import GetHeaderTokens from './apihelpers/getHeaderTokens';
+import setCookies from './apihelpers/setCookies';
 //TODO Put into .env file, goes for all API urls including createAsync
 const API_URL = 'http://localhost:3333'
 
 export default async function refreshTokens(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === 'POST') {
+    try {
+
         const tokens = GetHeaderTokens(req, res)
         const response = await fetch(`${API_URL}/auth/refresh`, {
             method: 'POST',
@@ -14,15 +15,15 @@ export default async function refreshTokens(req: NextApiRequest, res: NextApiRes
             }
         })
         const data = await response.json()
-        if (response.ok && data.tokens) {
-            setCookies(res, data.tokens)
-            return res.status(200).json(data)
-        } else {
 
-            return res.status(403).json({ message: 'Not Authorized' })
-        }
-    } else {
-        res.setHeader('Allow', ['POST'])
-       return res.status(405).json({ message: `Method ${req.method} not allowed ` })
+       setCookies(res, data.tokens)
+        console.log("HELLO 1");
+        return res.status(200).json(data)
+
+    } catch (error) {
+        console.log("HELLO 2");
+        res.status(403)
+
     }
+
 }

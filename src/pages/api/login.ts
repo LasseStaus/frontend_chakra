@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import setCookies from "../../components/apihelpers/setCookies";
+import setCookies from "./apihelpers/setCookies";
 
 //TODO Put into .env file, goes for all API urls including createAsync
 const API_URL = 'http://localhost:3333'
@@ -26,7 +26,7 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
       return res.status(data.statusCode).json({ message: data.message })
     }
   } else {
-    res.setHeader('Allow', ['POST'])
+
     return res.status(405).json({ message: `Method ${req.method} not allowed` })
   }
 }

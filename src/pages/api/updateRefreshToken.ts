@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import clearCookies from '../../components/apihelpers/clearCookies';
-import GetHeaderTokens from '../../components/apihelpers/getHeaderTokens';
-import setCookies from '../../components/apihelpers/setCookies';
+import clearCookies from './apihelpers/clearCookies';
+import GetHeaderTokens from './apihelpers/getHeaderTokens';
+import setCookies from './apihelpers/setCookies';
 //TODO Put into .env file, goes for all API urls including createAsync
 const API_URL = 'http://localhost:3333'
 
