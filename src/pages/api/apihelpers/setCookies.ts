@@ -6,24 +6,20 @@ export type Tokens = {
   refresh_token: string
 }
 export default function setCookies(res: NextApiResponse, data: Tokens) {
-  console.log("hello cookie");
-  
-  return (
-    res.setHeader('Set-Cookie', [
-      cookie.serialize('AT', String(data.access_token), {
-        httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development',
-        maxAge: 60 * 60 * 24 * 7, // 1 week
-        sameSite: 'strict',
-        path: '/'
-      }),
-      cookie.serialize('RT', String(data.refresh_token), {
-        httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development',
-        maxAge: 60 * 60 * 24 * 7, // 1 week
-        sameSite: 'strict',
-        path: '/'
-      })
-    ])
-  )
+  return res.setHeader('Set-Cookie', [
+    cookie.serialize('AT', String(data.access_token), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'development',
+      maxAge: 60 * 60 * 24 * 7, // 1 week
+      sameSite: 'strict',
+      path: '/'
+    }),
+    cookie.serialize('RT', String(data.refresh_token), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'development',
+      maxAge: 60 * 60 * 24 * 7, // 1 week
+      sameSite: 'strict',
+      path: '/'
+    })
+  ])
 }
