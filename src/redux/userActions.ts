@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { authenticationSliceState } from './authenticationSlice'
 import { Booking } from './userSlice'
 
-const API_URL = 'http://localhost:3333'
+const API_URL = process.env.NEXT_PUBLIC_API_REST
 
 export const getUserInfo = createAsyncThunk('loggedInUser/getUserInfo', async (_, thunkAPI) => {
   const token = thunkAPI.getState() as { authentication: authenticationSliceState }

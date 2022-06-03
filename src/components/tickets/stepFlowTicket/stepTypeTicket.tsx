@@ -25,12 +25,14 @@ const ticketCardSelect = {
 
 const StepTypeTicket = ({ typeOfTicket, setTicketType }: Props) => {
   const userState = useSelector(selectUser)
+  console.log('hej', userState.ticketTypes)
 
   return (
     <Flex my={{ base: 8, md: 2 }} flexDir="column" justify="center" align="center" w={'100%'} h={'100%'}>
       <Heading mb={4} fontSize={'2xl'}>
         Select the ticket type you want to purchase
       </Heading>
+
       <Flex w={'100%'} h={'100%'} flexDir={{ base: 'column', md: 'row' }} justifySelf="stretch" alignItems={'center'}>
         {userState.ticketTypes.map((ticketType: TicketType) => (
           <Flex

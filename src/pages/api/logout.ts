@@ -3,8 +3,8 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import clearCookies from './apihelpers/clearCookies'
 import getHeaderTokens from './apihelpers/getHeaderTokens'
 
-//TODO Put into .env file, goes for all API urls including createAsync
-const API_URL = 'http://localhost:3333'
+const API_URL = process.env.NEXT_PUBLIC_API_REST
+
 export default async function logout(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const token = getHeaderTokens(req, res)

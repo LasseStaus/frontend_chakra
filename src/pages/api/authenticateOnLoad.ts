@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import GetHeaderTokens from './apihelpers/getHeaderTokens';
 import setCookies from './apihelpers/setCookies';
-//TODO Put into .env file, goes for all API urls including createAsync
-const API_URL = 'http://localhost:3333'
+const API_URL = process.env.NEXT_PUBLIC_API_REST
 
 export default async function refreshTokens(req: NextApiRequest, res: NextApiResponse) {
     try {

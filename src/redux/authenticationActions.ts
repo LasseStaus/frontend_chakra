@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-const API_URL = "http://localhost:3000"
+const API_URL = process.env.NEXT_PUBLIC_API_PROXY
 export const loginThunk = createAsyncThunk("authentication/login", async (data: any, thunkAPI) => {
   const response = await fetch(`${API_URL}/api/login`, {
     method: "POST",

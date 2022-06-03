@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-//TODO Put into .env file, goes for all API urls including createAsync
-const API_URL = 'http://localhost:3333';
 
+const API_URL = process.env.NEXT_PUBLIC_API_REST
 export default async function SignupOldApi(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const response = await fetch(`${API_URL}/auth/local/signup`, {
