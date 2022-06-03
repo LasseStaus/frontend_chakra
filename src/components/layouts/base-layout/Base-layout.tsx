@@ -1,7 +1,6 @@
 import type { FC, ReactNode } from 'react'
 import Head from 'next/head'
-
-import { Box } from '@chakra-ui/react'
+import { Box, useColorModeValue } from '@chakra-ui/react'
 import Header from '../../header/Header'
 import Footer from '../../footer/Footer'
 
@@ -10,15 +9,19 @@ export type BaseLayoutProps = {
   children: ReactNode
 }
 
+// const bg = useColorModeValue('red.500', 'red.200')
+
 const BaseLayout: FC<BaseLayoutProps> = (p: BaseLayoutProps) => {
   return (
     <>
       <Head>
         <title>{p.pageTitle} | CPH Værksted</title>
       </Head>
-      <Box minH={'100vh'} bg='brandGrey' flexDir={'column'}>
+      <Box minH={'100vh'} bg={useColorModeValue('brandGrey', 'brandBlack')} flexDir={'column'}>
         <Header />
-        <main>{p.children}</main>
+        <main>
+          <Box position={'relative'}>{p.children}</Box>
+        </main>
         <Footer />
       </Box>
     </>

@@ -1,25 +1,15 @@
-import { Alert, AlertIcon, Stack } from '@chakra-ui/react'
+import { Alert, AlertIcon } from '@chakra-ui/react'
 
-const AlertBox = ({ status }: any) => {
-  let text = 'lol'
+type Props = {
+  alertMessage: string | undefined
+  alertType?: 'success' | 'error' | 'warning' | 'info'
+}
 
-  if (status === 'success') {
-    text = 'Success! Your account has been created'
-  }
-  if (status === 'error') {
-    text = 'Something went wrong, try again or FIND ANOTHER PLACE TO DO YOUR WOOD WORK'
-  }
-  if (status === 'error') {
-    text = 'nedtur'
-  }
-  if (status === 'error') {
-    text = 'nedtur'
-  }
-
+export const AlertBox = ({ alertMessage, alertType }: Props) => {
   return (
-    <Alert status={status}>
+    <Alert position={'absolute'} zIndex={'200'} status={alertType}>
       <AlertIcon />
-      {text}
+      {alertMessage}
     </Alert>
   )
 }

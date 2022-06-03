@@ -13,8 +13,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/context/AuthContext.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/context/AuthContext.tsx", "src/redux/authenticationSlice.js"],
   "exclude": ["node_modules"]
 }

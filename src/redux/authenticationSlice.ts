@@ -1,0 +1,158 @@
+import { AnyAction, createAsyncThunk, createSelector, createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit"
+import { authenticateOnLoad, loginThunk, logoutThunk, signupThunk, updateRefreshToken } from "./authenticationActions"
+import { RootState } from "./store"
+
+
+
+export interface authenticationSliceState {
+  isAdmin: boolean
+  pending: boolean
+  tokens: string | undefined 
+  authenticated: boolean
+  authenticationLoad: boolean
+  alertMessage: string | undefined
+  alertType: "success" | "error" | "warning" | "info" | undefined
+}
+
+const initialState: authenticationSliceState = {
+  isAdmin: false,
+  pending: true,
+  tokens: undefined,
+  authenticated: false,
+  alertMessage: undefined,
+  alertType: undefined,
+  authenticationLoad: true
+}
+
+export const authenticationSlice = createSlice({
+  name: "authentication",
+  initialState: initialState,
+  reducers: {
+    setAlertMessage: (state, action) => {
+      state.alertMessage = action.payload
+    },
+    updateAdmin : (state, action) => {
+      state.isAdmin = action.payload
+    }
+  },
+  extraReducers: (builder) => {
+    //
+    //signupThunk
+    builder.addCase(signupThunk.fulfilled, (state, action) => {
+      state.pending = false
+      state.tokens = action.payload.access_tokens
+      state.alertMessage = "Your user has been created! Please go to login"
+      state.alertType = "success"
+    }),
+      builder.addCase(signupThunk.pending, (state, action) => {
+        state.pending = true
+        state.authenticated = false
+      }),
+      builder.addCase(signupThunk.rejected, (state, action) => {
+        state.pending = false
+        state.authenticated = false
+        if(action.error) {
+
+          state.alertMessage = action.error.message
+        } 
+        state.alertType = "error"
+      }),
+      //
+      //loginThunk
+      builder.addCase(loginThunk.fulfilled, (state, action) => {
+        state.pending = false
+        state.authenticated = true
+        state.authenticationLoad= false
+        state.tokens = action.payload.tokens.access_token
+        state.alertMessage = "You've successfully logged in!"
+        state.alertType = "success"
+        state.isAdmin = action.payload.isAdmin
+      }),
+      builder.addCase(loginThunk.pending, (state, action) => {
+        state.pending = true
+        state.authenticated = false
+        state.authenticationLoad = true
+      }),
+      builder.addCase(loginThunk.rejected, (state, action:AnyAction) => {
+        state.pending = false
+        state.authenticated = false
+        state.alertMessage = action.payload.message  
+       // state.alertMessage = action.payload.message
+        state.tokens = undefined
+        state.alertType = "error"
+        state.authenticationLoad = false
+      }),
+      //
+      //logoutThunk
+      builder.addCase(logoutThunk.fulfilled, (state, action) => {
+        state.pending = false
+        state.authenticated = false
+        state.tokens = undefined
+        state.alertMessage = action.payload.message
+        state.alertType = "success"
+        state.isAdmin = false
+      }),
+      builder.addCase(logoutThunk.pending, (state, action) => {
+        state.pending = true
+        state.authenticated = false
+      }),
+      builder.addCase(logoutThunk.rejected, (state, action) => {
+        state.pending = false
+        state.authenticated = false
+      }),
+      //
+      //authenticateOnLoad
+      builder.addCase(authenticateOnLoad.fulfilled, (state, action) => {
+        state.pending = false
+        state.authenticated = true
+        state.tokens = action.payload.tokens.access_token
+        state.pending = false
+        state.authenticationLoad = false
+        state.isAdmin = action.payload.isAdmin
+      }),
+      builder.addCase(authenticateOnLoad.pending, (state, action) => {
+        state.pending = true
+        state.authenticated = false
+        state.authenticationLoad = true
+      }),
+      builder.addCase(authenticateOnLoad.rejected, (state, action) => {
+        state.pending = false
+        state.authenticated = false
+        state.alertMessage = "It's been a while! Please login again "
+        state.alertType = "info"
+        state.authenticationLoad = false
+        state.tokens = undefined
+        state.isAdmin = false
+      }),
+      builder.addCase(updateRefreshToken.fulfilled, (state, action) => {
+        state.tokens = action.payload.tokens.access_token
+        state.isAdmin = action.payload.isAdmin
+      }),
+      builder.addCase(updateRefreshToken.pending, (state, action) => {
+  
+      }),
+      builder.addCase(updateRefreshToken.rejected, (state, action) => {
+        state.pending = false
+        state.authenticated = false
+        state.alertMessage = "It's been a while! Please login again "
+        state.alertType = "info"
+        state.authenticationLoad = false
+        state.tokens = undefined
+        state.isAdmin = false
+      })
+  }
+})
+
+export const { setAlertMessage, updateAdmin } = authenticationSlice.actions
+
+/* export const selectAuthentication = (state: authenticationSliceState) => state.authentication
+
+
+
+ */
+
+export const selectAuthentication  = createSelector((state: RootState) => state.authentication, authentication => authentication)
+
+
+
+

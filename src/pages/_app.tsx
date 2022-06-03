@@ -1,17 +1,24 @@
-import { ChakraProvider, extendTheme } from '@chakra-ui/react'
-import { NextApiResponse } from 'next'
+import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react'
 import { AppProps } from 'next/app'
+import { Provider } from 'react-redux'
 import { themeVaerkstedetCPH } from '../../styles/theme'
-import { AuthProvider } from '../context/AuthContext'
+import '../../styles/styles.css'
+import { store } from '../redux/store'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <ChakraProvider resetCSS theme={themeVaerkstedetCPH}>
-      <AuthProvider>
-        <Component {...pageProps} />
-      </AuthProvider>
-    </ChakraProvider>
-  )
+const config = {
+  initialColorMode: 'light',
+  useSystemColorMode: false
 }
 
-export default MyApp
+const theme = extendTheme({ config })
+
+const AppWrapper = ({ Component, pageProps }: AppProps) => (
+  <ChakraProvider resetCSS theme={themeVaerkstedetCPH}>
+    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+    <Provider store={store}>
+      <Component {...pageProps} />
+    </Provider>
+  </ChakraProvider>
+)
+
+export default AppWrapper
