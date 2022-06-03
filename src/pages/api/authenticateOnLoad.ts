@@ -3,10 +3,6 @@ import GetHeaderTokens from './apihelpers/getHeaderTokens';
 import setCookies from './apihelpers/setCookies';
 const API_URL = process.env.NEXT_PUBLIC_API_REST
 
-console.log("auth", API_URL);
-console.log("env", process.env.NODE_ENV);
-
-
 export default async function refreshTokens(req: NextApiRequest, res: NextApiResponse) {
     try {
 
