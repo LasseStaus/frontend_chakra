@@ -27,7 +27,7 @@ function LandingPage() {
     setTimeout(() => {
       dispatch(updateRefreshToken())
       //set to 15000 for testing, otherwise it might bug
-    }, 10000)
+    }, 600000)
   }, [authState.tokens])
 
   useEffect(() => {
