@@ -14,7 +14,7 @@ export const store = configureStore({
           otherValue: 42
         }
       }
-    }).concat(logger)
+    })
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
