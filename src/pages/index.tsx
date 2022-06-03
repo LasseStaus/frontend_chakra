@@ -27,7 +27,7 @@ const Dashboard = () => {
   return (
     <Skeleton startColor="white" endColor="white" isLoaded={!authState.authenticationLoad}>
       {authState.authenticated && !authState.isAdmin ? (
-        <Layout pageTitle="Home">
+        <Layout pageTitle="Admin Panel">
           <LandingPage />
         </Layout>
       ) : (
