@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { SetCookie } from './cookieHelpers/setCookies'
+import { clearCookiesFetcher } from './cookieHelpers/clearCookiesFetcher'
 import clearCookiesHandler from '../pages/api/clearCookies'
 import getCookiesHandler from '../pages/api/getCookies'
 import { getCookieFetcher } from './cookieHelpers/getCookiesFetcher'
+import { setCookieFetcher } from './cookieHelpers/setCookiesFetcher'
 
 const API_URL = process.env.NEXT_PUBLIC_API_PROXY
 const API_URL_REST = process.env.NEXT_PUBLIC_API_REST
@@ -18,7 +19,7 @@ export const loginThunk = createAsyncThunk('authentication/login', async (data: 
   const responseData = await response.json()
 
   if (response.status === 200) {
-    SetCookie(responseData.tokens)
+    await setCookieFetcher(responseData.tokens)
     return responseData
   } else {
     console.log('HALLO', responseData)
@@ -44,23 +45,21 @@ export const signupThunk = createAsyncThunk('authentication/signup', async (data
 })
 
 export const logoutThunk = createAsyncThunk('authentication/logout', async (_, thunkAPI) => {
-  const cookies = getCookieFetcher()
+  const cookies = await getCookieFetcher()
 
-  console.log('LOGOUT COOKIES', await cookies)
+  const response = await fetch(`${API_URL_REST}/auth/logout`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${cookies.AT}`
+    }
+  })
 
-  // const response = await fetch(`${API_URL}/api/logout`, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   }
-  // })
-  // const resData = await response.json()
-  // if (response.status === 200) {
-  //   // clearCookiesHandler
-  //   return resData
-  // } else {
-  //   return thunkAPI.rejectWithValue(resData.message)
-  // }
+  if (response.ok) {
+    await clearCookiesFetcher()
+    return { message: 'Logout successfully' }
+  } else {
+    return thunkAPI.rejectWithValue('Fail')
+  }
 })
 
 export const authenticateOnLoad = createAsyncThunk('authentication/authenticateOnLoad', async (data, thunkAPI) => {

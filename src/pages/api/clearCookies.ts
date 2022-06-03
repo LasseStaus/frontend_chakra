@@ -7,8 +7,8 @@ export type Tokens = {
   refresh_token: string
 }
 
-// The cookie middleware will add the `set-cookie` header
-const clearCookiesHandler = (res: NextApiResponse) => {
+// The cookie middleware will add the `set-` header
+const clearCookiesHandler = (req: NextApiRequest, res: NextApiResponse) => {
   try {
     res.setHeader('Set-Cookie', [
       cookie.serialize('AT', '', {
