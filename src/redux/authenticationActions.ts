@@ -44,9 +44,9 @@ export const signupThunk = createAsyncThunk('authentication/signup', async (data
 })
 
 export const logoutThunk = createAsyncThunk('authentication/logout', async (_, thunkAPI) => {
-  const cookies = await getCookieFetcher()
+  const cookies = getCookieFetcher()
 
-  console.log('LOGOUT COOKIES', cookies)
+  console.log('LOGOUT COOKIES', await cookies)
 
   // const response = await fetch(`${API_URL}/api/logout`, {
   //   method: 'POST',

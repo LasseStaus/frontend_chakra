@@ -17,7 +17,7 @@ export const getCookieFetcher = async () => {
   const responseData = await response.json()
   console.log('cookie success 1', responseData)
 
-  if (responseData.RT && responseData.AT) {
+  if (responseData) {
     console.log('cookie success 2', responseData)
     return responseData
   } else {

@@ -17,6 +17,7 @@ const getCookiesHandler = (req: NextApiRequest, res: NextApiResponse) => {
     const token = cookie.parse(req.headers.cookie)
     console.log(token, 'SE HER i getcookie api')
 
+    res.status(200).json(token)
     return token
   } catch (error) {
     res.status(405).end()
