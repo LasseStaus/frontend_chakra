@@ -1,4 +1,4 @@
-import { Button, Container } from '@chakra-ui/react'
+import { Box, Button, Container } from '@chakra-ui/react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { loginThunk } from '../../redux/authenticationActions'
@@ -27,6 +27,7 @@ const Loginform = () => {
     <>
       <Container maxW={'container.sm'} variant={'halfPaddingY'}>
         {/* Pass all methods into context */}
+        <Box>HEjsa allesammen</Box>
         <FormProvider {...methods}>
           <form onSubmit={(e) => e.preventDefault()}>
             <FormField
