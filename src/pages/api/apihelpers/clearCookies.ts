@@ -2,7 +2,9 @@ import { NextApiResponse } from "next";
 import cookie from 'cookie'
 
 
-export default function clearCookies(res:NextApiResponse,) {
+export default function clearCookies(res:NextApiResponse) {
+  console.log("helo clearcookie");
+  return (
     res.setHeader("Set-Cookie",
         [
           cookie.serialize("AT", '', {
@@ -22,6 +24,6 @@ export default function clearCookies(res:NextApiResponse,) {
         ],
       )
 
-      res.setHeader("clearCookie", '')
+  )
     
 }

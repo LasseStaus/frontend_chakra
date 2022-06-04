@@ -88,6 +88,9 @@ export const userSlice = createSlice({
     setAlertMessage: (state, action) => {
       state.alertMessage = action.payload
     },
+    clearUserData: (state, action) => {
+      state.user = action.payload
+    },
     updateSelectedBookings: (state, action) => {
       state.selectedBookings = action.payload
     }
@@ -257,7 +260,7 @@ export const userSlice = createSlice({
   }
 })
 
-export const { setAlertMessage, updateSelectedBookings } = userSlice.actions
+export const { setAlertMessage, updateSelectedBookings,clearUserData } = userSlice.actions
 
 export const selectUser = createSelector(
   (state: RootState) => state.user,

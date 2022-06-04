@@ -24,7 +24,10 @@ const initialState: authenticationSliceState = {
   authenticationLoad: true
 }
 
+
 export const authenticationSlice = createSlice({
+
+
   name: "authentication",
   initialState: initialState,
   reducers: {

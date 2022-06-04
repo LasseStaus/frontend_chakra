@@ -42,6 +42,7 @@ export const signupThunk = createAsyncThunk("authentication/signup", async (data
 })
 
 export const logoutThunk = createAsyncThunk("authentication/logout", async (_, thunkAPI) => {
+
   const response = await fetch(`${API_URL}/api/logout`, {
     method: "POST",
     headers: {
@@ -49,11 +50,11 @@ export const logoutThunk = createAsyncThunk("authentication/logout", async (_, t
     }
   })
   const resData = await response.json()
+  
   if (response.status === 200) {
+
     return resData
   } else {
-
-   
     return thunkAPI.rejectWithValue(resData.message)
   }
 })
