@@ -1,10 +1,12 @@
-import { Box, Button, ButtonGroup, Container, Flex, Heading, IconButton, Spacer, useColorMode, useColorModeValue } from '@chakra-ui/react'
+import { Button, ButtonGroup, Flex, Heading, IconButton, useColorMode } from '@chakra-ui/react'
 import React, { FC } from 'react'
 import { FaMoon, FaSun } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutThunk } from '../../redux/authenticationActions'
 import { selectAuthentication } from '../../redux/authenticationSlice'
+import IsWindowSizeLargerThan from '../hooks/getWindowSize'
 import Logo from './Logo'
+import MobileMenu from './mobileMenu'
 
 const Header: FC = () => {
   const authState = useSelector(selectAuthentication)
@@ -16,9 +18,10 @@ const Header: FC = () => {
 
   const { colorMode, toggleColorMode } = useColorMode()
 
+  const isWindowLargerThan = IsWindowSizeLargerThan(764)
   return (
     <Flex
-      bg="white"
+      bg={colorMode === 'light' ? 'white' : 'gray.600'}
       minWidth="max-content"
       px={{ sm: 2, lg: 6 }}
       justifyContent={'space-between'}
@@ -28,26 +31,30 @@ const Header: FC = () => {
       py={{ sm: 2, lg: 4 }}
     >
       <Flex align="center">
-        <Logo height={{ sm: '35px', lg: '50px' }} />
-        <Heading fontSize={{ sm: 'sm', lg: '1xl' }} textTransform="uppercase">
+        <Logo />
+        <Heading fontSize={{ sm: 'sm', lg: '1xl' }} color={colorMode === 'dark' ? 'white' : 'gray.600'} textTransform="uppercase">
           VærkstedetCPH
         </Heading>
       </Flex>
-      <Spacer />
-      <ButtonGroup gap="2">
-        <IconButton
-          onClick={toggleColorMode}
-          isRound={true}
-          size="lg"
-          icon={colorMode === 'light' ? <FaSun /> : <FaMoon />}
-          aria-label={''}
-        />
-        {authState.authenticated ? (
-          <Button px={{ sm: 4, lg: 8 }} fontSize={{ base: 'xs', lg: 'lg' }} variant="primary" onClick={handleLogout}>
-            Logout
-          </Button>
-        ) : null}
-      </ButtonGroup>
+
+      {isWindowLargerThan ? (
+        <ButtonGroup gap="2" alignItems={'center'}>
+          <IconButton
+            onClick={toggleColorMode}
+            isRound={true}
+            size="md"
+            icon={colorMode === 'light' ? <FaSun /> : <FaMoon />}
+            aria-label={''}
+          />
+          {authState.authenticated ? (
+            <Button px={{ sm: 4, lg: 8 }} fontSize={{ base: 'xs', lg: 'lg' }} variant="primary" onClick={handleLogout}>
+              Logout
+            </Button>
+          ) : null}
+        </ButtonGroup>
+      ) : (
+        authState.authenticated && <MobileMenu />
+      )}
     </Flex>
   )
 }

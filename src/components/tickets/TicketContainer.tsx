@@ -1,7 +1,6 @@
-import { Button, Container, Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react'
+import { Button, Container, Flex, Heading, Icon, Text, useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
-import { AiOutlineCreditCard } from 'react-icons/ai'
-import { IoTicketOutline } from 'react-icons/io5'
+import { IoTicket, IoTicketOutline } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/userSlice'
 
@@ -19,8 +18,8 @@ const TicketItem: React.FC<TicketItemProps> = ({ amountOfTickets, text, textColo
   return (
     <Flex
       flexDir="column"
-      w={{ base: '100%', md: '33%' }}
-      h={{ base: '60vw', md: '18vw' }}
+      width={'100%'}
+      py={{ sm: 4, lg: 14 }}
       alignItems="center"
       justify="center"
       alignSelf="stretch"
@@ -46,7 +45,10 @@ export const Ticket = ({ onOpenTicket }: Props) => {
             <Heading variant={'componentHeader'}>Tickets</Heading>
           </Flex>
           <Flex ml={'auto'} gap={4} justifySelf="flex-end">
-            <Button onClick={onOpenTicket}>Buy tickets</Button>
+            <Button onClick={onOpenTicket}>
+              <Icon as={IoTicket} mr={2} />
+              Buy tickets
+            </Button>
           </Flex>
         </Flex>
         <Flex flexDir={{ base: 'column', md: 'row' }} my={4} gap={8} align="center">
