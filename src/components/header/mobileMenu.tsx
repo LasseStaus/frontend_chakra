@@ -36,14 +36,14 @@ const MobileMenu = () => {
       <Menu>
         <MenuButton as={IconButton} aria-label="Options" icon={<HamburgerIcon />} />
         <MenuList py={0} gap={2}>
-          <MenuItem>
+          <MenuItem py={6}>
             <Box onClick={handleLogout}>
               <Icon as={GiExitDoor} mr={2} />
               Logout
             </Box>
           </MenuItem>
 
-          <MenuItem>
+          <MenuItem py={6}>
             <Flex alignItems={'center'}>
               <Box onClick={toggleColorMode} alignItems={'center'} display="flex" gap={2}>
                 {icon}
