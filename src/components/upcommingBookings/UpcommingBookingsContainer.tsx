@@ -1,10 +1,26 @@
-import { Button, Container, Flex, Heading, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
+import {
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Icon,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  useDisclosure
+} from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { AiOutlineCalendar } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { Booking, selectUser } from '../../redux/userSlice'
 import CancelBookingAlert from '../cancelBookingAlert/CancelBookingAlert'
 import { formatDate } from '../helpers/formatSingleDate'
+import { AiOutlineCalendar } from 'react-icons/ai'
+import { AiFillCalendar } from 'react-icons/ai'
 
 type Props = {
   onBookingOpen: () => void
@@ -32,7 +48,8 @@ export const UpcommingBookings = ({ onBookingOpen }: Props) => {
             <Heading variant={'componentHeader'}>Upcomming Bookings</Heading>
           </Flex>
           <Flex ml={{ lg: 'auto' }} gap={4} w={{ base: 'full', md: 'auto' }} mt={{ base: '4', md: '0' }}>
-            <Button shadow={'base'} width={'auto'} onClick={onBookingOpen}>
+            <Button shadow={'base'} width={'auto'} onClick={onBookingOpen} alignItems="center">
+              <Icon as={AiFillCalendar} mr={2} />
               New booking
             </Button>
           </Flex>
@@ -65,7 +82,7 @@ export const UpcommingBookings = ({ onBookingOpen }: Props) => {
                     </Td>
                     <Td>{formatDate(booking.createdAt)}</Td>
                     <Td>
-                      <Button color="brandRed" variant="linkButton" onClick={() => openBooking(booking)}>
+                      <Button color="brandRed" variant="warning" onClick={() => openBooking(booking)}>
                         Cancel Booking
                       </Button>
                     </Td>
