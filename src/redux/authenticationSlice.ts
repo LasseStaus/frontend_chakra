@@ -41,7 +41,7 @@ export const authenticationSlice = createSlice({
   extraReducers: (builder) => {
     //
     //signupThunk
-    builder.addCase(signupThunk.fulfilled, (state, action:AnyAction) => {
+    builder.addCase(signupThunk.fulfilled, (state, action) => {
       state.pending = false
       state.tokens = action.payload.access_tokens
       state.alertMessage = "Your user has been created! Please go to login"
@@ -51,7 +51,7 @@ export const authenticationSlice = createSlice({
         state.pending = true
         state.authenticated = false
       }),
-      builder.addCase(signupThunk.rejected, (state, action:AnyAction) => {
+      builder.addCase(signupThunk.rejected, (state, action) => {
         state.pending = false
         state.authenticated = false
         if(action.error) {
@@ -62,7 +62,7 @@ export const authenticationSlice = createSlice({
       }),
       //
       //loginThunk
-      builder.addCase(loginThunk.fulfilled, (state, action:AnyAction) => {
+      builder.addCase(loginThunk.fulfilled, (state, action) => {
         state.pending = false
         state.authenticated = true
         state.authenticationLoad= false
@@ -87,7 +87,7 @@ export const authenticationSlice = createSlice({
       }),
       //
       //logoutThunk
-      builder.addCase(logoutThunk.fulfilled, (state, action:AnyAction) => {
+      builder.addCase(logoutThunk.fulfilled, (state, action) => {
         state.pending = false
         state.authenticated = false
         state.tokens = undefined
@@ -105,7 +105,7 @@ export const authenticationSlice = createSlice({
       }),
       //
       //authenticateOnLoad
-      builder.addCase(authenticateOnLoad.fulfilled, (state, action:AnyAction) => {
+      builder.addCase(authenticateOnLoad.fulfilled, (state, action) => {
         state.pending = false
         state.authenticated = true
         state.tokens = action.payload.tokens.access_token
@@ -127,7 +127,7 @@ export const authenticationSlice = createSlice({
         state.tokens = undefined
         state.isAdmin = false
       }),
-      builder.addCase(updateRefreshToken.fulfilled, (state, action:AnyAction) => {
+      builder.addCase(updateRefreshToken.fulfilled, (state, action) => {
         state.tokens = action.payload.tokens.access_token
         state.isAdmin = action.payload.isAdmin
         state.pending= false

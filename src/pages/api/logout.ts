@@ -14,13 +14,14 @@ export default async function logout(req: NextApiRequest, res: NextApiResponse) 
     }
   })
   const resData = await response.json()
+  clearCookies(res)
   if (resData.ok) {
-    console.log("lol 2");
     clearCookies(res)
+
     return res.status(200).json({ message: "You have been logged out!" })
   }
   else {
-    console.log("lol 3");
+    clearCookies(res)
     return res.status(403).json({ message: 'Something went wrong' })
   }
 }
