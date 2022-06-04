@@ -1,20 +1,5 @@
-import { AddIcon, ChevronDownIcon, EditIcon, ExternalLinkIcon, HamburgerIcon, RepeatIcon } from '@chakra-ui/icons'
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-  Button,
-  IconButton,
-  Box,
-  useColorMode,
-  Icon,
-  Flex
-} from '@chakra-ui/react'
+import { HamburgerIcon } from '@chakra-ui/icons'
+import { Box, Flex, Icon, IconButton, Menu, MenuButton, MenuItem, MenuList, useColorMode } from '@chakra-ui/react'
 import { FaMoon, FaSun } from 'react-icons/fa'
 import { GiExitDoor } from 'react-icons/gi'
 import { useDispatch } from 'react-redux'
