@@ -6,7 +6,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-  Button
+  Button,
+  useToast
 } from '@chakra-ui/react'
 import React from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
@@ -39,13 +40,23 @@ export default function UpdateBookingAlert({ booking, isUpdateBookingOpen, onUpd
     reset,
     formState: { errors, isValid, isDirty }
   } = methods
+  const errorToast = useToast({
+    position: 'bottom-right',
+    status: 'success',
+    title: 'Success',
+    isClosable: true,
+    duration: 5000,
+    variant: 'solid'
+  })
 
   const onSubmit: SubmitHandler<UpdateBookingProps> = async (data) => {
     const bookingData = { iLOQKey: data.iLOQKey, bookingId: booking?.id }
 
     dispatch(updateBookingWithiLOQKey(bookingData))
     reset({ iLOQKey: '' })
+
     onUpdateBookingClose()
+    return errorToast({ description: `Key added for ${booking!.bookedFor} ` })
   }
 
   return (

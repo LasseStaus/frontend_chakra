@@ -1,4 +1,4 @@
-import { Button, Flex, Wrap } from '@chakra-ui/react'
+import { Button, Flex } from '@chakra-ui/react'
 import { Step, Steps, useSteps } from 'chakra-ui-steps'
 import React from 'react'
 import { useDispatch } from 'react-redux'

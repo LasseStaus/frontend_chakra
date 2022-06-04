@@ -10,7 +10,7 @@ function AdminDasboard() {
   return (
     <>
       {authState.alertMessage != undefined ? <AlertBox alertMessage={authState.alertMessage} alertType={authState.alertType} /> : null}
-      <Container boxShadow={'lg'} maxW={'container.lg'} variant="lighterDarkMode">
+      <Container boxShadow={'lg'} maxW={'container.xxl'} marginTop={{ sm: 10, lg: 24 }} variant="lighterDarkMode">
         <AdminBookingPanel />
       </Container>
     </>

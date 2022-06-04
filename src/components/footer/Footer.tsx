@@ -1,6 +1,6 @@
-import { Box, chakra, Container, Flex, Stack, Text, useColorModeValue, VisuallyHidden } from '@chakra-ui/react'
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
+import { chakra, Container, Flex, Stack, Text, useColorModeValue, VisuallyHidden } from '@chakra-ui/react'
 import { ReactNode } from 'react'
+import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 
 const SocialButton = ({ children, label, href }: { children: ReactNode; label: string; href: string }) => {
   return (
@@ -28,7 +28,7 @@ const SocialButton = ({ children, label, href }: { children: ReactNode; label: s
 
 export const Footer = () => {
   return (
-    <Container maxW={'container.xxl'} marginBottom={0}>
+    <Container maxW={'none'} p={0} position={'relative'} marginTop={'auto'} paddingBottom={0} marginBottom={0}>
       <Flex
         bg={useColorModeValue('blackAlpha.100', 'blackAlpha.400')}
         position="absolute"
@@ -43,7 +43,7 @@ export const Footer = () => {
         align={{ base: 'center', md: 'center' }}
       >
         <Text>© 2022 VærkstedetCPH</Text>
-        <Stack direction={'row'} spacing={6} color={useColorModeValue('gray.900', 'primary')}>
+        <Stack direction={'row'} mt={{ sm: 4, md: 0 }} spacing={6} color={useColorModeValue('gray.900', 'primary')}>
           <SocialButton label={'Twitter'} href={'#'}>
             <FaTwitter />
           </SocialButton>

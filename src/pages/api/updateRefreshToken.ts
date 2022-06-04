@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import clearCookies from './apihelpers/clearCookies';
 import GetHeaderTokens from './apihelpers/getHeaderTokens';
 import setCookies from './apihelpers/setCookies';
 

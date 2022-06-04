@@ -46,9 +46,9 @@ export const UpcommingBookings = ({ onBookingOpen }: Props) => {
   return (
     <Container maxW={'container.lg'} borderRadius={6} shadow={'base'} variant="lighterDarkMode">
       <Flex flexDir="column">
-        <Flex flexDirection={{ sm: 'column', lg: 'row' }} alignItems={{ base: 'flex-start', md: 'center' }}>
+        <Flex flexDirection={{ sm: 'column', md: 'row' }} alignItems={{ base: 'flex-start', md: 'center' }}>
           <Flex gap={4} alignItems="center" w="full">
-            <AiOutlineCalendar style={{ width: '40px', height: 'auto' }} />
+            <AiOutlineCalendar style={{ width: '35px', height: 'auto' }} />
             <Heading variant={'componentHeader'}>Upcoming bookings</Heading>
           </Flex>
           <Flex ml={{ lg: 'auto' }} gap={4} w={{ base: 'full', md: 'auto' }} mt={{ base: '4', md: '0' }}>
@@ -59,7 +59,7 @@ export const UpcommingBookings = ({ onBookingOpen }: Props) => {
           </Flex>
         </Flex>
         <TableContainer mt={8}>
-          <Table variant="striped" size={'md'} colorScheme="gray">
+          <Table variant="adminTable" size={'md'} colorScheme="gray">
             <Thead>
               <Tr>
                 <Th>VærkstedetCPH</Th>

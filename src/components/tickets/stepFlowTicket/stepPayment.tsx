@@ -1,8 +1,7 @@
-import { Button, Flex, Image } from '@chakra-ui/react'
+import { Flex, Image } from '@chakra-ui/react'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../../redux/store'
-import { purchaseTicket } from '../../../redux/userActions'
 
 interface Props {
   typeOfTicket: string | undefined

@@ -1,5 +1,5 @@
 import { SettingsIcon } from '@chakra-ui/icons'
-import { Box, Button, Container, Flex, Grid, GridItem, Heading, Icon, Text, useDisclosure, Wrap } from '@chakra-ui/react'
+import { Box, Button, Container, Flex, Grid, GridItem, Heading, Icon, Text, useColorModeValue, useDisclosure, Wrap } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/userSlice'
@@ -50,7 +50,7 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
     <>
       <EditProfileDrawer isOpen={isOpen} onClose={onClose} />
 
-      <Box position={'relative'}>
+      <Box position={'relative'} mb={{ sm: 6, xl: 8, xxl: 12 }}>
         <Box
           backgroundImage="url('/wood3.png')"
           backgroundRepeat={'no-repeat'}
@@ -76,7 +76,7 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
               <GridItem
                 rowSpan={{ base: 1, md: 2 }}
                 colSpan={1}
-                bg="white"
+                bg={useColorModeValue('white', 'white')}
                 border={'orange'}
                 borderStyle={'solid'}
                 borderColor="primary"
@@ -106,7 +106,7 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
               <GridItem colSpan={{ base: 5, md: 4 }} rowSpan={1}>
                 <Flex justifyContent={{ base: 'space-around', md: 'space-between' }} w="full">
                   <ListItem
-                    heading="Upcomming Bookings"
+                    heading="Upcoming bookings"
                     body={amountOfBookings > 0 ? amountOfBookings + ' bookings' : 'No bookings ahead'}
                   />
                   <ListItem heading="Tickets" body={userState.tickets.activeTickets + ' tickets'} />

@@ -1,5 +1,4 @@
-import { TimeIcon } from '@chakra-ui/icons'
-import { Button, Container, Flex, Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
+import { Button, Flex, Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
@@ -25,7 +24,6 @@ export const AdminBookingPanel = () => {
   const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
   const { isOpen: isUpdateBookingOpen, onOpen: onUpdateBookingOpen, onClose: onUpdateBookingClose } = useDisclosure()
-
   const [updateBooking, setUpdateBooking] = useState<allUserBookingsData | undefined>(undefined)
   const userState = useSelector(selectUser)
 
@@ -49,15 +47,15 @@ export const AdminBookingPanel = () => {
         </Flex>
 
         <TableContainer>
-          <Table variant="striped" colorScheme="gray">
+          <Table variant="adminTable" size={'lg'}>
             <Thead>
               <Tr>
                 <Th>Date</Th>
                 <Th>VærkstedetCPH</Th>
-                <Th>iLOQ key</Th>
                 <Th>User phone</Th>
                 <Th>User email</Th>
                 <Th>Created at</Th>
+                <Th>iLOQ key</Th>
                 <Th></Th>
               </Tr>
             </Thead>
@@ -67,18 +65,18 @@ export const AdminBookingPanel = () => {
                   <Td>{formatDate(booking.bookedFor)}</Td>
                   <Td>Frederiksberg</Td>
 
+                  <Td>{booking?.user?.phonenumber}</Td>
+                  <Td>{booking?.user?.email}</Td>
+                  <Td>{formatDate(booking.createdAt)}</Td>
                   <Td>
                     {booking.iLOQKey ? (
                       booking.iLOQKey
                     ) : (
-                      <Button variant="linkButton" onClick={() => openModal(booking)}>
+                      <Button width={'100%'} variant="outline" borderColor={'blacklAlpha.300'} onClick={() => openModal(booking)}>
                         Assign key
                       </Button>
                     )}
                   </Td>
-                  <Td>{booking?.user?.phonenumber}</Td>
-                  <Td>{booking?.user?.email}</Td>
-                  <Td>{formatDate(booking.createdAt)}</Td>
                 </Tr>
               ))}
             </Tbody>

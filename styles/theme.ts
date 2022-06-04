@@ -1,8 +1,7 @@
 import { extendTheme } from '@chakra-ui/react'
+import { mode } from '@chakra-ui/theme-tools'
 import { StepsStyleConfig as Steps } from 'chakra-ui-steps'
 import { ButtonStyles as Button } from '../styles/components/ButtonStyles'
-import { whiten, mode, darken } from '@chakra-ui/theme-tools'
-import { Dict } from '@chakra-ui/utils'
 
 export const themeVaerkstedetCPH = extendTheme({
   colors: {
@@ -28,9 +27,6 @@ dCord2: '#99aab5',
 dCord3: '#2c2f33',
 dCord4:	'#2C2F33',
 dCord5:	'rgba(97, 95, 95, 0.301)',
-
-
-
   },
   breakpoints: {
     sm: '220px',
@@ -65,6 +61,22 @@ dCord5:	'rgba(97, 95, 95, 0.301)',
         }
       }
     },
+    Table: {
+      variants: {
+   
+        adminTable:(props:any) => ({
+          th: {
+         background: "initial"
+          },
+          tr: {
+            _even: {
+              backgroundColor: mode('blackAlpha.200', 'dCord5')(props),
+            }
+          }
+        })
+      }
+    },
+  
 
     CalendarControl: {
       parts: ['button'],
@@ -156,7 +168,13 @@ dCord5:	'rgba(97, 95, 95, 0.301)',
         }),
         onlyPaddingX: {
           paddingTop: 'none',
-          paddingBottom: 'none'
+          paddingBottom: 'none',
+        },
+        onlyX:{
+          paddingTop: 'none',
+          paddingBottom: 'none',
+          marginTop: 'none',
+          marginBottom: 'none',
         },
         even: {
           paddingTop: { sm: 4, xl: 4, xxl: 9 },

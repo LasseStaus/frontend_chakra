@@ -5,7 +5,7 @@ import { updateRefreshToken } from '../../redux/authenticationActions'
 import { selectAuthentication } from '../../redux/authenticationSlice'
 import { AppDispatch } from '../../redux/store'
 import { getTicketTypes, getUserInfo } from '../../redux/userActions'
-import { selectUser, setAlertMessage } from '../../redux/userSlice'
+import { selectUser } from '../../redux/userSlice'
 import AlertBox from '../alert/Alert'
 import CalendarModal from '../calendar/calendarModal'
 import CurrentCalendar from '../calendar/currentCalendar'
@@ -35,21 +35,6 @@ function LandingPage() {
     dispatch(getTicketTypes())
   }, [])
   const windowSize = IsWindowSizeLargerThan(700)
-
-  //TODO move timers into alertmessages
-  useEffect(() => {
-    console.log('JASHDASJDLASHDJSAD', authState.alertMessage)
-
-    if (userState.alertMessage != undefined) {
-      const timeId = setTimeout(() => {
-        dispatch(setAlertMessage(undefined))
-      }, 7000)
-
-      return () => {
-        clearTimeout(timeId)
-      }
-    }
-  }, [userState.alertMessage])
 
   return (
     <>

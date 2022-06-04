@@ -1,8 +1,8 @@
-import type { FC, ReactNode } from 'react'
+import { Flex, useColorModeValue } from '@chakra-ui/react'
 import Head from 'next/head'
-import { Box, useColorModeValue } from '@chakra-ui/react'
-import Header from '../../header/Header'
+import type { FC, ReactNode } from 'react'
 import Footer from '../../footer/Footer'
+import Header from '../../header/Header'
 
 export type BaseLayoutProps = {
   pageTitle: string
@@ -17,13 +17,15 @@ const BaseLayout: FC<BaseLayoutProps> = (p: BaseLayoutProps) => {
       <Head>
         <title>{p.pageTitle} | CPH Værksted</title>
       </Head>
-      <Box minH={'100vh'} bg={useColorModeValue('brandGrey', 'dCord1')} flexDir={'column'}>
+      <Flex minH={'100vh'} bg={useColorModeValue('brandGrey', 'dCord1')} flexDir={'column'}>
         <Header />
-        <main>
-          <Box position={'relative'}>{p.children}</Box>
-        </main>
+
+        <Flex position={'relative'} height={'100%'} flexDir="column">
+          {p.children}
+        </Flex>
+
         <Footer />
-      </Box>
+      </Flex>
     </>
   )
 }
