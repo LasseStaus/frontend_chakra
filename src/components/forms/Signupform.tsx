@@ -37,7 +37,7 @@ const SignupForm = ({ setTabIndex }: Props) => {
 
   return (
     <>
-      <Container maxW={'container.sm'} variant={'halfPaddingY'}>
+      <Container maxW={'container.sm'} variant={'halfPaddingY'} marginBottom={0}>
         <FormProvider {...methods}>
           <form onSubmit={(e) => e.preventDefault()}>
             <FormField

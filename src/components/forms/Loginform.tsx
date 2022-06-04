@@ -25,9 +25,7 @@ const Loginform = () => {
   }
   return (
     <>
-      <Container maxW={'container.sm'} variant={'halfPaddingY'}>
-        {/* Pass all methods into context */}
-        <Box>HEjsa allesammen</Box>
+      <Container maxW={'container.sm'} variant={'halfPaddingY'} marginBottom={0}>
         <FormProvider {...methods}>
           <form onSubmit={(e) => e.preventDefault()}>
             <FormField

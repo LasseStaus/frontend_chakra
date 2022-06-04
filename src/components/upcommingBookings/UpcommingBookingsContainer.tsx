@@ -12,7 +12,9 @@ import {
   Th,
   Thead,
   Tr,
-  useDisclosure
+  useColorModeValue,
+  useDisclosure,
+  useToken
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -39,13 +41,15 @@ export const UpcommingBookings = ({ onBookingOpen }: Props) => {
     onCancelBookingOpen()
   }
 
+  const bgT = useToken('colors', useColorModeValue('initial', 'dCord5'))
+
   return (
     <Container maxW={'container.lg'} borderRadius={6} shadow={'base'} variant="lighterDarkMode">
       <Flex flexDir="column">
         <Flex flexDirection={{ sm: 'column', lg: 'row' }} alignItems={{ base: 'flex-start', md: 'center' }}>
           <Flex gap={4} alignItems="center" w="full">
             <AiOutlineCalendar style={{ width: '40px', height: 'auto' }} />
-            <Heading variant={'componentHeader'}>Upcomming Bookings</Heading>
+            <Heading variant={'componentHeader'}>Upcoming bookings</Heading>
           </Flex>
           <Flex ml={{ lg: 'auto' }} gap={4} w={{ base: 'full', md: 'auto' }} mt={{ base: '4', md: '0' }}>
             <Button shadow={'base'} width={'auto'} onClick={onBookingOpen} alignItems="center">
@@ -69,9 +73,9 @@ export const UpcommingBookings = ({ onBookingOpen }: Props) => {
               {userState.bookings.length > 0 &&
                 userState.bookings.map((booking: Booking) => (
                   <Tr key={booking.id}>
-                    <Td>Frederiksberg</Td>
-                    <Td>{formatDate(booking.bookedFor)}</Td>
-                    <Td>
+                    <Td bg={bgT + '!important'}>Frederiksberg</Td>
+                    <Td bg={bgT + '!important'}>{formatDate(booking.bookedFor)}</Td>
+                    <Td bg={bgT + '!important'}>
                       {booking.iLOQKey ? (
                         booking.iLOQKey
                       ) : (
@@ -80,8 +84,8 @@ export const UpcommingBookings = ({ onBookingOpen }: Props) => {
                         </Text>
                       )}
                     </Td>
-                    <Td>{formatDate(booking.createdAt)}</Td>
-                    <Td>
+                    <Td bg={bgT + '!important'}>{formatDate(booking.createdAt)}</Td>
+                    <Td bg={bgT + '!important'}>
                       <Button color="brandRed" variant="warning" onClick={() => openBooking(booking)}>
                         Cancel Booking
                       </Button>

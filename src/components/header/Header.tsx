@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Flex, Heading, IconButton, useColorMode } from '@chakra-ui/react'
+import { Button, ButtonGroup, Flex, Heading, IconButton, useColorMode, useColorModeValue } from '@chakra-ui/react'
 import React, { FC } from 'react'
 import { FaMoon, FaSun } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,7 +21,7 @@ const Header: FC = () => {
   const isWindowLargerThan = IsWindowSizeLargerThan(764)
   return (
     <Flex
-      bg={colorMode === 'light' ? 'white' : 'gray.600'}
+      bg={colorMode === 'light' ? 'white' : 'dCompLBg'}
       minWidth="max-content"
       px={{ sm: 2, lg: 6 }}
       justifyContent={'space-between'}
@@ -32,7 +32,7 @@ const Header: FC = () => {
     >
       <Flex align="center">
         <Logo />
-        <Heading fontSize={{ sm: 'sm', lg: '1xl' }} color={colorMode === 'dark' ? 'white' : 'gray.600'} textTransform="uppercase">
+        <Heading fontSize={{ sm: 'sm', lg: '1xl' }} color={useColorModeValue('black', 'white')} textTransform="uppercase">
           VærkstedetCPH
         </Heading>
       </Flex>

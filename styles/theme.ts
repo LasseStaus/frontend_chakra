@@ -17,7 +17,20 @@ export const themeVaerkstedetCPH = extendTheme({
     brandDark: {
       100: '#323232',
       200: '#424242'
-    }
+    },
+
+dDarkBg: '#0F1117',
+dMainBg:'#3D434B', 
+dCompBg: '#212529',
+dCompLBg: '#272B2F',
+dCord1:  '#23272a',
+dCord2: '#99aab5',
+dCord3: '#2c2f33',
+dCord4:	'#2C2F33',
+dCord5:	'rgba(97, 95, 95, 0.301)',
+
+
+
   },
   breakpoints: {
     sm: '220px',
@@ -136,8 +149,8 @@ export const themeVaerkstedetCPH = extendTheme({
           color: mode('green', 'red')(props)
         }),
         lighterDarkMode: (props: any) => ({
-          bg: mode('brandWhite', 'brandDark.200')(props),
-          color: mode('brandBlack', 'white')(props),
+          bg: mode('brandWhite', 'dCord4')(props),
+          color: mode('brandBlack', 'whiteAlpha.800')(props),
           paddingTop: { sm: 4, xl: 4, xxl: 9 },
           paddingBottom: { sm: 4, xl: 4, xxl: 9 }
         }),

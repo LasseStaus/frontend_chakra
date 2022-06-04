@@ -32,13 +32,25 @@ export const AuthenticatedPage = () => {
     <>
       {alertMessage != undefined ? <AlertBox alertMessage={alertMessage} alertType={alertType} /> : null}
       <Container maxW={'container.sm'} marginTop={0}>
-        <Box bg={useColorModeValue('brandGrey', 'brandDark.200')} boxShadow={'base'} mt={12} borderRadius={6}>
+        <Box bg={useColorModeValue('white', 'dCord4')} boxShadow={'base'} mt={12} borderRadius={6}>
           <Tabs defaultIndex={0} index={index} onChange={(index) => setTabIndex(index)} isFitted variant="enclosed" border={'sm'}>
             <TabList p={0} boxShadow={'sm'}>
-              <Tab textTransform="uppercase" _selected={{ color: useColorModeValue('brandDark.200', 'primary'), fontWeight: 'bold' }}>
+              <Tab
+                textTransform="uppercase"
+                color={useColorModeValue('white', 'whiteAlpha.500')}
+                bg={useColorModeValue('white', 'dCompLBg')}
+                fontWeight="bold"
+                _selected={{ bg: useColorModeValue('primary', 'blackAlpha.500'), color: useColorModeValue('white', 'primary') }}
+              >
                 Login
               </Tab>
-              <Tab textTransform="uppercase" _selected={{ color: useColorModeValue('brandDark.200', 'primary'), fontWeight: 'bold' }}>
+              <Tab
+                textTransform="uppercase"
+                color={useColorModeValue('white', 'whiteAlpha.500')}
+                bg={useColorModeValue('white', 'dCompLBg')}
+                fontWeight="bold"
+                _selected={{ bg: useColorModeValue('primary', 'blackAlpha.500'), color: useColorModeValue('white', 'primary') }}
+              >
                 Signup
               </Tab>
             </TabList>

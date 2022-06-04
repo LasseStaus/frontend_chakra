@@ -41,9 +41,9 @@ const CurrentCalendar = ({ numberOfMonths }: calendarProps) => {
 
   return (
     <Container maxW={'container.lg'} borderRadius={6} shadow={'base'} variant="lighterDarkMode">
-      <Flex gap={4} alignItems="center">
+      <Flex gap={2} alignItems="center">
         <IoMdTime style={{ width: '40px', height: 'auto' }} />
-        <Heading variant={'componentHeader'}>Current Availability</Heading>
+        <Heading variant={'componentHeader'}>Current availability</Heading>
       </Flex>
       <Flex className="frontpage-calendar" justifyContent={'center'} flexDir="column" alignItems={'center'} w={'100%'} h={'100%'}>
         <Calendar

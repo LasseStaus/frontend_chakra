@@ -1,4 +1,4 @@
-import { Flex, Heading, Text } from '@chakra-ui/react'
+import { Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction } from 'react'
 import { useSelector } from 'react-redux'
 import { selectUser, TicketType } from '../../../redux/userSlice'
@@ -8,16 +8,6 @@ type Props = {
   setTicketType: Dispatch<SetStateAction<string>>
 }
 
-const ticketCardStyle = {
-  width: '100%',
-  justify: 'center',
-  align: 'center',
-  bg: 'brandGrey',
-  margin: '1rem',
-  p: '4',
-  borderRadius: '10px'
-}
-
 const ticketCardSelect = {
   border: '2px',
   borderColor: 'primary'
@@ -25,6 +15,15 @@ const ticketCardSelect = {
 
 const StepTypeTicket = ({ typeOfTicket, setTicketType }: Props) => {
   const userState = useSelector(selectUser)
+  const ticketCardStyle = {
+    width: '100%',
+    justify: 'center',
+    align: 'center',
+    bg: useColorModeValue('brandGrey', 'dCord5'),
+    margin: '1rem',
+    p: '4',
+    borderRadius: '10px'
+  }
   console.log('hej', userState.ticketTypes)
 
   return (

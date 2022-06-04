@@ -23,7 +23,7 @@ const TicketItem: React.FC<TicketItemProps> = ({ amountOfTickets, text, textColo
       alignItems="center"
       justify="center"
       alignSelf="stretch"
-      bg={useColorModeValue('#F2F2F2', 'brandDark.100')}
+      bg={useColorModeValue('#F2F2F2', 'dCord5')}
     >
       <IoTicketOutline style={{ width: '30px', height: 'auto' }} />
       <Text fontSize="4xl">{amountOfTickets}</Text>

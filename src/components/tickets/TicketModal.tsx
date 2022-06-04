@@ -1,4 +1,14 @@
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react'
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useColorModeValue
+} from '@chakra-ui/react'
 import { FC } from 'react'
 import StepFlowTicket from './stepFlowTicket/stepFlow'
 
@@ -11,7 +21,7 @@ const TicketModal: FC<Props> = ({ isOpen, onClose }) => {
     <>
       <Modal size={'5xl'} onClose={onClose} isOpen={isOpen}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg={useColorModeValue('white', 'dCord4')}>
           <ModalHeader>Buy tickets</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

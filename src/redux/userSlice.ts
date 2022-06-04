@@ -209,6 +209,7 @@ export const userSlice = createSlice({
         }
         state.alertMessage = 'You have now canceled you booking'
         state.alertType = 'success'
+        state.allUserBookings = action.payload.allUserBookings
       }),
       builder.addCase(deleteBooking.pending, (state, action) => {
         state.pending = true
