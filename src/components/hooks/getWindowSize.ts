@@ -12,7 +12,7 @@ export default function IsWindowSizeLargerThan(pixels: number) {
     window.addEventListener('resize', handleResize)
     handleResize()
     return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  }, [pixels])
 
   return windowIsLarger
 }

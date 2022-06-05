@@ -1,5 +1,5 @@
 import { Drawer, DrawerCloseButton, DrawerContent, DrawerOverlay, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
-import React, { FC } from 'react'
+import React from 'react'
 import { EditProfileDetails } from './EditProfileDetails'
 import { EditProfilePassword } from './EditProfilePassword'
 

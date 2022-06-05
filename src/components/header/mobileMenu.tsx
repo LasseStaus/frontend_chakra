@@ -21,8 +21,8 @@ const MobileMenu = () => {
       <Menu>
         <MenuButton as={IconButton} aria-label="Options" icon={<HamburgerIcon />} />
         <MenuList py={0} gap={2}>
-          <MenuItem py={6}>
-            <Box onClick={handleLogout}>
+          <MenuItem py={6} onClick={handleLogout}>
+            <Box>
               <Icon as={GiExitDoor} mr={2} />
               Logout
             </Box>

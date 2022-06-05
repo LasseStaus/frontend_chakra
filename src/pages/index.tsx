@@ -1,12 +1,12 @@
 import { Skeleton } from '@chakra-ui/react'
-import { Router, useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import AuthenticatedPage from '../components/authenticationPage/AuthenticationPage'
 import LandingPage from '../components/landing-page/LandingPage'
 import Layout from '../components/layouts/layout/Layout'
 import { authenticateOnLoad } from '../redux/authenticationActions'
-import { authenticationSliceState, selectAuthentication } from '../redux/authenticationSlice'
+import { selectAuthentication } from '../redux/authenticationSlice'
 import { store } from '../redux/store'
 
 type AppDispatch = typeof store.dispatch

@@ -1,5 +1,5 @@
 import { SettingsIcon } from '@chakra-ui/icons'
-import { Box, Button, Container, Flex, Grid, GridItem, Heading, Icon, Text, useDisclosure, Wrap } from '@chakra-ui/react'
+import { Box, Button, Container, Flex, Grid, GridItem, Heading, Icon, Text, useColorModeValue, useDisclosure, Wrap } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/userSlice'
@@ -33,24 +33,15 @@ const ListItem = ({ heading, body }: ListItemProps) => {
 
 export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
   const { isOpen, onOpen: onOpenProfile, onClose } = useDisclosure()
-  /*   let amountOfBookings: number */
   const userState = useSelector(selectUser)
 
   const amountOfBookings = userState.bookings.length
-
-  console.log('HEJSAAAA', amountOfBookings)
-
-  /*  if (userState.bookings) {
-    amountOfBookings = userState.bookings.length
-  } else {
-    amountOfBookings = 0
-  } */
 
   return (
     <>
       <EditProfileDrawer isOpen={isOpen} onClose={onClose} />
 
-      <Box position={'relative'}>
+      <Box position={'relative'} mb={{ sm: 6, xl: 8, xxl: 12 }}>
         <Box
           backgroundImage="url('/wood3.png')"
           backgroundRepeat={'no-repeat'}
@@ -76,7 +67,7 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
               <GridItem
                 rowSpan={{ base: 1, md: 2 }}
                 colSpan={1}
-                bg="white"
+                bg={useColorModeValue('white', 'white')}
                 border={'orange'}
                 borderStyle={'solid'}
                 borderColor="primary"
@@ -91,12 +82,12 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
                 </Box>
               </GridItem>
 
-              <GridItem colSpan={{ base: 4, md: 4 }} alignSelf="center">
+              <GridItem colSpan={{ base: 4, md: 4 }} alignSelf="center" justifySelf="auto">
                 <Flex justifyContent="start" direction={{ base: 'column', md: 'row' }} alignItems="center" gap={{ base: '2', md: '8' }}>
                   <Heading fontWeight="bold" color="white" fontSize={{ base: 'xl', lg: '3xl' }} textTransform="uppercase">
                     {userState.user?.firstname} {userState.user?.lastname}
                   </Heading>
-                  <Button w="40" ml={'auto'} variant="secondary" size="sm" onClick={onOpenProfile}>
+                  <Button w={{ base: 'full', md: 40 }} ml={'auto'} variant="secondary" size="sm" onClick={onOpenProfile}>
                     <SettingsIcon mr={2} />
                     Edit profile
                   </Button>
@@ -106,7 +97,7 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
               <GridItem colSpan={{ base: 5, md: 4 }} rowSpan={1}>
                 <Flex justifyContent={{ base: 'space-around', md: 'space-between' }} w="full">
                   <ListItem
-                    heading="Upcomming Bookings"
+                    heading="Upcoming bookings"
                     body={amountOfBookings > 0 ? amountOfBookings + ' bookings' : 'No bookings ahead'}
                   />
                   <ListItem heading="Tickets" body={userState.tickets.activeTickets + ' tickets'} />

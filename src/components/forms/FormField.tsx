@@ -1,8 +1,8 @@
+import { Box, FormControl, FormErrorMessage } from '@chakra-ui/react'
+import React from 'react'
 import { Controller, ControllerProps, FieldError, FieldPath, FieldValues, useFormContext, UseFormStateReturn } from 'react-hook-form'
 import { ControllerFieldState, ControllerRenderProps } from 'react-hook-form/dist/types/controller'
-import React from 'react'
 import { InputField } from './Input'
-import { Box, FormControl, FormErrorMessage, Text } from '@chakra-ui/react'
 
 type FormFieldBase = {
   as?: React.ElementType

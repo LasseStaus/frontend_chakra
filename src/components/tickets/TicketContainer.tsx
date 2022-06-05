@@ -9,7 +9,7 @@ type Props = {
 }
 
 interface TicketItemProps {
-  amountOfTickets: number | undefined
+  amountOfTickets: number | null
   text: string
   textColor: string
 }
@@ -23,7 +23,7 @@ const TicketItem: React.FC<TicketItemProps> = ({ amountOfTickets, text, textColo
       alignItems="center"
       justify="center"
       alignSelf="stretch"
-      bg={useColorModeValue('#F2F2F2', 'brandDark.100')}
+      bg={useColorModeValue('#F2F2F2', 'dCord5')}
     >
       <IoTicketOutline style={{ width: '30px', height: 'auto' }} />
       <Text fontSize="4xl">{amountOfTickets}</Text>
@@ -39,13 +39,13 @@ export const Ticket = ({ onOpenTicket }: Props) => {
   return (
     <Container maxW={'container.lg'} variant="lighterDarkMode" borderRadius={6} shadow={'base'}>
       <Flex flexDir="column">
-        <Flex alignItems="center">
+        <Flex flexDir={{ sm: 'column', md: 'row' }}>
           <Flex gap={4} alignItems="center">
-            <IoTicketOutline style={{ width: '40px', height: 'auto' }} />
+            <IoTicketOutline style={{ width: '35px', height: 'auto' }} />
             <Heading variant={'componentHeader'}>Tickets</Heading>
           </Flex>
-          <Flex ml={'auto'} gap={4} justifySelf="flex-end">
-            <Button onClick={onOpenTicket}>
+          <Flex ml={{ md: 'auto' }} gap={4} justifySelf={{ lg: 'flex-end' }}>
+            <Button mt={{ sm: 4, md: 0 }} onClick={onOpenTicket}>
               <Icon as={IoTicket} mr={2} />
               Buy tickets
             </Button>

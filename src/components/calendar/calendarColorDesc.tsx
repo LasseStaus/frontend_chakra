@@ -7,10 +7,10 @@ export const CalendarColorDescription = () => {
         <Box borderRadius="100" w="30px" h="20px" backgroundColor="brandRed" mr={2} />
         <Text>Fully booked</Text>
       </Flex>
-      <Flex>
+      {/*      <Flex>
         <Box borderRadius="100" w="30px" h="20px" border="1px solid black" backgroundColor="white" mr={2} />
         <Text>Available</Text>
-      </Flex>
+      </Flex> */}
     </Flex>
   )
 }

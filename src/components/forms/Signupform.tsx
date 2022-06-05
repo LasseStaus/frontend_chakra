@@ -1,7 +1,7 @@
-import { Box, Button, Container } from '@chakra-ui/react'
+import { Button, Container } from '@chakra-ui/react'
 import React, { Dispatch, SetStateAction, useRef } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { signupThunk } from '../../redux/authenticationActions'
 import { AppDispatch } from '../../redux/store'
 import { SignupProps } from '../types/AuthTypes'
@@ -37,7 +37,7 @@ const SignupForm = ({ setTabIndex }: Props) => {
 
   return (
     <>
-      <Container maxW={'container.sm'} variant={'halfPaddingY'}>
+      <Container maxW={'container.sm'} variant={'halfPaddingY'} marginBottom={0}>
         <FormProvider {...methods}>
           <form onSubmit={(e) => e.preventDefault()}>
             <FormField

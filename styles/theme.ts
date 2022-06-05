@@ -1,8 +1,7 @@
 import { extendTheme } from '@chakra-ui/react'
+import { mode } from '@chakra-ui/theme-tools'
 import { StepsStyleConfig as Steps } from 'chakra-ui-steps'
 import { ButtonStyles as Button } from '../styles/components/ButtonStyles'
-import { whiten, mode, darken } from '@chakra-ui/theme-tools'
-import { Dict } from '@chakra-ui/utils'
 
 export const themeVaerkstedetCPH = extendTheme({
   colors: {
@@ -17,7 +16,17 @@ export const themeVaerkstedetCPH = extendTheme({
     brandDark: {
       100: '#323232',
       200: '#424242'
-    }
+    },
+
+    dDarkBg: '#0F1117',
+    dMainBg: '#3D434B',
+    dCompBg: '#212529',
+    dCompLBg: '#272B2F',
+    dCord1: '#23272a',
+    dCord2: '#99aab5',
+    dCord3: '#2c2f33',
+    dCord4: '#2C2F33',
+    dCord5: 'rgba(97, 95, 95, 0.301)'
   },
   breakpoints: {
     sm: '220px',
@@ -27,8 +36,8 @@ export const themeVaerkstedetCPH = extendTheme({
     xxl: '1536px'
   },
   fonts: {
-    heading: `'Dosis', sans-serif`,
-    body: `'Dosis', sans-serif`
+    heading: `'Dosis', 'sans-serif'`,
+    body: `'Dosis', 'sans-serif'`
   },
   sizes: {
     container: {
@@ -50,6 +59,20 @@ export const themeVaerkstedetCPH = extendTheme({
           shadow: 'none',
           boxShadow: '32px 16px 0 6px #3B4DCC'
         }
+      }
+    },
+    Table: {
+      variants: {
+        adminTable: (props: any) => ({
+          th: {
+            background: 'initial'
+          },
+          tr: {
+            _even: {
+              backgroundColor: mode('blackAlpha.200', 'dCord5')(props)
+            }
+          }
+        })
       }
     },
 
@@ -136,14 +159,20 @@ export const themeVaerkstedetCPH = extendTheme({
           color: mode('green', 'red')(props)
         }),
         lighterDarkMode: (props: any) => ({
-          bg: mode('brandWhite', 'brandDark.200')(props),
-          color: mode('brandBlack', 'white')(props),
+          bg: mode('brandWhite', 'dCord4')(props),
+          color: mode('brandBlack', 'whiteAlpha.800')(props),
           paddingTop: { sm: 4, xl: 4, xxl: 9 },
           paddingBottom: { sm: 4, xl: 4, xxl: 9 }
         }),
         onlyPaddingX: {
           paddingTop: 'none',
           paddingBottom: 'none'
+        },
+        onlyX: {
+          paddingTop: 'none',
+          paddingBottom: 'none',
+          marginTop: 'none',
+          marginBottom: 'none'
         },
         even: {
           paddingTop: { sm: 4, xl: 4, xxl: 9 },

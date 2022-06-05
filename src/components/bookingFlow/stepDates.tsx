@@ -1,6 +1,5 @@
-import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
-import { isDisabled } from '@chakra-ui/utils'
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Flex, Heading, Text, useColorMode } from '@chakra-ui/react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { Calendar, DateObject } from 'react-multi-date-picker'
 import DatePanel from 'react-multi-date-picker/plugins/date_panel'
 import { useSelector } from 'react-redux'
@@ -33,6 +32,7 @@ const StepDates = ({ calenderDates, setCalendarDates }: props) => {
     dateArray.push(date)
   })
 
+  const { colorMode } = useColorMode()
   return (
     <Flex my={8} flexDir="column" justify="center" align="center" w={'100%'} h={'100%'}>
       <Heading mb={4} fontSize={'2xl'}>
@@ -59,6 +59,7 @@ const StepDates = ({ calenderDates, setCalendarDates }: props) => {
           format={format}
           multiple
           sort
+          className={colorMode === 'light' ? 'hej' : 'darkMode'}
           buttons={true}
           plugins={[<DatePanel header="Selected Dates" key={null} />]}
         />
