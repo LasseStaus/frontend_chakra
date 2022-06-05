@@ -53,7 +53,7 @@ export const logoutThunk = createAsyncThunk('authentication/logout', async (_, t
   })
 
   if (response.ok) {
-    await clearCookiesFetcher()
+    await clearCookiesFetcher() // TO DO
     thunkAPI.dispatch(clearUserData(undefined))
     return { message: 'You have been logged out!' }
   } else {
