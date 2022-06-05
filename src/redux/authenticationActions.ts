@@ -28,6 +28,7 @@ export const loginThunk = createAsyncThunk('authentication/login', async (data: 
     },
     body: JSON.stringify(data)
   })
+  
   const responseData = await response.json()
 
   if (response.status === 200) {
@@ -69,6 +70,7 @@ export const logoutThunk = createAsyncThunk('authentication/logout', async (_, t
     thunkAPI.dispatch(clearUserData(undefined))
     return { message: 'You have been logged out!' }
   } else {
+    await clearCookiesFetcher() 
     return thunkAPI.rejectWithValue('Logout fail')
   }
 })

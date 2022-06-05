@@ -24,6 +24,7 @@ export interface Tickets {
   usedTickets: number | null
 }
 
+
 export interface Booking {
   id: string
   bookedFor: Date

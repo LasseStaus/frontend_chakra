@@ -6,19 +6,19 @@ import { Booking } from './userSlice'
 const API_URL = process.env.NEXT_PUBLIC_API_REST
 
 
-interface editUserData{
+interface editUserData {
   firstname?: string
-  lastname?:string
-  email?:string
+  lastname?: string
+  email?: string
 }
-interface editPasswordData{
+interface editPasswordData {
   passwordCurrent: string,
-      passwordNew: string,
-      passwordNewConfirm: string
+  passwordNew: string,
+  passwordNewConfirm: string
 }
 
-interface updateKeyData{
-  bookingId: string,
+interface updateKeyData {
+  bookingId: string | undefined
   iLOQKey: string
 }
 export const getUserInfo = createAsyncThunk('loggedInUser/getUserInfo', async (_, thunkAPI) => {
@@ -37,7 +37,7 @@ export const getUserInfo = createAsyncThunk('loggedInUser/getUserInfo', async (_
   if (response.status === 200) {
     return resData
   } else {
- return thunkAPI.rejectWithValue('Could not get user info')
+    return thunkAPI.rejectWithValue('Could not get user info')
   }
 })
 

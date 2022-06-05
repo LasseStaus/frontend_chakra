@@ -88,6 +88,7 @@ export const authenticationSlice = createSlice({
       builder.addCase(logoutThunk.rejected, (state) => {
         state.pending = false
         state.authenticated = false
+        state.isAdmin = false
       }),
       //
       //authenticateOnLoad
