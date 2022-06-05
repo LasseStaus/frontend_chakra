@@ -10,11 +10,11 @@ export type Tokens = {
 const getCookiesHandler = (req: NextApiRequest, res: NextApiResponse) => {
   try {
     if (!req.headers.cookie) {
-      return res.status(403).json({ message: 'Not Authorized' })
+      return res.end()
+      /* return res.status(403).json({ message: 'Not Authorized' }) */
     }
 
     const token = cookie.parse(req.headers.cookie)
-    console.log(token, 'SE HER i getcookie api')
 
     res.status(200).json(token)
     return token

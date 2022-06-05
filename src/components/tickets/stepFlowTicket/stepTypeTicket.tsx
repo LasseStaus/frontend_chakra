@@ -24,7 +24,6 @@ const StepTypeTicket = ({ typeOfTicket, setTicketType }: Props) => {
     p: '4',
     borderRadius: '10px'
   }
-  console.log('hej', userState.ticketTypes)
 
   return (
     <Flex my={{ base: 8, md: 2 }} flexDir="column" justify="center" align="center" w={'100%'} h={'100%'}>

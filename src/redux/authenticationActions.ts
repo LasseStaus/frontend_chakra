@@ -1,14 +1,26 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { useDispatch } from 'react-redux'
 import { clearCookiesFetcher } from './cookieHelpers/clearCookiesFetcher'
 import { getCookieFetcher } from './cookieHelpers/getCookiesFetcher'
 import { setCookieFetcher } from './cookieHelpers/setCookiesFetcher'
-import { getUserInfo } from './userActions'
 import { clearUserData } from './userSlice'
 
 const API_URL = process.env.NEXT_PUBLIC_API_REST
 
-export const loginThunk = createAsyncThunk('authentication/login', async (data: any, thunkAPI) => {
+
+interface loginData {
+  email: string, 
+  password: string
+}
+interface signupData {
+  firstname: string,
+  lastname: string,
+  email: string, 
+  password: string,
+  phonenumber: string,
+  passwordConfirm: string
+}
+
+export const loginThunk = createAsyncThunk('authentication/login', async (data: loginData, thunkAPI) => {
   const response = await fetch(`${API_URL}/auth/local/signin`, {
     method: 'POST',
     headers: {
@@ -26,7 +38,7 @@ export const loginThunk = createAsyncThunk('authentication/login', async (data: 
   }
 })
 
-export const signupThunk = createAsyncThunk('authentication/signup', async (data: any, thunkAPI) => {
+export const signupThunk = createAsyncThunk('authentication/signup', async (data: signupData, thunkAPI) => {
   const response = await fetch(`${API_URL}/auth/local/signup`, {
     method: 'POST',
     headers: {
@@ -63,7 +75,7 @@ export const logoutThunk = createAsyncThunk('authentication/logout', async (_, t
 
 export const authenticateOnLoad = createAsyncThunk('authentication/authenticateOnLoad', async (_, thunkAPI) => {
   const cookies = await getCookieFetcher()
-
+  if(!cookies) return thunkAPI.rejectWithValue('Not Authorized')
   const response = await fetch(`${API_URL}/auth/refresh`, {
     method: 'POST',
     headers: {
@@ -92,7 +104,6 @@ export const updateRefreshToken = createAsyncThunk('authentication/updateRefresh
   const responesData = await response.json()
 
   if (response.ok && responesData.tokens) {
-    console.log('UpdatRefesh success')
 
     await setCookieFetcher(responesData.tokens)
     return responesData

@@ -18,7 +18,6 @@ const CurrentCalendar = ({ numberOfMonths }: calendarProps) => {
 
   const allCurrentBookings = useSelector((state: any) => state.user.allUserBookings)
   const currentDate = new Date()
-  console.log(allCurrentBookings)
 
   let dateArray: string[] = []
 

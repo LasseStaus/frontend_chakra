@@ -4,7 +4,6 @@ export type Tokens = {
 }
 
 export const clearCookiesFetcher = async () => {
-  console.log('in clearcookies fethcer')
 
   const response = await fetch('/api/clearCookies', {
     method: 'POST',
@@ -15,7 +14,6 @@ export const clearCookiesFetcher = async () => {
   })
 
   if (response.ok) {
-    console.log('cookie CLEAR success')
     return
   } else {
     return new Error('cookie clear fail')

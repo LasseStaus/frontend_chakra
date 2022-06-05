@@ -1,4 +1,3 @@
-import { responseSymbol } from 'next/dist/server/web/spec-compliant/fetch-event'
 
 export type Tokens = {
   access_token: string
@@ -6,20 +5,42 @@ export type Tokens = {
 }
 
 export const getCookieFetcher = async () => {
-  const response = await fetch('/api/getCookies', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
+  try {
+    const response = await fetch('/api/getCookies', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })  
+    const responseData = await response.json()
+  
+    if (responseData) {
+      return responseData
+    } else {
+      return new Error('cookie GET fail')
     }
-  })
-
-  const responseData = await response.json()
-
-  if (responseData) {
-    console.log('cookie GET success', responseData)
-    return responseData
-  } else {
-    return new Error('cookie GET fail')
+    
+  } catch (error) {
+    return false
   }
 }
+/* const response = await fetch('/api/getCookies', {
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
+})
+
+
+const responseData = await response.json()
+console.log("HALLOO MAND", responseData);
+
+if (responseData) {
+  console.log('cookie GET success', responseData)
+  return responseData
+} else {
+  return new Error('cookie GET fail')
+} */
+

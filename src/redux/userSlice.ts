@@ -146,7 +146,6 @@ export const userSlice = createSlice({
       //
       //editUserPassword
       builder.addCase(editUserPassword.fulfilled, (state, action: AnyAction) => {
-        console.log('password success')
         state.alertMessage = action.payload
         state.alertType = 'success'
       }),
@@ -161,7 +160,6 @@ export const userSlice = createSlice({
       //
       //getTicketTypes
       builder.addCase(getTicketTypes.fulfilled, (state, action: AnyAction) => {
-        console.log('getTicketTypes success', action.payload)
         state.ticketTypes = action.payload
       }),
       builder.addCase(getTicketTypes.pending, (state) => {
@@ -229,7 +227,6 @@ export const userSlice = createSlice({
       //
       //getAllUserBookings
       builder.addCase(getAllUserBookings.fulfilled, (state, action: AnyAction) => {
-        console.log('getAllUserBookings success', action.payload)
         state.allUserBookings = action.payload
       }),
       builder.addCase(getAllUserBookings.pending, (state) => {

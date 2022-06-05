@@ -23,14 +23,12 @@ function LandingPage() {
   const authState = useSelector(selectAuthentication)
   const userState = useSelector(selectUser)
 
-  console.log(userState)
-
   useEffect(() => {
     setTimeout(() => {
       dispatch(updateRefreshToken())
       //set to 15000 for testing, otherwise it might bug
     }, 600000)
-  }, [authState.tokens, dispatch])
+  }, [])
 
   useEffect(() => {
     dispatch(getUserInfo())

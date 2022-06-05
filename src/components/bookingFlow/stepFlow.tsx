@@ -34,12 +34,9 @@ const StepFlow = () => {
   })
 
   const [calenderDates, setCalendarDates] = useState<DateObject | DateObject[] | null>(null)
-  console.log(calenderDates)
   const userState = useSelector(selectUser)
 
   function handleNext() {
-    console.log('Tickets', userState.tickets.activeTickets, 'step', activeStep)
-
     if (activeStep === 0) {
       if (userState.tickets.activeTickets && userState.tickets.activeTickets > 0) {
         const formattedDates = FormatDatesforState(calenderDates)

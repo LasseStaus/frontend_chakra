@@ -1,10 +1,26 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { authenticationSliceState } from './authenticationSlice'
 import { getCookieFetcher } from './cookieHelpers/getCookiesFetcher'
 import { Booking } from './userSlice'
 
+
 const API_URL = process.env.NEXT_PUBLIC_API_REST
 
+
+interface editUserData{
+  firstname?: string
+  lastname?:string
+  email?:string
+}
+interface editPasswordData{
+  passwordCurrent: string,
+      passwordNew: string,
+      passwordNewConfirm: string
+}
+
+interface updateKeyData{
+  bookingId: string,
+  iLOQKey: string
+}
 export const getUserInfo = createAsyncThunk('loggedInUser/getUserInfo', async (_, thunkAPI) => {
   const cookies = await getCookieFetcher()
 
@@ -21,11 +37,11 @@ export const getUserInfo = createAsyncThunk('loggedInUser/getUserInfo', async (_
   if (response.status === 200) {
     return resData
   } else {
-    return // TO DO HERE?
+ return thunkAPI.rejectWithValue('Could not get user info')
   }
 })
 
-export const editUserInfo = createAsyncThunk('loggedInUser/editUserInfo', async (data: any, thunkAPI) => {
+export const editUserInfo = createAsyncThunk('loggedInUser/editUserInfo', async (data: editUserData, thunkAPI) => {
   const cookies = await getCookieFetcher()
 
   const response = await fetch(`${API_URL}/user/edit/userInfo`, {
@@ -47,7 +63,7 @@ export const editUserInfo = createAsyncThunk('loggedInUser/editUserInfo', async 
   }
 })
 
-export const editUserPassword = createAsyncThunk('loggedInUser/editUserPassword', async (data: any, thunkAPI) => {
+export const editUserPassword = createAsyncThunk('loggedInUser/editUserPassword', async (data: editPasswordData, thunkAPI) => {
   const cookies = await getCookieFetcher()
 
   const response = await fetch(`${API_URL}/user/edit/password`, {
@@ -186,7 +202,7 @@ export const getAllUserBookings = createAsyncThunk('loggedInUser/getAllUserBooki
   }
 })
 
-export const updateBookingWithiLOQKey = createAsyncThunk('loggedInUser/updateBookingWithiLOQKey', async (data: any, thunkAPI) => {
+export const updateBookingWithiLOQKey = createAsyncThunk('loggedInUser/updateBookingWithiLOQKey', async (data: updateKeyData, thunkAPI) => {
   const cookies = await getCookieFetcher()
 
   const response = await fetch(`${API_URL}/booking/updateBooking`, {
