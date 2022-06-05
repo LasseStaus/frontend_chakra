@@ -1,17 +1,15 @@
-import { AnyAction, createSelector, createSlice } from "@reduxjs/toolkit"
-import { authenticateOnLoad, loginThunk, logoutThunk, signupThunk, updateRefreshToken } from "./authenticationActions"
-import { RootState } from "./store"
-
-
+import { AnyAction, createSelector, createSlice } from '@reduxjs/toolkit'
+import { authenticateOnLoad, loginThunk, logoutThunk, signupThunk, updateRefreshToken } from './authenticationActions'
+import { RootState } from './store'
 
 export interface authenticationSliceState {
   isAdmin: boolean
   pending: boolean
-  tokens: string | undefined 
+  tokens: string | undefined
   authenticated: boolean
   authenticationLoad: boolean
   alertMessage: string | undefined
-  alertType: "success" | "error" | "warning" | "info" | undefined
+  alertType: 'success' | 'error' | 'warning' | 'info' | undefined
 }
 
 const initialState: authenticationSliceState = {
@@ -24,17 +22,14 @@ const initialState: authenticationSliceState = {
   authenticationLoad: true
 }
 
-
 export const authenticationSlice = createSlice({
-
-
-  name: "authentication",
+  name: 'authentication',
   initialState: initialState,
   reducers: {
-    setAlertMessage: (state, action) => {      
+    setAlertMessage: (state, action) => {
       state.alertMessage = action.payload
     },
-    updateAdmin : (state, action) => {
+    updateAdmin: (state, action) => {
       state.isAdmin = action.payload
     }
   },
@@ -44,31 +39,28 @@ export const authenticationSlice = createSlice({
     builder.addCase(signupThunk.fulfilled, (state, action) => {
       state.pending = false
       state.tokens = action.payload.access_tokens
-      state.alertMessage = "Your user has been created! Please go to login"
-      state.alertType = "success"
+      state.alertMessage = 'Your user has been created! Please go to login'
+      state.alertType = 'success'
     }),
       builder.addCase(signupThunk.pending, (state) => {
         state.pending = true
         state.authenticated = false
       }),
-      builder.addCase(signupThunk.rejected, (state, action) => {
+      builder.addCase(signupThunk.rejected, (state, action: AnyAction) => {
         state.pending = false
         state.authenticated = false
-        if(action.error) {
-
-          state.alertMessage = action.error.message
-        } 
-        state.alertType = "error"
+        state.alertMessage = action.payload
+        state.alertType = 'error'
       }),
       //
       //loginThunk
       builder.addCase(loginThunk.fulfilled, (state, action) => {
         state.pending = false
         state.authenticated = true
-        state.authenticationLoad= false
+        state.authenticationLoad = false
         state.tokens = action.payload.tokens.access_token
         state.alertMessage = "You've successfully logged in!"
-        state.alertType = "success"
+        state.alertType = 'success'
         state.isAdmin = action.payload.isAdmin
       }),
       builder.addCase(loginThunk.pending, (state) => {
@@ -76,13 +68,13 @@ export const authenticationSlice = createSlice({
         state.authenticated = false
         state.authenticationLoad = true
       }),
-      builder.addCase(loginThunk.rejected, (state, action:AnyAction) => {
+      builder.addCase(loginThunk.rejected, (state, action: AnyAction) => {
         state.pending = false
         state.authenticated = false
-        state.alertMessage = action.payload.message  
-       // state.alertMessage = action.payload.message
+        state.alertMessage = action.payload.message
+        // state.alertMessage = action.payload.message
         state.tokens = undefined
-        state.alertType = "error"
+        state.alertType = 'error'
         state.authenticationLoad = false
       }),
       //
@@ -92,7 +84,7 @@ export const authenticationSlice = createSlice({
         state.authenticated = false
         state.tokens = undefined
         state.alertMessage = action.payload.message
-        state.alertType = "success"
+        state.alertType = 'success'
         state.isAdmin = false
       }),
       builder.addCase(logoutThunk.pending, (state) => {
@@ -122,7 +114,7 @@ export const authenticationSlice = createSlice({
         state.pending = false
         state.authenticated = false
         state.alertMessage = "It's been a while! Please login again "
-        state.alertType = "info"
+        state.alertType = 'info'
         state.authenticationLoad = false
         state.tokens = undefined
         state.isAdmin = false
@@ -130,17 +122,16 @@ export const authenticationSlice = createSlice({
       builder.addCase(updateRefreshToken.fulfilled, (state, action) => {
         state.tokens = action.payload.tokens.access_token
         state.isAdmin = action.payload.isAdmin
-        state.pending= false
+        state.pending = false
       }),
       builder.addCase(updateRefreshToken.pending, (state) => {
         state.pending = true
-  
       }),
       builder.addCase(updateRefreshToken.rejected, (state) => {
         state.pending = false
         state.authenticated = false
         state.alertMessage = "It's been a while! Please login again "
-        state.alertType = "info"
+        state.alertType = 'info'
         state.authenticationLoad = false
         state.tokens = undefined
         state.isAdmin = false
@@ -156,8 +147,7 @@ export const { setAlertMessage, updateAdmin } = authenticationSlice.actions
 
  */
 
-export const selectAuthentication  = createSelector((state: RootState) => state.authentication, authentication => authentication)
-
-
-
-
+export const selectAuthentication = createSelector(
+  (state: RootState) => state.authentication,
+  (authentication) => authentication
+)

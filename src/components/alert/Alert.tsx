@@ -16,8 +16,6 @@ export const AlertBox = ({ alertMessage, alertType }: Props) => {
 
   const dispatch: AppDispatch = useDispatch()
   useEffect(() => {
-    console.log('1', userState.alertMessage, '2', authState.alertMessage)
-
     if (userState.alertMessage != undefined || authState.alertMessage != undefined) {
       const timeId = setTimeout(() => {
         dispatch(setAlertMessage(undefined))

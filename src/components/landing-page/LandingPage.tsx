@@ -1,4 +1,4 @@
-import { useDisclosure } from '@chakra-ui/react'
+import { Skeleton, useDisclosure } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateRefreshToken } from '../../redux/authenticationActions'
@@ -23,6 +23,8 @@ function LandingPage() {
   const authState = useSelector(selectAuthentication)
   const userState = useSelector(selectUser)
 
+  console.log(userState)
+
   useEffect(() => {
     setTimeout(() => {
       dispatch(updateRefreshToken())
@@ -38,13 +40,15 @@ function LandingPage() {
 
   return (
     <>
-      {userState.alertMessage != undefined && <AlertBox alertMessage={userState.alertMessage} alertType={userState.alertType} />}
-      <ProfileBanner onOpenTicket={onOpenTicket} onBookingOpen={onBookingOpen} />
-      <CurrentCalendar numberOfMonths={windowSize ? 2 : 1} />
-      <UpcommingBookings onBookingOpen={onBookingOpen} />
-      <Ticket onOpenTicket={onOpenTicket} />
-      <TicketModal isOpen={isOpenTicket} onClose={onCloseTicket} />
-      <CalendarModal isOpen={isBookingOpen} onClose={onBookingClose} />
+      <Skeleton startColor="white" endColor="white" isLoaded={userState.user.firstname != ''}>
+        {userState.alertMessage != undefined && <AlertBox alertMessage={userState.alertMessage} alertType={userState.alertType} />}
+        <ProfileBanner onOpenTicket={onOpenTicket} onBookingOpen={onBookingOpen} />
+        <CurrentCalendar numberOfMonths={windowSize ? 2 : 1} />
+        <UpcommingBookings onBookingOpen={onBookingOpen} />
+        <Ticket onOpenTicket={onOpenTicket} />
+        <TicketModal isOpen={isOpenTicket} onClose={onCloseTicket} />
+        <CalendarModal isOpen={isBookingOpen} onClose={onBookingClose} />
+      </Skeleton>
     </>
   )
 }

@@ -8,6 +8,7 @@ import Layout from '../components/layouts/layout/Layout'
 import { authenticateOnLoad } from '../redux/authenticationActions'
 import { selectAuthentication } from '../redux/authenticationSlice'
 import { store } from '../redux/store'
+import { selectUser } from '../redux/userSlice'
 
 type AppDispatch = typeof store.dispatch
 const Dashboard = () => {

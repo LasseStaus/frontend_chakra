@@ -33,18 +33,9 @@ const ListItem = ({ heading, body }: ListItemProps) => {
 
 export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
   const { isOpen, onOpen: onOpenProfile, onClose } = useDisclosure()
-  /*   let amountOfBookings: number */
   const userState = useSelector(selectUser)
 
   const amountOfBookings = userState.bookings.length
-
-  console.log('HEJSAAAA', amountOfBookings)
-
-  /*  if (userState.bookings) {
-    amountOfBookings = userState.bookings.length
-  } else {
-    amountOfBookings = 0
-  } */
 
   return (
     <>
@@ -91,12 +82,12 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
                 </Box>
               </GridItem>
 
-              <GridItem colSpan={{ base: 4, md: 4 }} alignSelf="center">
+              <GridItem colSpan={{ base: 4, md: 4 }} alignSelf="center" justifySelf="auto">
                 <Flex justifyContent="start" direction={{ base: 'column', md: 'row' }} alignItems="center" gap={{ base: '2', md: '8' }}>
                   <Heading fontWeight="bold" color="white" fontSize={{ base: 'xl', lg: '3xl' }} textTransform="uppercase">
                     {userState.user?.firstname} {userState.user?.lastname}
                   </Heading>
-                  <Button w="40" ml={'auto'} variant="secondary" size="sm" onClick={onOpenProfile}>
+                  <Button w={{ base: 'full', md: 40 }} ml={'auto'} variant="secondary" size="sm" onClick={onOpenProfile}>
                     <SettingsIcon mr={2} />
                     Edit profile
                   </Button>

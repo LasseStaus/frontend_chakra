@@ -56,7 +56,6 @@ export const AdminBookingPanel = () => {
                 <Th>User email</Th>
                 <Th>Created at</Th>
                 <Th>iLOQ key</Th>
-                <Th></Th>
               </Tr>
             </Thead>
             <Tbody>

@@ -6,6 +6,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_REST
 
 export const getUserInfo = createAsyncThunk('loggedInUser/getUserInfo', async (_, thunkAPI) => {
   const token = thunkAPI.getState() as { authentication: authenticationSliceState }
+  console.log('inGetUserInfo')
 
   const response = await fetch(`${API_URL}/user/profile`, {
     method: 'GET',
@@ -72,8 +73,6 @@ export const editUserPassword = createAsyncThunk('loggedInUser/editUserPassword'
   if (response.status === 200) {
     return thunkAPI.fulfillWithValue(resData.message)
   } else {
-    console.log('We are here')
-
     return thunkAPI.rejectWithValue(resData.message)
   }
 })

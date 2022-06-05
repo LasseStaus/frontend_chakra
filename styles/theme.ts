@@ -18,15 +18,15 @@ export const themeVaerkstedetCPH = extendTheme({
       200: '#424242'
     },
 
-dDarkBg: '#0F1117',
-dMainBg:'#3D434B', 
-dCompBg: '#212529',
-dCompLBg: '#272B2F',
-dCord1:  '#23272a',
-dCord2: '#99aab5',
-dCord3: '#2c2f33',
-dCord4:	'#2C2F33',
-dCord5:	'rgba(97, 95, 95, 0.301)',
+    dDarkBg: '#0F1117',
+    dMainBg: '#3D434B',
+    dCompBg: '#212529',
+    dCompLBg: '#272B2F',
+    dCord1: '#23272a',
+    dCord2: '#99aab5',
+    dCord3: '#2c2f33',
+    dCord4: '#2C2F33',
+    dCord5: 'rgba(97, 95, 95, 0.301)'
   },
   breakpoints: {
     sm: '220px',
@@ -36,8 +36,8 @@ dCord5:	'rgba(97, 95, 95, 0.301)',
     xxl: '1536px'
   },
   fonts: {
-    heading: `'Dosis', sans-serif`,
-    body: `'Dosis', sans-serif`
+    heading: `'Dosis', 'sans-serif'`,
+    body: `'Dosis', 'sans-serif'`
   },
   sizes: {
     container: {
@@ -63,20 +63,18 @@ dCord5:	'rgba(97, 95, 95, 0.301)',
     },
     Table: {
       variants: {
-   
-        adminTable:(props:any) => ({
+        adminTable: (props: any) => ({
           th: {
-         background: "initial"
+            background: 'initial'
           },
           tr: {
             _even: {
-              backgroundColor: mode('blackAlpha.200', 'dCord5')(props),
+              backgroundColor: mode('blackAlpha.200', 'dCord5')(props)
             }
           }
         })
       }
     },
-  
 
     CalendarControl: {
       parts: ['button'],
@@ -168,13 +166,13 @@ dCord5:	'rgba(97, 95, 95, 0.301)',
         }),
         onlyPaddingX: {
           paddingTop: 'none',
-          paddingBottom: 'none',
+          paddingBottom: 'none'
         },
-        onlyX:{
+        onlyX: {
           paddingTop: 'none',
           paddingBottom: 'none',
           marginTop: 'none',
-          marginBottom: 'none',
+          marginBottom: 'none'
         },
         even: {
           paddingTop: { sm: 4, xl: 4, xxl: 9 },
