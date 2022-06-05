@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Heading, Text, Center } from '@chakra-ui/react'
+import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
 
 interface Props {

@@ -1,95 +1,115 @@
-import { createAsyncThunk } from "@reduxjs/toolkit"
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { clearCookiesFetcher } from './cookieHelpers/clearCookiesFetcher'
+import { getCookieFetcher } from './cookieHelpers/getCookiesFetcher'
+import { setCookieFetcher } from './cookieHelpers/setCookiesFetcher'
+import { clearUserData } from './userSlice'
 
-const API_URL = process.env.NEXT_PUBLIC_API_PROXY
+const API_URL = process.env.NEXT_PUBLIC_API_REST
 
-export const loginThunk = createAsyncThunk("authentication/login", async (data: any, thunkAPI) => {
-  const response = await fetch(`${API_URL}/api/login`, {
-    method: "POST",
+
+interface loginData {
+  email: string, 
+  password: string
+}
+interface signupData {
+  firstname: string,
+  lastname: string,
+  email: string, 
+  password: string,
+  phonenumber: string,
+  passwordConfirm: string
+}
+
+export const loginThunk = createAsyncThunk('authentication/login', async (data: loginData, thunkAPI) => {
+  const response = await fetch(`${API_URL}/auth/local/signin`, {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
   })
-  const resData = await response.json()
+  
+  const responseData = await response.json()
 
   if (response.status === 200) {
-
-    return resData
+    await setCookieFetcher(responseData.tokens)
+    return responseData
   } else {
-
-    console.log("HALLO", resData); 
-    return thunkAPI.rejectWithValue(resData)
+    return thunkAPI.rejectWithValue(responseData)
   }
 })
 
-export const signupThunk = createAsyncThunk("authentication/signup", async (data: any, thunkAPI) => {
-  const response = await fetch(`${API_URL}/api/signup`, {
-    method: "POST",
+export const signupThunk = createAsyncThunk('authentication/signup', async (data: signupData, thunkAPI) => {
+  const response = await fetch(`${API_URL}/auth/local/signup`, {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
   })
-  const resData = await response.json()
-  if (response.status === 200) {
-    return resData
+  const responseData = await response.json()
+  if (response.ok) {
+    return responseData
   } else {
-
-    return thunkAPI.rejectWithValue('sdasdasd')
+    return thunkAPI.rejectWithValue(responseData.message)
   }
 })
 
-export const logoutThunk = createAsyncThunk("authentication/logout", async (_, thunkAPI) => {
-  const response = await fetch(`${API_URL}/api/logout`, {
-    method: "POST",
+export const logoutThunk = createAsyncThunk('authentication/logout', async (_, thunkAPI) => {
+  const cookies = await getCookieFetcher()
+
+  const response = await fetch(`${API_URL}/auth/logout`, {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json"
+      Authorization: `Bearer ${cookies.AT}`
     }
   })
-  const resData = await response.json()
-  if (response.status === 200) {
-    return resData
-  } else {
 
-   
-    return thunkAPI.rejectWithValue(resData.message)
+  if (response.ok) {
+    await clearCookiesFetcher() // TO DO
+    thunkAPI.dispatch(clearUserData(undefined))
+    return { message: 'You have been logged out!' }
+  } else {
+    await clearCookiesFetcher() 
+    return thunkAPI.rejectWithValue('Logout fail')
   }
 })
 
-export const authenticateOnLoad = createAsyncThunk("authentication/authenticateOnLoad", async (data, thunkAPI) => {
-  const response = await fetch(`${API_URL}/api/authenticateOnLoad`, {
-    method: "POST",
+export const authenticateOnLoad = createAsyncThunk('authentication/authenticateOnLoad', async (_, thunkAPI) => {
+  const cookies = await getCookieFetcher()
+  if(!cookies) return thunkAPI.rejectWithValue('Not Authorized')
+  const response = await fetch(`${API_URL}/auth/refresh`, {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json"
+      Authorization: `Bearer ${cookies?.RT} `
     }
   })
-  const resData = await response.json()
-  console.log("HELLO SLICE 1");
-  
-  if (response.status === 200) {
-    console.log("HELLO SLICE 2");
-    return resData
+  const responesData = await response.json()
+
+  if (response.ok) {
+    await setCookieFetcher(responesData.tokens)
+    return responesData
   } else {
-    const errorMessage: string = resData.message
-    return thunkAPI.rejectWithValue(errorMessage)
+    return thunkAPI.rejectWithValue(responesData.message)
   }
 })
 
+export const updateRefreshToken = createAsyncThunk('authentication/updateRefreshToken', async (_, thunkAPI) => {
+  const cookies = await getCookieFetcher()
 
-export const updateRefreshToken = createAsyncThunk("authentication/updateRefreshToken", async (_, thunkAPI) => {
-  const response = await fetch(`${API_URL}/api/updateRefreshToken`, {
-    method: "POST",
+  const response = await fetch(`${API_URL}/auth/refresh`, {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json"
+      Authorization: `Bearer ${cookies?.RT} `
     }
   })
-  
-  const resData = await response.json()
-  if (response.status === 200) {
-    return resData
+  const responesData = await response.json()
+
+  if (response.ok && responesData.tokens) {
+
+    await setCookieFetcher(responesData.tokens)
+    return responesData
   } else {
-    return thunkAPI.rejectWithValue(resData)
+    return thunkAPI.rejectWithValue(responesData.message)
   }
 })

@@ -1,10 +1,12 @@
 import { SettingsIcon } from '@chakra-ui/icons'
-import { Box, Button, Container, Flex, Grid, GridItem, Heading, Text, useDisclosure, Wrap } from '@chakra-ui/react'
+import { Box, Button, Container, Flex, Grid, GridItem, Heading, Icon, Text, useColorModeValue, useDisclosure, Wrap } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/userSlice'
 import { formatDate } from '../helpers/formatSingleDate'
 import { EditProfileDrawer } from './EditProfileDrawer'
+import { IoTicket } from 'react-icons/io5'
+import { AiFillCalendar } from 'react-icons/ai'
 
 type Props = {
   onOpenTicket: () => void
@@ -31,24 +33,15 @@ const ListItem = ({ heading, body }: ListItemProps) => {
 
 export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
   const { isOpen, onOpen: onOpenProfile, onClose } = useDisclosure()
-  /*   let amountOfBookings: number */
   const userState = useSelector(selectUser)
 
   const amountOfBookings = userState.bookings.length
-
-  console.log('HEJSAAAA', amountOfBookings)
-
-  /*  if (userState.bookings) {
-    amountOfBookings = userState.bookings.length
-  } else {
-    amountOfBookings = 0
-  } */
 
   return (
     <>
       <EditProfileDrawer isOpen={isOpen} onClose={onClose} />
 
-      <Box position={'relative'}>
+      <Box position={'relative'} mb={{ sm: 6, xl: 8, xxl: 12 }}>
         <Box
           backgroundImage="url('/wood3.png')"
           backgroundRepeat={'no-repeat'}
@@ -67,14 +60,14 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
               zIndex={'10'}
               templateRows="repeat(3, 1fr)"
               templateColumns="repeat(5, 1fr)"
-              columnGap={{ base: 4, md: 20 }}
+              columnGap={{ base: 4, md: 10 }}
               rowGap={{ base: 8, md: 2 }}
               justifyContent="center"
             >
               <GridItem
                 rowSpan={{ base: 1, md: 2 }}
                 colSpan={1}
-                bg="white"
+                bg={useColorModeValue('white', 'white')}
                 border={'orange'}
                 borderStyle={'solid'}
                 borderColor="primary"
@@ -84,19 +77,19 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
                 justifySelf="center"
                 p="4"
               >
-                <Box boxSize={{ base: '20', md: '200px' }}>
+                <Box boxSize={{ base: '20', md: '150px' }}>
                   <Image src="/lillelogo.png" alt="me" width="50" height="45" layout="responsive" />
                 </Box>
               </GridItem>
 
-              <GridItem colSpan={{ base: 4, md: 4 }} alignSelf="center">
+              <GridItem colSpan={{ base: 4, md: 4 }} alignSelf="center" justifySelf="auto">
                 <Flex justifyContent="start" direction={{ base: 'column', md: 'row' }} alignItems="center" gap={{ base: '2', md: '8' }}>
                   <Heading fontWeight="bold" color="white" fontSize={{ base: 'xl', lg: '3xl' }} textTransform="uppercase">
                     {userState.user?.firstname} {userState.user?.lastname}
                   </Heading>
-                  <Button w="40" ml={'auto'} variant="secondary" size="sm" onClick={onOpenProfile}>
+                  <Button w={{ base: 'full', md: 40 }} ml={'auto'} variant="secondary" size="sm" onClick={onOpenProfile}>
+                    <SettingsIcon mr={2} />
                     Edit profile
-                    <SettingsIcon ml={4} />
                   </Button>
                 </Flex>
               </GridItem>
@@ -104,10 +97,10 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
               <GridItem colSpan={{ base: 5, md: 4 }} rowSpan={1}>
                 <Flex justifyContent={{ base: 'space-around', md: 'space-between' }} w="full">
                   <ListItem
-                    heading="Upcomming Bookings"
+                    heading="Upcoming bookings"
                     body={amountOfBookings > 0 ? amountOfBookings + ' bookings' : 'No bookings ahead'}
                   />
-                  <ListItem heading="Tickets" body={userState.tickets.activeTickets + 'tickets'} />
+                  <ListItem heading="Tickets" body={userState.tickets.activeTickets + ' tickets'} />
                   <ListItem
                     heading="Latest Purchase"
                     body={userState.purchases[0] ? formatDate(userState.purchases[0]?.purchasedAt) : 'No purchases'}
@@ -118,9 +111,11 @@ export const ProfileBanner = ({ onOpenTicket, onBookingOpen }: Props) => {
               <GridItem colSpan={5} alignSelf={{ base: 'center', md: 'end' }}>
                 <Flex w="full" justify={{ base: 'center', md: 'end' }} gap="2">
                   <Button onClick={onBookingOpen} w={{ base: 'full', md: '40' }}>
+                    <Icon as={AiFillCalendar} mr={2} />
                     New Booking
                   </Button>
                   <Button onClick={onOpenTicket} w={{ base: 'full', md: '40' }} variant="secondary">
+                    <Icon as={IoTicket} mr={2} />
                     Buy tickets
                   </Button>
                 </Flex>

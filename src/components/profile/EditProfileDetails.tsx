@@ -21,10 +21,10 @@ export const EditProfileDetails = ({ onClose }: Props) => {
   const methods = useForm<EditUserProps>({
     mode: 'onBlur',
     defaultValues: {
-      firstname: userState.user?.firstname,
-      lastname: userState.user?.lastname,
-      email: userState.user?.email,
-      phonenumber: userState.user?.phonenumber
+      firstname: userState.user.firstname,
+      lastname: userState.user.lastname,
+      email: userState.user.email,
+      phonenumber: userState.user.phonenumber
     }
   })
 

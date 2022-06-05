@@ -1,4 +1,4 @@
-import { Box, Button, Container, Flex } from '@chakra-ui/react'
+import { Button, Flex, useToast } from '@chakra-ui/react'
 import { Step, Steps, useSteps } from 'chakra-ui-steps'
 import React, { useState } from 'react'
 import { DateObject } from 'react-multi-date-picker'
@@ -20,22 +20,31 @@ const steps = [
 const StepFlow = () => {
   const dispatch: AppDispatch = useDispatch()
 
-  const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
+  const errorToast = useToast({
+    position: 'bottom-right',
+    status: 'error',
+    title: 'Whoops',
+    isClosable: true,
+    duration: 5000,
+    variant: 'solid'
+  })
+  // "subtle" | "solid" | "left-accent" | "top-accent" |
+  const { nextStep, prevStep, setStep, activeStep } = useSteps({
     initialStep: 0
   })
 
   const [calenderDates, setCalendarDates] = useState<DateObject | DateObject[] | null>(null)
-  console.log(calenderDates)
-
   const userState = useSelector(selectUser)
 
   function handleNext() {
-    if (activeStep === 0 && userState.tickets.activeTickets) {
-      if (userState.tickets.activeTickets > 0) {
+    if (activeStep === 0) {
+      if (userState.tickets.activeTickets && userState.tickets.activeTickets > 0) {
         const formattedDates = FormatDatesforState(calenderDates)
         dispatch(updateSelectedBookings(formattedDates))
         return nextStep()
-      } else alert('Not enough tickets')
+      } else {
+        return errorToast({ description: "You don't have enough tickets" })
+      }
     }
     if (activeStep === 1) {
       dispatch(createBooking(userState.selectedBookings))
