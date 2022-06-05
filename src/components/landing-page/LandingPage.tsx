@@ -30,12 +30,12 @@ function LandingPage() {
       dispatch(updateRefreshToken())
       //set to 15000 for testing, otherwise it might bug
     }, 600000)
-  }, [authState.tokens])
+  }, [authState.tokens, dispatch])
 
   useEffect(() => {
     dispatch(getUserInfo())
     dispatch(getTicketTypes())
-  }, [])
+  }, [dispatch])
   const windowSize = IsWindowSizeLargerThan(700)
 
   return (

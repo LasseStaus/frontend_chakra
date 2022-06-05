@@ -94,7 +94,7 @@ export default function UpdateBookingAlert({ booking, isUpdateBookingOpen, onUpd
             <Button variant="secondary" onClick={onUpdateBookingClose}>
               No
             </Button>
-            <Button colorScheme="red" ml={3} type="submit" onClick={handleSubmit(onSubmit)}>
+            <Button disabled={!isDirty || !isValid} colorScheme="red" ml={3} type="submit" onClick={handleSubmit(onSubmit)}>
               Submit
             </Button>
           </AlertDialogFooter>

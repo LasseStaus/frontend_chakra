@@ -36,7 +36,7 @@ const CurrentCalendar = ({ numberOfMonths }: calendarProps) => {
     dateArray.push(date)
   })
 
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode } = useColorMode()
 
   return (
     <Container maxW={'container.lg'} borderRadius={6} shadow={'base'} variant="lighterDarkMode">

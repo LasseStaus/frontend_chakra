@@ -1,7 +1,6 @@
 import { Box, Container, Tab, TabList, TabPanel, TabPanels, Tabs, useColorModeValue } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { selectUser } from '../../redux/userSlice'
 import AlertBox from '../alert/Alert'
 import Loginform from '../forms/Loginform'
 import SignupForm from '../forms/Signupform'
@@ -11,8 +10,6 @@ export const AuthenticatedPage = () => {
 
   const alertMessage = useSelector((state: any) => state.authentication.alertMessage)
   const alertType = useSelector((state: any) => state.authentication.alertType)
-  const userState = useSelector(selectUser)
-  console.log('USER auth pagen', userState)
 
   return (
     <>

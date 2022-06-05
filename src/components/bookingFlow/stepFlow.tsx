@@ -29,7 +29,7 @@ const StepFlow = () => {
     variant: 'solid'
   })
   // "subtle" | "solid" | "left-accent" | "top-accent" |
-  const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
+  const { nextStep, prevStep, setStep, activeStep } = useSteps({
     initialStep: 0
   })
 

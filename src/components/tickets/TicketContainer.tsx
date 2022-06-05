@@ -9,7 +9,7 @@ type Props = {
 }
 
 interface TicketItemProps {
-  amountOfTickets: number | undefined
+  amountOfTickets: number | null
   text: string
   textColor: string
 }

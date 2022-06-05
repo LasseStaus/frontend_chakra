@@ -11,7 +11,7 @@ import StepTypeTicket from './stepTypeTicket'
 const steps = [{ label: 'Choose ticket card' }, { label: 'Payment' }, { label: 'Confirmation' }]
 
 const StepFlowTicket = () => {
-  const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
+  const { nextStep, prevStep, setStep, activeStep } = useSteps({
     initialStep: 0
   })
   const [typeOfTicket, setTicketType] = React.useState<string>('3 days')
@@ -35,7 +35,7 @@ const StepFlowTicket = () => {
         {activeStep === 0 ? (
           <StepTypeTicket typeOfTicket={typeOfTicket} setTicketType={setTicketType} />
         ) : activeStep === 1 ? (
-          <StepPaymentTicket typeOfTicket={typeOfTicket} />
+          <StepPaymentTicket />
         ) : (
           <StepConfirmTicket typeOfTicket={typeOfTicket} />
         )}

@@ -32,7 +32,7 @@ const StepDates = ({ calenderDates, setCalendarDates }: props) => {
     dateArray.push(date)
   })
 
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode } = useColorMode()
   return (
     <Flex my={8} flexDir="column" justify="center" align="center" w={'100%'} h={'100%'}>
       <Heading mb={4} fontSize={'2xl'}>

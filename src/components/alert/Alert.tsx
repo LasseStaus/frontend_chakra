@@ -25,7 +25,7 @@ export const AlertBox = ({ alertMessage, alertType }: Props) => {
         clearTimeout(timeId)
       }
     }
-  }, [userState.alertMessage, authState.alertMessage])
+  }, [userState.alertMessage, authState.alertMessage, dispatch])
 
   return (
     <Alert position={'absolute'} zIndex={'200'} status={alertType}>
