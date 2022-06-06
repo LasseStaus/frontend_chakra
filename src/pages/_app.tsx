@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { themeVaerkstedetCPH } from '../../styles/theme'
 import '../../styles/styles.css'
 import { store } from '../redux/store'
+import '@fontsource/dosis'
 
 const config = {
   initialColorMode: 'light',
