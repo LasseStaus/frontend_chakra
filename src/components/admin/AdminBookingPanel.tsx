@@ -15,7 +15,7 @@ export interface allUserBookingsData {
   userId: string
   iLOQKey?: string
   user?: {
-    phonenumber: number
+    phonenumber: number | null
     email: string
   }
 }
@@ -24,8 +24,13 @@ export const AdminBookingPanel = () => {
   const dispatch: AppDispatch = useDispatch<AppDispatch>()
 
   const { isOpen: isUpdateBookingOpen, onOpen: onUpdateBookingOpen, onClose: onUpdateBookingClose } = useDisclosure()
-  const [updateBooking, setUpdateBooking] = useState<allUserBookingsData | undefined>(undefined)
   const userState = useSelector(selectUser)
+  const [updateBooking, setUpdateBooking] = useState<allUserBookingsData>({
+    id: '',
+    bookedFor: new Date(),
+    createdAt: new Date(),
+    userId: ''
+  })
 
   function openModal(booking: allUserBookingsData) {
     setUpdateBooking(booking)

@@ -24,8 +24,7 @@ type UpdateBookingProps = {
 }
 
 type Props = {
-  param?: string
-  booking: Booking | undefined
+  booking: Booking
   isUpdateBookingOpen: boolean
   onUpdateBookingClose: () => void
 }
