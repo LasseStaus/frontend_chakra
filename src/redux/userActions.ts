@@ -2,9 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { getCookieFetcher } from './cookieHelpers/getCookiesFetcher'
 import { Booking } from './userSlice'
 
-
 const API_URL = process.env.NEXT_PUBLIC_API_REST
-
 
 interface editUserData {
   firstname?: string
@@ -12,13 +10,13 @@ interface editUserData {
   email?: string
 }
 interface editPasswordData {
-  passwordCurrent: string,
-  passwordNew: string,
+  passwordCurrent: string
+  passwordNew: string
   passwordNewConfirm: string
 }
 
 interface updateKeyData {
-  bookingId: string | undefined
+  bookingId: string
   iLOQKey: string
 }
 export const getUserInfo = createAsyncThunk('loggedInUser/getUserInfo', async (_, thunkAPI) => {
@@ -111,7 +109,7 @@ export const getTicketTypes = createAsyncThunk('loggedInUser/getTicketTypes', as
   }
 })
 
-export const purchaseTicket = createAsyncThunk('loggedInUser/purchaseTicket', async (typeOfTicket: string | undefined, thunkAPI) => {
+export const purchaseTicket = createAsyncThunk('loggedInUser/purchaseTicket', async (typeOfTicket: string, thunkAPI) => {
   const cookies = await getCookieFetcher()
 
   const response = await fetch(`${API_URL}/ticket/purchase`, {
