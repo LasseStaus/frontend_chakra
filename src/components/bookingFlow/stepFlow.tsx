@@ -35,11 +35,11 @@ const StepFlow = () => {
 
   const [calenderDates, setCalendarDates] = useState<DateObject | DateObject[] | null>(null)
   const userState = useSelector(selectUser)
+  const formattedDates = FormatDatesforState(calenderDates)
 
   function handleNext() {
     if (activeStep === 0) {
-      if (userState.tickets.activeTickets && userState.tickets.activeTickets > 0) {
-        const formattedDates = FormatDatesforState(calenderDates)
+      if (userState.tickets.activeTickets && userState.tickets.activeTickets >= formattedDates.length) {
         dispatch(updateSelectedBookings(formattedDates))
         return nextStep()
       } else {
