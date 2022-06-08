@@ -6,17 +6,16 @@ import { clearUserData } from './userSlice'
 
 const API_URL = process.env.NEXT_PUBLIC_API_REST
 
-
 interface loginData {
-  email: string, 
+  email: string
   password: string
 }
 interface signupData {
-  firstname: string,
-  lastname: string,
-  email: string, 
-  password: string,
-  phonenumber: string,
+  firstname: string
+  lastname: string
+  email: string
+  password: string
+  phonenumber: string
   passwordConfirm: string
 }
 
@@ -28,7 +27,7 @@ export const loginThunk = createAsyncThunk('authentication/login', async (data: 
     },
     body: JSON.stringify(data)
   })
-  
+
   const responseData = await response.json()
 
   if (response.status === 200) {
@@ -70,14 +69,14 @@ export const logoutThunk = createAsyncThunk('authentication/logout', async (_, t
     thunkAPI.dispatch(clearUserData(undefined))
     return { message: 'You have been logged out!' }
   } else {
-    await clearCookiesFetcher() 
+    await clearCookiesFetcher()
     return thunkAPI.rejectWithValue('Logout fail')
   }
 })
 
 export const authenticateOnLoad = createAsyncThunk('authentication/authenticateOnLoad', async (_, thunkAPI) => {
   const cookies = await getCookieFetcher()
-  if(!cookies) return thunkAPI.rejectWithValue('Not Authorized')
+  if (!cookies) return thunkAPI.rejectWithValue('Not Authorized')
   const response = await fetch(`${API_URL}/auth/refresh`, {
     method: 'POST',
     headers: {
@@ -106,7 +105,6 @@ export const updateRefreshToken = createAsyncThunk('authentication/updateRefresh
   const responesData = await response.json()
 
   if (response.ok && responesData.tokens) {
-
     await setCookieFetcher(responesData.tokens)
     return responesData
   } else {

@@ -87,8 +87,6 @@ export const editUserPassword = createAsyncThunk('loggedInUser/editUserPassword'
 // ============TICKET============
 // ==============================
 
-// getTicketTypes
-// ================================================
 export const getTicketTypes = createAsyncThunk('loggedInUser/getTicketTypes', async (_, thunkAPI) => {
   const cookies = await getCookieFetcher()
 
@@ -178,8 +176,6 @@ export const deleteBooking = createAsyncThunk('loggedInUser/deleteBooking', asyn
   }
 })
 
-// getAllUserBookings
-// ================================================
 export const getAllUserBookings = createAsyncThunk('loggedInUser/getAllUserBookings', async (_, thunkAPI) => {
   const cookies = await getCookieFetcher()
 
