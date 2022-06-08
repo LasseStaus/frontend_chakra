@@ -14,7 +14,7 @@ const setCookiesHandler = (req: NextApiRequest, res: NextApiResponse) => {
     res.setHeader('Set-Cookie', [
       cookie.serialize('AT', String(access_token), {
         httpOnly: true,
-        secure: true, // TO DO
+        secure: true,
         maxAge: 60 * 60 * 24 * 7, // 1 week
         sameSite: 'strict',
         path: '/'

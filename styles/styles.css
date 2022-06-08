@@ -1,6 +1,6 @@
 /*COSTUM OVERWRITE*/
 .darkMode {
-  background-color: 'none'
+  background-color: 'none';
 }
 
 .rmdp-wrapper.darkMode.rmdp-shadow {
@@ -8,26 +8,26 @@
 }
 
 .frontpage-calendar .rmdp-wrapper.rmdp-shadow.rmdp-wrapper.rmdp-shadow {
-  box-shadow:  none}
+  box-shadow: none;
+}
 .rmdp-wrapper.rmdp-shadow.rmdp-wrapper.rmdp-shadow {
-  box-shadow: 0px 0px 6px 2px #23272a;}
-.rmdp-wrapper .rmdp-header-values{
+  box-shadow: 0px 0px 6px 2px #23272a;
+}
+.rmdp-wrapper .rmdp-header-values {
   font-size: 14px;
   text-transform: uppercase;
   font-weight: bold;
   text-align: left;
-
 }
-.rmdp-wrapper.darkMode .rmdp-border-right{
-  border-right: 1px solid rgb(212, 212, 212, 0.0);
+.rmdp-wrapper.darkMode .rmdp-border-right {
+  border-right: 1px solid rgb(212, 212, 212, 0);
 }
 .rmdp-wrapper.darkMode .rmdp-panel-body span,
-.rmdp-wrapper.darkMode .rmdp-panel-body li .b-deselect{
-
+.rmdp-wrapper.darkMode .rmdp-panel-body li .b-deselect {
   color: rgb(212, 212, 212);
 }
 
-.rmdp-wrapper.darkMode .rmdp-panel-header{
+.rmdp-wrapper.darkMode .rmdp-panel-header {
   color: rgb(212, 212, 212);
 }
 
@@ -36,10 +36,10 @@
   background-color: #23272a;
   color: black;
 }
-.rmdp-wrapper.darkMode .rmdp-day.rmdp-selected span:not(.highlight){
+.rmdp-wrapper.darkMode .rmdp-day.rmdp-selected span:not(.highlight) {
   background-color: #23272a;
 }
-.rmdp-wrapper.darkMode .rmdp-header-values{
+.rmdp-wrapper.darkMode .rmdp-header-values {
   color: rgb(212, 212, 212);
 }
 .rmdp-wrapper.darkMode .rmdp-day span {
@@ -118,16 +118,14 @@
   background-color: #f6f6f6;
 }
 
-
-.rmdp-wrapper.darkMode .rmdp-day.rmdp-today span{
+.rmdp-wrapper.darkMode .rmdp-day.rmdp-today span {
   background-color: none;
   border: 1px solid lightgray;
   background: none;
 }
-.rmdp-wrapper.darkMode .rmdp-week .rmdp-week-day{
-  color: #DD9933;
+.rmdp-wrapper.darkMode .rmdp-week .rmdp-week-day {
+  color: #dd9933;
 }
-
 
 .rmdp-wrapper .rmdp-day.rmdp-selected span:not(.highlight) {
   border: 1px solid black;
@@ -157,12 +155,8 @@
   border-width: 0 2px 2px 0;
 }
 
-.rmdp-day-picker > div:first-child .rmdp-week:first-child {
-  /*   border-top: 1px solid grey; */
-}
 .rmdp-week .rmdp-week-day {
-
-  color: #b2700e ;
+  color: #b2700e;
   font-weight: Bold;
   width: 100%;
 }
@@ -219,14 +213,9 @@
   background-color: rgba(255, 0, 0, 0);
   color: #000;
 }
-.frontpage-calendar .rmdp-wrapper {
-}
-.frontpage-calendar .rmdp-wrapper {
-}
+
 .frontpage-calendar .rmdp-wrapper .rmdp-top-class {
   display: flex !important;
-}
-.frontpage-calendar .rmdp-wrapper .rmdp-day-picker {
 }
 
 .frontpage-calendar .rmdp-wrapper .rmdp-calendar .rmdp-day-picker {
@@ -238,6 +227,3 @@
   width: 100%;
   box-shadow: none;
 }
-.frontpage-calendar .rmdp-wrapper {
-}
-

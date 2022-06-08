@@ -24,7 +24,6 @@ export interface Tickets {
   usedTickets: number | null
 }
 
-
 export interface Booking {
   id: string
   bookedFor: Date
@@ -167,10 +166,7 @@ export const userSlice = createSlice({
         state.pending = true
       }),
       builder.addCase(getTicketTypes.rejected, (state) => {
-        //TODO state
-        // state.pending = false
-        // state.alertMessage = action.payload
-        // state.alertType = 'error'
+        state.pending = true
       })
     //
     //purchaseTicket
@@ -206,6 +202,8 @@ export const userSlice = createSlice({
       builder.addCase(createBooking.rejected, (state) => {
         state.pending = false
       }),
+      //
+      //deleteBooking
       builder.addCase(deleteBooking.fulfilled, (state, action: AnyAction) => {
         const newBookings = state.bookings?.filter((booking) => booking.id !== action.payload.deletedBooking.id)
         state.bookings = newBookings
@@ -234,10 +232,7 @@ export const userSlice = createSlice({
         state.pending = true
       }),
       builder.addCase(getAllUserBookings.rejected, (state) => {
-        //TODO state
-        // state.pending = false
-        // state.alertMessage = action.payload
-        // state.alertType = 'error'
+        state.pending = true
       })
     //
     //editUserInfo
