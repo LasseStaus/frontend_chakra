@@ -30,6 +30,12 @@ This repo is the frontend part of an exam project at KEA, developed for CPH-Vær
 
 It is a prototype of a system where users can create an account and purchase tickets that can be spend in a booking system. 
 
+ The admin user for the application is seeded automatically by running the [backend](https://github.com/LasseStaus/CPHworkshop_backend), and the admin panel can be accessed with the following credentials
+
+> Email: Admin@admin.com
+> 
+> Password: 1234Admin
+> 
 
 ## Built with
 
