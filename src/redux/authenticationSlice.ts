@@ -112,6 +112,8 @@ export const authenticationSlice = createSlice({
         state.authenticationLoad = false
         state.isAdmin = false
       }),
+      //
+      //updateRefreshToken
       builder.addCase(updateRefreshToken.fulfilled, (state, action) => {
         state.isAdmin = action.payload.isAdmin
         state.pending = false

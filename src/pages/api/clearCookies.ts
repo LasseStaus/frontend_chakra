@@ -6,21 +6,21 @@ export type Tokens = {
   refresh_token: string
 }
 
-// The cookie middleware will add the `set-` header
+// The cookie middleware will clear the cookie
 const clearCookiesHandler = (req: NextApiRequest, res: NextApiResponse) => {
   try {
     res.setHeader('Set-Cookie', [
       cookie.serialize('AT', '', {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development',
-        maxAge: -1, // 1 week
+        secure: true,
+        maxAge: -1,
         sameSite: 'strict',
         path: '/'
       }),
       cookie.serialize('RT', '', {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development',
-        maxAge: -1, // 1 week
+        secure: true,
+        maxAge: -1,
         sameSite: 'strict',
         path: '/'
       })

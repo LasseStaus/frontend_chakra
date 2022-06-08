@@ -6,12 +6,11 @@ export type Tokens = {
   refresh_token: string
 }
 
-// The cookie middleware will add the `set-cookie` header
+// The cookie middleware will get the cookie from req.header
 const getCookiesHandler = (req: NextApiRequest, res: NextApiResponse) => {
   try {
     if (!req.headers.cookie) {
       return res.end()
-      /* return res.status(403).json({ message: 'Not Authorized' }) */
     }
 
     const token = cookie.parse(req.headers.cookie)

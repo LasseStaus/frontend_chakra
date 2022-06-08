@@ -68,7 +68,7 @@ const StepDates = ({ calenderDates, setCalendarDates }: props) => {
           format={format}
           multiple
           sort
-          className={colorMode === 'light' ? 'hej' : 'darkMode'}
+          className={colorMode === 'light' ? '' : 'darkMode'}
           buttons={true}
           plugins={[<DatePanel header="Selected Dates" key={null} />]}
         />

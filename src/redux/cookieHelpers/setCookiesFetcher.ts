@@ -14,7 +14,6 @@ export const setCookieFetcher = async (data: Tokens) => {
   })
 
   if (response.ok) {
-    //TODO Return smt
     return
   } else {
     return new Error('cookie SET fail')

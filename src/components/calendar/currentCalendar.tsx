@@ -54,6 +54,12 @@ const CurrentCalendar = ({ numberOfMonths }: calendarProps) => {
                 style: { color: 'white', backgroundColor: 'rgb(223, 90, 90)' }
               }
             }
+            if (date) {
+              return {
+                disabled: true,
+                style: { color: 'black' }
+              }
+            }
           }}
           className={colorMode === 'light' ? '' : 'darkMode'}
           disabled={true}
