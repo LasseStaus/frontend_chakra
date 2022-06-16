@@ -10,6 +10,9 @@ export type Tokens = {
 const setCookiesHandler = (req: NextApiRequest, res: NextApiResponse) => {
   const { access_token, refresh_token }: Tokens = req.body
 
+  console.log("body", req.body);
+  
+
   try {
     res.setHeader('Set-Cookie', [
       cookie.serialize('AT', String(access_token), {

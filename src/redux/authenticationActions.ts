@@ -3,6 +3,7 @@ import { clearCookiesFetcher } from './cookieHelpers/clearCookiesFetcher'
 import { getCookieFetcher } from './cookieHelpers/getCookiesFetcher'
 import { setCookieFetcher } from './cookieHelpers/setCookiesFetcher'
 import { clearUserData } from './userSlice'
+import jwt from 'jwt-decode'
 
 const API_URL = process.env.NEXT_PUBLIC_API_REST
 
@@ -19,6 +20,14 @@ interface signupData {
   passwordConfirm: string
 }
 
+interface jwtData {
+  sub: string
+  email: string
+  role: string
+  iat: number
+  exp: number
+}
+
 export const loginThunk = createAsyncThunk('authentication/login', async (data: loginData, thunkAPI) => {
   const response = await fetch(`${API_URL}/auth/local/signin`, {
     method: 'POST',
@@ -30,9 +39,17 @@ export const loginThunk = createAsyncThunk('authentication/login', async (data: 
 
   const responseData = await response.json()
 
+
+  
   if (response.status === 200) {
-    await setCookieFetcher(responseData.tokens)
-    return responseData
+   await  setCookieFetcher(responseData)
+     const decodedJwt:jwtData = await  jwt(responseData.access_token)
+    let isAdmin = false
+    if(decodedJwt.role === "ADMIN"){
+      isAdmin = true
+    }
+
+    return isAdmin
   } else {
     return thunkAPI.rejectWithValue(responseData)
   }
@@ -86,8 +103,14 @@ export const authenticateOnLoad = createAsyncThunk('authentication/authenticateO
   const responesData = await response.json()
 
   if (response.ok) {
-    await setCookieFetcher(responesData.tokens)
-    return responesData
+    await setCookieFetcher(responesData)
+    const decodedJwt:jwtData = await  jwt(responesData.access_token)
+    let isAdmin = false
+    if(decodedJwt.role === "ADMIN"){
+      isAdmin = true
+    }
+
+    return isAdmin
   } else {
     return thunkAPI.rejectWithValue(responesData.message)
   }
@@ -105,8 +128,14 @@ export const updateRefreshToken = createAsyncThunk('authentication/updateRefresh
   const responesData = await response.json()
 
   if (response.ok && responesData.tokens) {
-    await setCookieFetcher(responesData.tokens)
-    return responesData
+    await setCookieFetcher(responesData)
+    const decodedJwt:jwtData = await  jwt(responesData.access_token)
+    let isAdmin = false
+    if(decodedJwt.role === "ADMIN"){
+      isAdmin = true
+    }
+
+    return isAdmin
   } else {
     return thunkAPI.rejectWithValue(responesData.message)
   }

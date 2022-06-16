@@ -13,6 +13,9 @@ export const setCookieFetcher = async (data: Tokens) => {
     body: JSON.stringify(data)
   })
 
+  console.log("fetcher", data);
+  
+
   if (response.ok) {
     return
   } else {

@@ -52,12 +52,14 @@ export const authenticationSlice = createSlice({
       //
       //loginThunk
       builder.addCase(loginThunk.fulfilled, (state, action) => {
+        console.log("payload", action.payload);
+        
         state.pending = false
         state.authenticated = true
         state.authenticationLoad = false
         state.alertMessage = "You've successfully logged in!"
         state.alertType = 'success'
-        state.isAdmin = action.payload.isAdmin
+        state.isAdmin = action.payload
       }),
       builder.addCase(loginThunk.pending, (state) => {
         state.pending = true
@@ -97,7 +99,7 @@ export const authenticationSlice = createSlice({
         state.authenticated = true
         state.pending = false
         state.authenticationLoad = false
-        state.isAdmin = action.payload.isAdmin
+        state.isAdmin = action.payload
       }),
       builder.addCase(authenticateOnLoad.pending, (state) => {
         state.pending = true
@@ -115,7 +117,7 @@ export const authenticationSlice = createSlice({
       //
       //updateRefreshToken
       builder.addCase(updateRefreshToken.fulfilled, (state, action) => {
-        state.isAdmin = action.payload.isAdmin
+        state.isAdmin = action.payload
         state.pending = false
       }),
       builder.addCase(updateRefreshToken.pending, (state) => {

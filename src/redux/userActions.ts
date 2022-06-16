@@ -176,19 +176,35 @@ export const deleteBooking = createAsyncThunk('loggedInUser/deleteBooking', asyn
   }
 })
 
-export const getAllUserBookings = createAsyncThunk('loggedInUser/getAllUserBookings', async (_, thunkAPI) => {
+export const getAllBookings = createAsyncThunk('loggedInUser/getAllBookings', async (_, thunkAPI) => {
   const cookies = await getCookieFetcher()
 
-  const response = await fetch(`${API_URL}/booking/allUserBookings`, {
+  const response = await fetch(`${API_URL}/booking/allBookings`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       authorization: `Bearer ${cookies.AT}`
     }
   })
-
   const resData = await response.json()
+  if (response.status === 200) {
+    return resData
+  } else {
+    return thunkAPI.rejectWithValue(resData.message)
+  }
+})
 
+export const getAllBookingsWithUserInfo = createAsyncThunk('loggedInUser/getAllBookingsWithUserInfo', async (_, thunkAPI) => {
+  const cookies = await getCookieFetcher()
+
+  const response = await fetch(`${API_URL}/booking/allBookingsWithUserInfo`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${cookies.AT}`
+    }
+  })
+  const resData = await response.json()
   if (response.status === 200) {
     return resData
   } else {
@@ -199,7 +215,7 @@ export const getAllUserBookings = createAsyncThunk('loggedInUser/getAllUserBooki
 export const updateBookingWithiLOQKey = createAsyncThunk('loggedInUser/updateBookingWithiLOQKey', async (data: updateKeyData, thunkAPI) => {
   const cookies = await getCookieFetcher()
 
-  const response = await fetch(`${API_URL}/booking/updateBooking`, {
+  const response = await fetch(`${API_URL}/booking/updateBookingKey`, {
     method: 'PATCH',
     headers: {
       Accept: 'application/json',

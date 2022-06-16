@@ -1,9 +1,9 @@
 import { Button, Flex, Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
-import { getAllUserBookings } from '../../redux/userActions'
+import { getAllBookingsWithUserInfo } from '../../redux/userActions'
 import { selectUser } from '../../redux/userSlice'
 import { formatDate } from '../helpers/formatSingleDate'
 import UpdateBookingAlert from '../updateBookingAlert/UpdateBookingAlert'
@@ -12,7 +12,7 @@ export interface allUserBookingsData {
   id: string
   bookedFor: Date
   createdAt: Date
-  userId: string
+  userId?: string
   iLOQKey?: string
   user?: {
     phonenumber: number | null
@@ -38,7 +38,7 @@ export const AdminBookingPanel = () => {
   }
 
   useEffect(() => {
-    dispatch(getAllUserBookings())
+    dispatch(getAllBookingsWithUserInfo())
   }, [dispatch])
 
   return (
@@ -64,7 +64,7 @@ export const AdminBookingPanel = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {userState.allUserBookings?.map((booking: allUserBookingsData) => (
+              {userState.allBookingsWithUserInfo?.map((booking: allUserBookingsData) => (
                 <Tr key={booking.id}>
                   <Td>{formatDate(booking.bookedFor)}</Td>
                   <Td>Frederiksberg</Td>

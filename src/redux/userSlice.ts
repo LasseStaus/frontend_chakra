@@ -5,7 +5,8 @@ import {
   deleteBooking,
   editUserInfo,
   editUserPassword,
-  getAllUserBookings,
+  getAllBookings,
+  getAllBookingsWithUserInfo,
   getTicketTypes,
   getUserInfo,
   purchaseTicket,
@@ -28,7 +29,7 @@ export interface Booking {
   id: string
   bookedFor: Date
   createdAt: Date
-  userId: string
+  userId?: string
   iLOQKey?: string
 }
 interface Purchase {
@@ -53,6 +54,7 @@ export interface userSliceState {
   ticketTypes: TicketType[]
   bookings: Booking[]
   allUserBookings: Booking[]
+  allBookingsWithUserInfo: Booking[]
   selectedBookings: string[]
   purchases: Purchase[]
   pending: boolean
@@ -69,6 +71,7 @@ const initialState: userSliceState = {
   },
   bookings: [],
   allUserBookings: [],
+  allBookingsWithUserInfo: [],
   selectedBookings: [],
   purchases: [],
   tickets: {
@@ -224,24 +227,35 @@ export const userSlice = createSlice({
         state.alertType = 'error'
       }),
       //
-      //getAllUserBookings
-      builder.addCase(getAllUserBookings.fulfilled, (state, action: AnyAction) => {
+      //getAllBookings
+      builder.addCase(getAllBookings.fulfilled, (state, action: AnyAction) => {
         state.allUserBookings = action.payload
       }),
-      builder.addCase(getAllUserBookings.pending, (state) => {
+      builder.addCase(getAllBookings.pending, (state) => {
         state.pending = true
       }),
-      builder.addCase(getAllUserBookings.rejected, (state) => {
+      builder.addCase(getAllBookings.rejected, (state) => {
+        state.pending = true
+      })
+      //
+      //getAllBookingsWithUserInfo
+      builder.addCase(getAllBookingsWithUserInfo.fulfilled, (state, action: AnyAction) => {
+        state.allBookingsWithUserInfo = action.payload
+      }),
+      builder.addCase(getAllBookingsWithUserInfo.pending, (state) => {
+        state.pending = true
+      }),
+      builder.addCase(getAllBookingsWithUserInfo.rejected, (state) => {
         state.pending = true
       })
     //
-    //editUserInfo
+    //UpdatebookingKey
     builder.addCase(updateBookingWithiLOQKey.fulfilled, (state, action: AnyAction) => {
-      const booking = state.allUserBookings.find((booking) => booking.id === action.payload.id)
+      const booking = state.allBookingsWithUserInfo.find((booking) => booking.id === action.payload.id)
       if (booking) {
         booking.iLOQKey = action.payload.iLOQKey
       }
-      state.alertMessage = 'User booking updated successfully'
+      state.alertMessage = `Booking for ${booking?.bookedFor} updated with key ${action.payload.iLOQKey}`
       state.alertType = 'success'
     }),
       builder.addCase(updateBookingWithiLOQKey.pending, (state) => {

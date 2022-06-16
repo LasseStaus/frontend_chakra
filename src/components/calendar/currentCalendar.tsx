@@ -4,7 +4,7 @@ import { IoMdTime } from 'react-icons/io'
 import { Calendar } from 'react-multi-date-picker'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
-import { getAllUserBookings } from '../../redux/userActions'
+import { getAllBookings } from '../../redux/userActions'
 import { CalendarColorDescription } from './calendarColorDesc'
 interface calendarProps {
   numberOfMonths: number
@@ -13,7 +13,7 @@ const CurrentCalendar = ({ numberOfMonths }: calendarProps) => {
   const dispatch: AppDispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAllUserBookings())
+    dispatch(getAllBookings())
   }, [dispatch])
 
   const allCurrentBookings = useSelector((state: any) => state.user.allUserBookings)
